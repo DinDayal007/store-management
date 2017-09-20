@@ -1,13 +1,24 @@
 package com.storemanagement.utils;
-import java.util.List;
-import com.storemanagement.entities.User;
-import com.storemanagement.services.UserService;
+import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.SubGroup;
+import com.storemanagement.services.GroupService;
 public class Application {
 	public static void main(String[] args) {
-		UserService service = new UserService();
-		List<User> users = service.getAllObjects(User.class);
-		System.out.println("number of users => " + users.size());
-		for(User user : users)
-			System.out.println(user.getName() + " => " + user.getRole().getName());
+		GroupService service = new GroupService();
+		MainGroup mainGrp = new MainGroup();
+		mainGrp.setName("Main Group");
+		SubGroup subGrp = new SubGroup();
+		subGrp.setName("Sub Group 1");
+		subGrp.setMainGroup(mainGrp);
+		SubGroup subGrp2 = new SubGroup();
+		subGrp2.setName("Sub Group 2");
+		subGrp2.setMainGroup(mainGrp);
+		SubGroup subGrp3 = new SubGroup();
+		subGrp3.setName("Sub Group 3");
+		subGrp3.setMainGroup(mainGrp);
+		service.addObject(mainGrp);
+		service.addObject(subGrp);
+		service.addObject(subGrp2);
+		service.addObject(subGrp3);
 	}
 }

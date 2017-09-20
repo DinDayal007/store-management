@@ -19,9 +19,9 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
         
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
         
-        <mapping class="com.storemanagement.entities.User"/>
-        <mapping class="com.storemanagement.entities.Role"/>
+        <mapping class="com.storemanagement.entities.MainGroup"/>
+        <mapping class="com.storemanagement.entities.SubGroup"/>
     </session-factory>
 </hibernate-configuration>
