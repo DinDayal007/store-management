@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,6 +44,9 @@ public class Item {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "PRODUCTION_DATE")
 	private Date productionDate;
+	@ManyToOne
+	@JoinColumn(name = "SUBGROUP_ID")
+	private SubGroup subGroup;
 	public int getId() {
 		return id;
 	}
@@ -114,5 +118,11 @@ public class Item {
 	}
 	public void setProductionDate(Date productionDate) {
 		this.productionDate = productionDate;
+	}
+	public SubGroup getSubGroup() {
+		return subGroup;
+	}
+	public void setSubGroup(SubGroup subGroup) {
+		this.subGroup = subGroup;
 	}
 }

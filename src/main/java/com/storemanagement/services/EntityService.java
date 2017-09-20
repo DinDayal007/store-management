@@ -1,7 +1,7 @@
 package com.storemanagement.services;
 import java.util.List;
 import com.storemanagement.utils.HibernateDriver;
-class EntityService extends HibernateDriver {
+public class EntityService extends HibernateDriver {
 	public EntityService() {}
 	/**
 	 * Generic method to add new entity
