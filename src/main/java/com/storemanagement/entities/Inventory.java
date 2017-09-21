@@ -14,8 +14,8 @@ public class Inventory {
 	private int id;
 	@Column(name = "NAME")
 	private String name;
-	@Column(name = "DESC")
-	private String desc;
+	@Column(name = "DESCRIPTION")
+	private String description;
 	public int getId() {
 		return id;
 	}
@@ -28,10 +28,10 @@ public class Inventory {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

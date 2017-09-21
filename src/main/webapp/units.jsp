@@ -14,9 +14,13 @@
 
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="unit.html"><button class="btn btn-lg btn-primary">إضافة وحدة جديدة</button></a>
+                            <a href="#"><button class="btn btn-lg btn-primary">إضافة وحدة جديدة</button></a>
                         </div>
                         <!-- /.panel-heading -->
+                        <%
+                        List<Unit> units = (List<Unit>) request.getAttribute("units");
+                        int i = 0;
+                        %>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
@@ -30,21 +34,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <%
+                                        for(Unit unit : units){
+                                        	i++;
+                                        %>
                                         <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td><button class="btn btn-success"><i class="fa fa-edit"></i></button></td>
-                                            <td><button class="btn btn-danger"><i class="fa fa-close"></i></button></td>
+                                            <td><%= i %></td>
+                                            <td><%= unit.getName() %></td>
+                                            <td><%= unit.getDescription() %></td>
+                                            <td><a href="editUnit.jsp?id=<%= unit.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="deleteUnit.jsp?id=<%= unit.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td><button class="btn btn-success"><i class="fa fa-edit"></i></button></td>
-                                            <td><button class="btn btn-danger"><i class="fa fa-close"></i></button></td>
-                                        </tr>
-                                        
+                                        <% } %>
                                     </tbody>
                                 </table>
                             </div>
