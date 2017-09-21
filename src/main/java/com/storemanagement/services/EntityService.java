@@ -9,7 +9,7 @@ public class EntityService extends HibernateDriver {
 	 * @param object
 	 * @return
 	 */
-	public <T extends Object> int addObject(T object) {
+	public static <T extends Object> int addObject(T object) {
 		int objId = 0;
 		try {
 			openSession();
@@ -29,7 +29,7 @@ public class EntityService extends HibernateDriver {
 	 * @param cls
 	 * @return
 	 */
-	public <T extends Object> Object getObject(Class<T> cls, int objectId) {
+	public static <T extends Object> Object getObject(Class<T> cls, int objectId) {
 		Object obj = null;
 		try {
 			openSession();
@@ -47,7 +47,7 @@ public class EntityService extends HibernateDriver {
 	 * @param object
 	 * @return
 	 */
-	public <T extends Object> void updateObject(T object) {
+	public static <T extends Object> void updateObject(T object) {
 		try {
 			openSession();
 			getSession().update(object);
@@ -63,7 +63,7 @@ public class EntityService extends HibernateDriver {
 	 * @param object
 	 * @return
 	 */
-	public <T extends Object> void removeObject(T object) {
+	public static <T extends Object> void removeObject(T object) {
 		try {
 			openSession();
 			getSession().delete(object);
@@ -79,7 +79,7 @@ public class EntityService extends HibernateDriver {
 	 * @param cls
 	 * @return
 	 */
-	public <T extends Object> List<T> getAllObjects(Class<T> cls) {
+	public static <T extends Object> List<T> getAllObjects(Class<T> cls) {
 		List<T> objects = null;
 		try {
 			openSession();

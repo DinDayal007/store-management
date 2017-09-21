@@ -13,7 +13,6 @@ import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
 public class Application {
 	public static void main(String[] args) {
-		EntityService service = new EntityService();
 		
 		Supplier sup = new Supplier();
 		sup.setCode("123465");
@@ -23,34 +22,34 @@ public class Application {
 		sup.setMobile2("0144586148");
 		sup.setName("mohammed");
 		sup.setPhone("0485632");
-		service.addObject(sup);
+		EntityService.addObject(sup);
 		Unit unit = new Unit();
-		unit.setName("unit name");
-		unit.setDescription("unit description");
-		service.addObject(unit);
+		unit.setName("unit name 2");
+		unit.setDescription("unit description 2");
+		EntityService.addObject(unit);
 		
-		MainGroup mg = new MainGroup();
-		mg.setName("main group");
-		service.addObject(mg);
-		
-		SubGroup sg = new SubGroup();
-		sg.setName("sub group");
-		sg.setMainGroup(mg);
-		service.addObject(sg);
-		
-		Item item = new Item();
-		item.setCode("123456");
-		item.setName("new item");
-		item.setPrice(500.0);
-		item.setExpirationDate(new Date());
-		item.setProductionDate(new Date());
-		item.setHome("egypt");
-		item.setMinLimit(5);
-		item.setMaxLimit(100);
-		item.setTax(5.5);
-		item.setSubGroup(sg);
-		item.setSupplier(sup);
-		item.setUnit(unit);
-		service.addObject(item);
+//		MainGroup mg = new MainGroup();
+//		mg.setName("main group");
+//		EntityService.addObject(mg);
+//		
+//		SubGroup sg = new SubGroup();
+//		sg.setName("sub group");
+//		sg.setMainGroup(mg);
+//		service.addObject(sg);
+//		
+//		Item item = new Item();
+//		item.setCode("123456");
+//		item.setName("new item");
+//		item.setPrice(500.0);
+//		item.setExpirationDate(new Date());
+//		item.setProductionDate(new Date());
+//		item.setHome("egypt");
+//		item.setMinLimit(5);
+//		item.setMaxLimit(100);
+//		item.setTax(5.5);
+//		item.setSubGroup(sg);
+//		item.setSupplier(sup);
+//		item.setUnit(unit);
+//		service.addObject(item);
 	}
 }
