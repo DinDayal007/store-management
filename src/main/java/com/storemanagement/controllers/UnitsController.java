@@ -16,7 +16,7 @@ public class UnitsController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Unit> units = EntityService.getAllObjects(Unit.class);
 		request.setAttribute("units", units);
-		request.getRequestDispatcher("units.jsp").forward(request, response);
+		request.getRequestDispatcher("units/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,

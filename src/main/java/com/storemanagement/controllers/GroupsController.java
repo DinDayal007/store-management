@@ -11,7 +11,7 @@ public class GroupsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("groups.jsp").forward(request, response);
+		request.getRequestDispatcher("groups/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,

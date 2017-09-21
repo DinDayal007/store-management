@@ -16,7 +16,7 @@ public class UsersController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<User> users = EntityService.getAllObjects(User.class);
 		request.setAttribute("users", users);
-		request.getRequestDispatcher("users.jsp").forward(request, response);
+		request.getRequestDispatcher("users/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,

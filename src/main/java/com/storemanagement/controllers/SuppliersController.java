@@ -11,7 +11,7 @@ public class SuppliersController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("suppliers.jsp").forward(request, response);
+		request.getRequestDispatcher("suppliers/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,

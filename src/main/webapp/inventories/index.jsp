@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="header.jsp" />
+<jsp:include page="../header.jsp" />
 			<div class="row">
 				<div class="col-lg-12">
 					<h1 class="page-header">المخازن</h1>
@@ -59,4 +59,4 @@
 		</div>
 		<!-- /#page-wrapper -->
 
-<jsp:include page="footer.jsp" />
+<jsp:include page="../footer.jsp" />

@@ -16,7 +16,7 @@ public class InventoriesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
 		request.setAttribute("inventories", inventories);
-		request.getRequestDispatcher("inventories.jsp").forward(request, response);
+		request.getRequestDispatcher("inventories/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,

@@ -1,11 +1,11 @@
-<%@page import="com.storemanagement.entities.User"%>
+<%@page import="com.storemanagement.entities.Unit"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="header.jsp" />
+<jsp:include page="../header.jsp" />
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">المستخدمين</h1>
+                    <h1 class="page-header">وحدات الأصناف</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -14,11 +14,12 @@
 
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="unit.html"><button class="btn btn-lg btn-primary">إضافة مستخدم جديد</button></a>
+                            <a href="#"><button class="btn btn-lg btn-primary">إضافة وحدة جديدة</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%
-                        List<User> users = (List<User>) request.getAttribute("users");
+                        List<Unit> units = (List<Unit>) request.getAttribute("units");
+                        int i = 0;
                         %>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -26,26 +27,23 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>اسم المستخدم</th>
-                                            <th>كلمة السر</th>
-                                            <th>دور المستخدم</th>
+                                            <th>اسم الوحدة</th>
+                                            <th>وصف الوحدة</th>
                                             <th>تعديل</th>
-                                            <th>حظر</th>
-                                            <th>حذف نهائى</th>
+                                            <th>حذف</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% for(User user : users){
-                                        	int i = 0;
+                                        <%
+                                        for(Unit unit : units){
+                                        	i++;
                                         %>
                                         <tr>
                                             <td><%= i %></td>
-                                            <td><%= user.getName() %></td>
-                                            <td><%= user.getPassword() %></td>
-                                            <td><%= user.getRole().getName() %></td>
-                                            <td><a href="editUser.jsp?id=<%= user.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="blockUser.jsp?id=<%= user.getId() %>"><button class="btn btn-default"><i class="fa fa-ban"></i></button></a></td>
-                                            <td><a href="deleteUser.jsp?id=<%= user.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><%= unit.getName() %></td>
+                                            <td><%= unit.getDescription() %></td>
+                                            <td><a href="editUnit.jsp?id=<%= unit.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="deleteUnit.jsp?id=<%= unit.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                         <% } %>
                                     </tbody>
@@ -61,4 +59,4 @@
         </div>
         <!-- /#page-wrapper -->
 
-<jsp:include page="footer.jsp" />
+<jsp:include page="../footer.jsp" />
