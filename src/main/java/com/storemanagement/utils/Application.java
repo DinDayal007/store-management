@@ -15,10 +15,30 @@ import com.storemanagement.services.GroupService;
 public class Application {
 	public static void main(String[] args) {
 		
-		Inventory inv = new Inventory();
-		inv.setName("second inventory");
-		inv.setDescription("second inventory description");
-		EntityService.addObject(inv);
+//		Role role = new Role();
+//		role.setName("admin");
+//		EntityService.addObject(role);
+//		Role role2 = new Role();
+//		role2.setName("normal");
+//		EntityService.addObject(role2);
+//		
+//		User user = new User();
+//		user.setName("mohammed yehia");
+//		user.setPassword("123456");
+//		user.setRole(role);
+//		user.setStatus(1);
+//		User user2 = new User();
+//		user2.setName("ihab mostafa");
+//		user2.setPassword("0000");
+//		user2.setRole(role2);
+//		user2.setStatus(1);
+//		EntityService.addObject(user);
+//		EntityService.addObject(user2);
+		
+//		Inventory inv = new Inventory();
+//		inv.setName("second inventory");
+//		inv.setDescription("second inventory description");
+//		EntityService.addObject(inv);
 		
 //		Supplier sup = new Supplier();
 //		sup.setCode("123465");

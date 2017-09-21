@@ -21,6 +21,8 @@
         
         <property name="hbm2ddl.auto">update</property>
         
+        <mapping class="com.storemanagement.entities.User"/>
+        <mapping class="com.storemanagement.entities.Role"/>
         <mapping class="com.storemanagement.entities.Unit"/>
         <mapping class="com.storemanagement.entities.Supplier"/>
         <mapping class="com.storemanagement.entities.Item"/>
