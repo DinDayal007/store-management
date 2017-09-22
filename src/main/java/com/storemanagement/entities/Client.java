@@ -16,8 +16,8 @@ public class Client {
 	private String code;
 	@Column(name = "NAME", nullable = false)
 	private String name;
-	@Column(name = "DESC")
-	private String desc;
+	@Column(name = "DESCRIPTION")
+	private String description;
 	@Column(name = "EMAIL")
 	private String email;
 	@Column(name = "PHONE")
@@ -44,11 +44,11 @@ public class Client {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getEmail() {
 		return email;

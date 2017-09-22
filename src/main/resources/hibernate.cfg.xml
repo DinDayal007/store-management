@@ -25,6 +25,7 @@
         <mapping class="com.storemanagement.entities.Role"/>
         <mapping class="com.storemanagement.entities.Unit"/>
         <mapping class="com.storemanagement.entities.Supplier"/>
+        <mapping class="com.storemanagement.entities.Client"/>
         <mapping class="com.storemanagement.entities.Item"/>
         <mapping class="com.storemanagement.entities.MainGroup"/>
         <mapping class="com.storemanagement.entities.SubGroup"/>

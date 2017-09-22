@@ -1,19 +1,19 @@
 package com.storemanagement.utils;
-import java.util.Date;
-import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
-import com.storemanagement.entities.Inventory;
-import com.storemanagement.entities.Item;
-import com.storemanagement.entities.MainGroup;
-import com.storemanagement.entities.Role;
-import com.storemanagement.entities.SubGroup;
+import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Supplier;
-import com.storemanagement.entities.Unit;
-import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
-import com.storemanagement.services.GroupService;
 public class Application {
 	public static void main(String[] args) {
+		
+//		Client client = new Client();
+//		client.setCode("012024");
+//		client.setDescription("some description 2");
+//		client.setEmail("moh@mail.com");
+//		client.setMobile1("0155455445");
+//		client.setMobile2("0144586148");
+//		client.setName("mahmoud");
+//		client.setPhone("048299999");
+//		EntityService.addObject(client);
 		
 //		Role role = new Role();
 //		role.setName("admin");
