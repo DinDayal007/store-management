@@ -21,7 +21,19 @@ public class GroupsController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		if(request.getParameter("action").equals("add"))
+			add(request, response);
+		response.sendRedirect("groups");
+	}
+	// add new group
+	protected void add(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("group_name").equals("")) {
+			String name = request.getParameter("group_name");
+			MainGroup mainGroup = new MainGroup();
+			mainGroup.setName(name);
+			EntityService.addObject(mainGroup);
+		}
 	}
 }

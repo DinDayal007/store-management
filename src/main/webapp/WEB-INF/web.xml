@@ -4,6 +4,16 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <filter>
+  	<filter-name>MetaFilter</filter-name>
+  	<display-name>MetaFilter</display-name>
+  	<description></description>
+  	<filter-class>com.storemanagement.filters.MetaFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>MetaFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <servlet>
   	<servlet-name>ItemsController</servlet-name>
   	<display-name>ItemsController</display-name>
@@ -57,5 +67,11 @@
   	<display-name>HomeController</display-name>
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.HomeController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>SubGroupsController</servlet-name>
+  	<display-name>SubGroupsController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.SubGroupsController</servlet-class>
   </servlet>
 </web-app>

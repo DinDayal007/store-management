@@ -9,6 +9,8 @@
         <property name="connection.url">jdbc:mysql://localhost/usarabia_store</property>
         <property name="connection.username">root</property>
         <property name="connection.password">root</property>
+        <property name="connection.useUnicode">true</property>
+		<property name="connection.characterEncoding">utf-8</property>
         
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>

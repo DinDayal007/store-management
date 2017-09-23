@@ -42,8 +42,8 @@
                                             <td><%= i %></td>
                                             <td><%= unit.getName() %></td>
                                             <td><%= unit.getDescription() %></td>
-                                            <td><a href="units/editUnit.jsp?id=<%= unit.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="units/deleteUnit.jsp?id=<%= unit.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><a href="units/edit.jsp?id=<%= unit.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="units/delete.jsp?id=<%= unit.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                         <% } %>
                                     </tbody>

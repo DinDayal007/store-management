@@ -1,11 +1,11 @@
-<%@page import="com.storemanagement.entities.MainGroup"%>
+<%@page import="com.storemanagement.entities.SubGroup"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="../header.jsp" />
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">مجموعات الأصناف الرئيسية</h1>
+                    <h1 class="page-header">مجموعات الأصناف الفرعية</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -14,11 +14,11 @@
             
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                        	<a href="groups/add.html"><button class="btn btn-lg btn-primary">إضافة مجموعة رئيسية</button></a>
+                        	<a href="#"><button class="btn btn-lg btn-primary">إضافة مجموعة فرعية</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%
-                        List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups");
+                        List<SubGroup> subGroups = (List<SubGroup>) request.getAttribute("subGroups");
                         int i = 0;
                         %>
                         <div class="panel-body">
@@ -33,14 +33,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% for(MainGroup mainGroup : mainGroups){
+                                        <% for(SubGroup subGroup : subGroups){
                                         	i++; 
                                         %>
                                         <tr>
                                             <td><%= i %></td>
-                                            <td><%= mainGroup.getName() %></td>
-                                            <td><a href="groups/edit.jsp?id=<%= mainGroup.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="groups/delete.jsp?id=<%= mainGroup.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><%= subGroup.getName() %></td>
+                                            <td><a href="subgroups/edit.jsp?id=<%= subGroup.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="subgroups/delete.jsp?id=<%= subGroup.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                         <% } %>
                                     </tbody>

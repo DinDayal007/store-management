@@ -1,3 +1,5 @@
+<%@page import="com.storemanagement.entities.MainGroup"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -91,12 +93,14 @@
 						<li>
                             <a href="#"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الفرعية<span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
+                                <% if(session.getAttribute("sessionMainGroups") != null){
+                                List<MainGroup> sessionMainGroups = (List<MainGroup>) session.getAttribute("sessionMainGroups");
+                                for(MainGroup mainGroup : sessionMainGroups){
+                                %>
                                 <li>
-                                    <a href="#">مجموعة رئيسية</a>
+                                    <a href="subgroups?id=<%= mainGroup.getId() %>"><%= mainGroup.getName() %></a>
                                 </li>
-                                <li>
-                                    <a href="#">مجموعة رئيسية</a>
-                                </li>
+                                <% }} %>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
