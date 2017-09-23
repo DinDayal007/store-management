@@ -40,7 +40,7 @@
                                             <td><%= i %></td>
                                             <td><%= mainGroup.getName() %></td>
                                             <td><a href="groups/edit.jsp?id=<%= mainGroup.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="groups/delete.jsp?id=<%= mainGroup.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><a href="groups?id=<%= mainGroup.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                         <% } %>
                                     </tbody>
