@@ -85,8 +85,22 @@
                             <a href="items"><i class="fa fa-list fa-fw"></i> الأصناف</a>
                         </li>
                         <li>
-                            <a href="groups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف</a>
+                            <a href="groups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الرئيسية</a>
                         </li>
+						
+						<li>
+                            <a href="#"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الفرعية<span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="#">مجموعة رئيسية</a>
+                                </li>
+                                <li>
+                                    <a href="#">مجموعة رئيسية</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						
                         <li>
                             <a href="units"><i class="fa fa-cubes fa-fw"></i> وحدات الأصناف</a>
                         </li>
