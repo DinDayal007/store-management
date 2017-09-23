@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | إضافة مجموعة رئيسية</title>
+    <title>برنامج إدارة المبيعات | حذف مجموعة رئيسية</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -22,18 +24,19 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">إضافة مجموعة رئيسية جديدة</h3>
+                        <h3 class="panel-title">حذف مجموعة رئيسية</h3>
                     </div>
                     <div class="panel-body">
                         <form method="post" action="/store-management/groups">
                             <fieldset>
                                 <div class="form-group">
-                                	<label for="group_name">اسم المجموعة الرئيسية</label>
-                                    <input class="form-control" placeholder="اسم المجموعة الرئيسية" name="group_name" type="text" id="group_name" autofocus required>
-                                    <input type="hidden" name="action" value="add" />
+                                	<p class="lead">هل انت متأكد من حذف هذه المجموعة ؟</p>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="حفظ" />
+                                <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
+                                <input type="hidden" name="action" value="delete" />
+                                <input type="submit" class="btn btn-danger" value="حذف" />
+                                <a href="/store-management/units"><button class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

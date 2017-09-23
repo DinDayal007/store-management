@@ -10,11 +10,11 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-            <div class="row">       
+            <div class="row">      
 
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="#"><button class="btn btn-lg btn-primary">إضافة وحدة جديدة</button></a>
+                            <a href="units/add.html"><button class="btn btn-lg btn-primary">إضافة وحدة جديدة</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%

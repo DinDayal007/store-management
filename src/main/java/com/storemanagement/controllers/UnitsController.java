@@ -21,7 +21,48 @@ public class UnitsController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		if(request.getParameter("action").equals("add"))
+			add(request, response);
+		else if(request.getParameter("action").equals("edit"))
+			edit(request, response);
+		else if(request.getParameter("action").equals("delete"))
+			delete(request, response);
+		response.sendRedirect("units");
+	}
+	//add new unit
+	protected void add(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("unit_name").equals("")) {
+			String name = request.getParameter("unit_name");
+			String description = request.getParameter("unit_description");
+			Unit unit = new Unit();
+			unit.setName(name);
+			unit.setDescription(description);
+			EntityService.addObject(unit);
+		}
+	}
+	//edit existing unit
+	protected void edit(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("unit_name").equals("")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String name = request.getParameter("unit_name");
+			String description = request.getParameter("unit_description");
+			Unit unit = new Unit();
+			unit.setId(id);
+			unit.setName(name);
+			unit.setDescription(description);
+			EntityService.updateObject(unit);
+		}
+	}
+	//delete existing unit
+	protected void delete(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("id").equals("")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			Unit unit = new Unit();
+			unit.setId(id);
+			EntityService.removeObject(unit);
+		}
 	}
 }

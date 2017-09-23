@@ -14,23 +14,19 @@ public class GroupsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("id") == null) {
-			List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
-			request.setAttribute("mainGroups", mainGroups);
-			request.getRequestDispatcher("groups/index.jsp").forward(request, response);
-		}else {
-			delete(request, response);
-			response.sendRedirect("groups");
-		}
+		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
+		request.setAttribute("mainGroups", mainGroups);
+		request.getRequestDispatcher("groups/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		if(request.getParameter("action").equals("add"))
 			add(request, response);
 		else if(request.getParameter("action").equals("edit"))
 			edit(request, response);
+		else if(request.getParameter("action").equals("delete"))
+			delete(request, response);
 		response.sendRedirect("groups");
 	}
 	// add new group
