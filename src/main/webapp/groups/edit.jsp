@@ -21,6 +21,8 @@ MainGroup mainGroup = (MainGroup) EntityService.getObject(MainGroup.class, id);
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="../css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="../css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
 </head>
 <body>
@@ -29,8 +31,9 @@ MainGroup mainGroup = (MainGroup) EntityService.getObject(MainGroup.class, id);
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">تعديل المجموعة الرئيسية</h3>
+                    <div class="panel-heading" style="overflow: hidden;">
+                        <h3 class="panel-title" style="float: right;">تعديل المجموعة الرئيسية</h3>
+                    	<a href="/store-management/groups" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
                         <form method="post" action="/store-management/groups">

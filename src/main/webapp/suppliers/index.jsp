@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="#"><button class="btn btn-lg btn-primary">إضافة مورد جديد</button></a>
+                            <a href="suppliers/add.html"><button class="btn btn-lg btn-primary">إضافة مورد جديد</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%
@@ -40,8 +40,8 @@
                                             <td><%= supplier.getName() %></td>
                                             <td><%= supplier.getDescription() %></td>
                                             <td><a href="suppliers/view.jsp?id=<%= supplier.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
-                                            <td><a href="supplier/edit.jsp?id<%= supplier.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="supplier/delete.jsp?id<%= supplier.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><a href="suppliers/edit.jsp?id=<%= supplier.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="suppliers/delete.jsp?id=<%= supplier.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                         <% } %>
                                     </tbody>
