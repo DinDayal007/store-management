@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | حذف وحدة</title>
+    <title>برنامج إدارة المبيعات | حذف مخزن</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -24,19 +24,19 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">حذف وحدة</h3>
+                        <h3 class="panel-title">حذف المخزن</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/units">
+                        <form method="post" action="/store-management/inventories">
                             <fieldset>
                                 <div class="form-group">
-                                	<p class="lead">هل انت متأكد من حذف هذه الوحدة ؟</p>
+                                	<p class="lead">هل انت متأكد من حذف هذا المخزن ؟</p>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/units"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management/inventories"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

@@ -1,10 +1,10 @@
 <%@page import="com.storemanagement.services.EntityService"%>
-<%@page import="com.storemanagement.entities.MainGroup"%>
+<%@page import="com.storemanagement.entities.Inventory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 int id = Integer.parseInt(request.getParameter("id"));
-MainGroup mainGroup = (MainGroup) EntityService.getObject(MainGroup.class, id);
+Inventory inventory = (Inventory) EntityService.getObject(Inventory.class, id);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@ MainGroup mainGroup = (MainGroup) EntityService.getObject(MainGroup.class, id);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | تعديل مجموعة رئيسية</title>
+    <title>برنامج إدارة المبيعات | تعديل مخزن</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -30,18 +30,22 @@ MainGroup mainGroup = (MainGroup) EntityService.getObject(MainGroup.class, id);
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">تعديل المجموعة الرئيسية</h3>
+                        <h3 class="panel-title">تعديل المخزن</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/groups">
+                        <form method="post" action="/store-management/inventories">
                             <fieldset>
                                 <div class="form-group">
-                                	<label for="group_name">اسم المجموعة الرئيسية</label>
-                                    <input class="form-control" placeholder="اسم المجموعة الرئيسية" name="group_name" type="text" id="group_name" value="<%= mainGroup.getName() %>" autofocus required>
-                                    <input type="hidden" name="id" value="<%= id %>" />
-                                    <input type="hidden" name="action" value="edit" />
+                                	<label for="inventory_name">اسم المخزن</label>
+                                    <input class="form-control" placeholder="اسم المخزن" name="inventory_name" value="<%= inventory.getName() %>" type="text" id="inventory_name" autofocus required>
+                                </div>
+                                <div class="form-group">
+                                	<label for="inventory_description">وصف الوحدة</label>
+                                    <input class="form-control" placeholder="وصف المخزن" name="inventory_description" value="<%= inventory.getDescription() %>" type="text" id="inventory_description" autofocus>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
+                                <input type="hidden" name="id" value="<%= id %>" />
+                                <input type="hidden" name="action" value="edit" />
                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="تعديل" />
                             </fieldset>
                         </form>

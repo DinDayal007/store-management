@@ -36,7 +36,7 @@
                                 <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/units"><button class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management/groups"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

@@ -21,7 +21,48 @@ public class InventoriesController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		if(request.getParameter("action").equals("add"))
+			add(request, response);
+		else if(request.getParameter("action").equals("edit"))
+			edit(request, response);
+		else if(request.getParameter("action").equals("delete"))
+			delete(request, response);
+		response.sendRedirect("inventories");
+	}
+	//add new inventory
+	protected void add(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("inventory_name").equals("")) {
+			String name = request.getParameter("inventory_name");
+			String description = request.getParameter("inventory_description");
+			Inventory inventory = new Inventory();
+			inventory.setName(name);
+			inventory.setDescription(description);
+			EntityService.addObject(inventory);
+		}
+	}
+	//edit existing inventory
+	protected void edit(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("inventory_name").equals("")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String name = request.getParameter("inventory_name");
+			String description = request.getParameter("inventory_description");
+			Inventory inventory = new Inventory();
+			inventory.setId(id);
+			inventory.setName(name);
+			inventory.setDescription(description);
+			EntityService.updateObject(inventory);
+		}
+	}
+	//delete existing inventory
+	protected void delete(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("id").equals("")) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			Inventory inventory = new Inventory();
+			inventory.setId(id);
+			EntityService.removeObject(inventory);
+		}
 	}
 }

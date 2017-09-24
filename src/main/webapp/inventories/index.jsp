@@ -14,7 +14,7 @@
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="invrntory.html"><button class="btn btn-lg btn-primary">إضافة مخزن جديد</button></a>
+						<a href="inventories/add.html"><button class="btn btn-lg btn-primary">إضافة مخزن جديد</button></a>
 					</div>
 					<!-- /.panel-heading -->
 					<%
@@ -42,8 +42,8 @@
                                             <td><%= i %></td>
                                             <td><%= inventory.getName() %></td>
                                             <td><%= inventory.getDescription() %></td>
-                                            <td><a href="editInventory.jsp?id=<%= inventory.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="deleteInventory.jsp?id=<%= inventory.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><a href="inventories/edit.jsp?id=<%= inventory.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="inventories/delete.jsp?id=<%= inventory.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                     <% } %>
 								</tbody>

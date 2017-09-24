@@ -30,7 +30,7 @@ Unit unit = (Unit) EntityService.getObject(Unit.class, id);
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">إضافة وحدة جديدة</h3>
+                        <h3 class="panel-title">تعديل الوحدة</h3>
                     </div>
                     <div class="panel-body">
                         <form method="post" action="/store-management/units">

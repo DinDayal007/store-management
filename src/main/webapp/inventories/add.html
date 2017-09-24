@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | حذف وحدة</title>
+    <title>برنامج إدارة المبيعات | إضافة مخزن جديد</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -24,19 +22,22 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">حذف وحدة</h3>
+                        <h3 class="panel-title">إضافة مخزن جديد</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/units">
+                        <form method="post" action="/store-management/inventories">
                             <fieldset>
                                 <div class="form-group">
-                                	<p class="lead">هل انت متأكد من حذف هذه الوحدة ؟</p>
+                                	<label for="inventory_name">اسم المخزن</label>
+                                    <input class="form-control" placeholder="اسم المخزن" name="inventory_name" type="text" id="inventory_name" autofocus required>
+                                </div>
+                                <div class="form-group">
+                                	<label for="inventory_description">وصف المخزن</label>
+                                    <input class="form-control" placeholder="وصف المخزن" name="inventory_description" type="text" id="inventory_description" autofocus>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
-                                <input type="hidden" name="action" value="delete" />
-                                <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/units"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <input type="hidden" name="action" value="add" />
+                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="حفظ" />
                             </fieldset>
                         </form>
                     </div>
