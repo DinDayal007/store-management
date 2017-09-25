@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="#"><button class="btn btn-lg btn-primary">إضافة صنف جديد</button></a>
+                            <a href="items/add.jsp"><button class="btn btn-lg btn-primary">إضافة صنف جديد</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%
@@ -25,11 +25,10 @@
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
+                                        	<th>المجموعة الرئيسية</th>
+                                        	<th>المجموعة الفرعية</th>
                                             <th>الكود</th>
                                             <th>الإسم</th>
-                                            <th>السعر</th>
-                                            <th>تاريخ الإنتاج</th>
-                                            <th>تاريخ الإنتهاء</th>
                                             <th>مشاهدة</th>
                                             <th>تعديل</th>
                                             <th>حذف</th>
@@ -38,11 +37,10 @@
                                     <tbody>
 										<% for(Item item : items){ %>
 										<tr class="odd gradeX">
+											<td><%= item.getSubGroup().getMainGroup().getName() %></td>
+											<td><%= item.getSubGroup().getName() %></td>
                                             <td><%= item.getCode() %></td>
                                             <td><%= item.getName() %></td>
-                                            <td><%= item.getPrice() %> EGP</td>
-                                            <td class="center"><%= item.getProductionDate() %></td>
-                                            <td class="center"><%= item.getExpirationDate() %></td>
                                             <td><a href="items/view.jsp?id=<%= item.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
                                             <td><a href="items/edit.jsp?id=<%= item.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
                                             <td><a href="items/delete.jsp?id=<%= item.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>

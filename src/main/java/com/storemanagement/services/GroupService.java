@@ -4,7 +4,7 @@ import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SubGroup;
 public class GroupService extends EntityService {
 	public static List<SubGroup> getSubGroupsFromMainGroup(MainGroup mainGroup) {
-		List<SubGroup> subGroups = null;;
+		List<SubGroup> subGroups = null;
 		try {
 			openSession();
 			subGroups = getSession()
