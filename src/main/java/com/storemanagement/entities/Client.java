@@ -14,7 +14,7 @@ public class Client {
 	private int id;
 	@Column(name = "CODE")
 	private String code;
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME")
 	private String name;
 	@Column(name = "DESCRIPTION")
 	private String description;
