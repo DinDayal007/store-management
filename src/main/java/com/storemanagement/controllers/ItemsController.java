@@ -1,6 +1,8 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -60,8 +62,12 @@ public class ItemsController extends HttpServlet {
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
-			item.setProductionDate(new Date());
-			item.setExpirationDate(new Date());
+			try {
+				item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
+				item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			EntityService.addObject(item);
 		}
 	}
@@ -87,8 +93,12 @@ public class ItemsController extends HttpServlet {
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
-			item.setProductionDate(new Date());
-			item.setExpirationDate(new Date());
+			try {
+				item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
+				item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 			EntityService.updateObject(item);
 		}
 	}

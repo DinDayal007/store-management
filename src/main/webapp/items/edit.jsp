@@ -22,7 +22,7 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | إضافة صنف</title>
+    <title>برنامج إدارة المبيعات | تعديل صنف</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -39,7 +39,7 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
-                        <h3 class="panel-title" style="float: right;">إضافة صنف جديد</h3>
+                        <h3 class="panel-title" style="float: right;">تعديل صنف جديد</h3>
                     	<a href="/store-management/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
