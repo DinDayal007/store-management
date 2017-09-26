@@ -74,4 +74,10 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.SubGroupsController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>CachesController</servlet-name>
+  	<display-name>CachesController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.CachesController</servlet-class>
+  </servlet>
 </web-app>

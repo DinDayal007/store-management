@@ -1,5 +1,6 @@
 package com.storemanagement.utils;
 import java.util.Date;
+import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
@@ -12,6 +13,11 @@ import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 public class Application {
 	public static void main(String[] args) {
+		
+//		Cache cache = new Cache();
+//		cache.setName("احمد");
+//		cache.setQyt(650);
+//		EntityService.addObject(cache);
 		
 //		Client client = new Client();
 //		client.setCode("012024");

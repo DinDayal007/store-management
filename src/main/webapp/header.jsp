@@ -102,6 +102,9 @@
                             <a href="clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
                         </li>
                         <li>
+                            <a href="caches"><i class="fa fa-male fa-fw"></i> الخزائن</a>
+                        </li>
+                        <li>
                             <a href="inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
                         </li>
                         <li>
