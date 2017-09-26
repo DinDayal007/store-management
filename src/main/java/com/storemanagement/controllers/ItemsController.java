@@ -68,14 +68,14 @@ public class ItemsController extends HttpServlet {
 	//edit existing item
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("item_name").equals("") && request.getParameter("item_code").equals("")) {
+		if(!request.getParameter("item_name").equals("") && !request.getParameter("item_code").equals("")) {
 			int id = Integer.parseInt(request.getParameter("id"));
 			SubGroup subGroup = new SubGroup();
-			subGroup.setId(Integer.parseInt(request.getParameter("subGroup_id")));
+			subGroup.setId(Integer.parseInt(request.getParameter("subGroups")));
 			Unit unit = new Unit();
-			unit.setId(Integer.parseInt(request.getParameter("unit_id")));
+			unit.setId(Integer.parseInt(request.getParameter("units")));
 			Supplier supplier = new Supplier();
-			supplier.setId(Integer.parseInt(request.getParameter("supplier_id")));
+			supplier.setId(Integer.parseInt(request.getParameter("suppliers")));
 			Item item = new Item();
 			item.setId(id);
 			item.setSubGroup(subGroup);
@@ -87,8 +87,8 @@ public class ItemsController extends HttpServlet {
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
-			item.setProductionDate(new Date(request.getParameter("item_productionDate")));
-			item.setExpirationDate(new Date(request.getParameter("item_expirationDate")));
+			item.setProductionDate(new Date());
+			item.setExpirationDate(new Date());
 			EntityService.updateObject(item);
 		}
 	}

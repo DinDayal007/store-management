@@ -107,7 +107,6 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
                                     <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" name="item_expirationDate" type="date" min="1" id="item_expirationDate" required>
                                 	<input type="hidden" name="action" value="add" />
                                 </div>
-                                <input type="hidden" name="action" value="add" />
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="حفظ" />
                             </fieldset>
