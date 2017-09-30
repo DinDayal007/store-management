@@ -80,7 +80,17 @@
                 <div class="sidebar-nav navbar-collapse">
                     <br /><br />
                     <ul class="nav" id="side-menu">
-                        
+                        <li>
+                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> المبيعات<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="sales">فاتورة بيع جديدة</a>
+                                </li>
+                                <li>
+                                    <a href="#">فاتورة مرتجع بيع</a>
+                                </li>
+                            </ul>
+                        </li>
                         <li>
                             <a href="items"><i class="fa fa-list fa-fw"></i> الأصناف</a>
                         </li>
@@ -102,7 +112,7 @@
                             <a href="clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
                         </li>
                         <li>
-                            <a href="caches"><i class="fa fa-male fa-fw"></i> الخزائن</a>
+                            <a href="caches"><i class="fa fa-money fa-fw"></i> الخزائن</a>
                         </li>
                         <li>
                             <a href="inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>

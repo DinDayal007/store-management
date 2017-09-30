@@ -80,4 +80,10 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.CachesController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>SalesController</servlet-name>
+  	<display-name>SalesController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.SalesController</servlet-class>
+  </servlet>
 </web-app>
