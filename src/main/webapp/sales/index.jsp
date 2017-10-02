@@ -28,11 +28,12 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
+			<form action="" method="post">
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_num">رقم الفاتورة</label> 
-						<input style="width: 30%" class="form-control" type="number" id="inv_num" name="inv_num" value="1" disabled />
+						<input style="width: 30%" class="form-control" type="number" id="inv_num" name="inv_num" value="1" readonly />
 					</div>
 					<div class="form-group form-inline">
 						<label for="client">العميل</label> 
@@ -54,8 +55,8 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 						<input style="width: 40%" class="form-control" type="text" id="inv_date" name="inv_date" value="<%= new SimpleDateFormat("dd-MM-yyyy").format(new Date()) %>" disabled />
 					</div>
 					<div class="form-group form-inline">
-						<label for="store">المخزن</label> 
-						<select class="form-control" id="store" name="store">
+						<label for="inventory">المخزن</label> 
+						<select class="form-control" id="inventory" name="inventory">
 							<% for(Inventory inventory : inventories){ %>
 							<option value="<%= inventory.getId() %>"><%= inventory.getName() %></option>
 							<% } %>
@@ -106,7 +107,7 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 						<div style="overflow: hidden;">
 							<select class="form-control" name="item" id="item" style="float: right; width: 85%">
 							</select>
-							<button class="btn btn-success" id="add_item" style="float: left"><i class="fa fa-plus" aria-hidden="true"></i></button>
+							<button class="btn btn-success" id="add_item" type="button" style="float: left"><i class="fa fa-plus" aria-hidden="true"></i></button>
 						</div>
 					</div>
 				</div>
@@ -138,7 +139,7 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 					<div class="col-md-3">
 						<div class="form-group form-inline">
 							<label for="totalPrice">إجمالى الفاتورة</label>
-							<input type="number" style="width: 40%;" class="form-control" value="0" name="totalPrice" id="totalPrice" disabled />
+							<input type="number" style="width: 40%;" class="form-control" value="0" name="totalPrice" id="totalPrice" readonly />
 						</div>
 					</div>
 					<div class="col-md-3">
@@ -167,13 +168,13 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 					<div class="col-md-3 hideInMonetary hidden">
 						<div class="form-group form-inline">
 							<label for="remain">الباقى</label>
-							<input type="number" style="width: 40%;" class="form-control" min="1" name="remain" id="remain" disabled />
+							<input type="number" style="width: 40%;" class="form-control" min="1" name="remain" id="remain" readonly />
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group form-inline">
 							<label for="finalTotal">الاجمالى النهائي</label>
-							<input type="number" class="form-control" min="1" name="finalTotal" id="finalTotal" disabled />
+							<input type="number" class="form-control" min="1" name="finalTotal" id="finalTotal" readonly />
 						</div>
 					</div>
 				</div>
@@ -181,9 +182,11 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 				<div class="row">
 					<div class="col-md-3 col-md-offset-9">
 						<div class="form-group form-inline">
+							<input type="hidden" name="action" value="save" />
 							<input type="submit" class="btn btn-lg btn-primary" value="طباعة الفاتورة" />
 							<a href="#"><button class="btn btn-lg btn-default">خروج</button></a>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -209,15 +212,16 @@ $(document).ready(function(){
 			data : {itemId : itemId, action : "3"},
 			dataType : "json",
 			success : function(data){
-				addRows(data.itemCode, data.itemName, data.itemPrice);
+				addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice);
 			}
 		});
 	});
 	
 	//add new items to the invoice if the request is success
-	function addRows(code, name, price){
+	function addRows(id, code, name, price){
 		i++;
 		$('#item-rows').append('<tr id="row' + i + '">' + 
+		'<input type="hidden" name="item_id[]" value = "' + id + '"/>' +
 		'<td><input class="form-control" value="' + code + '" type="text" name="item_code[]" autofocus disabled /></td>' +
 		'<td><input class="form-control" value="' + name + '" type="text" name="item_name[]" disabled /></td>' + 
 		'<td><input class="form-control itemPrice" value="' + price + '" type="number" name="item_price[]" min="1" disabled /></td>' +

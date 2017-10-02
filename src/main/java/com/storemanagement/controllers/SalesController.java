@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +13,9 @@ import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.SubGroup;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
 import com.storemanagement.services.ItemService;
@@ -41,6 +44,8 @@ public class SalesController extends HttpServlet {
 			getItems(request, response);
 		else if(request.getParameter("action").equals("3"))
 			getItemById(request, response);
+		else if(request.getParameter("action").equals("save"))
+			saveInvoice(request, response);
 	}
 	
 	//get subGroups from mainGroup
@@ -93,10 +98,42 @@ public class SalesController extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("itemId", id);
 			jsonObject.put("itemCode", item.getCode());
 			jsonObject.put("itemName", item.getName());
 			jsonObject.put("itemPrice", item.getPrice());
 			response.getWriter().print(jsonObject.toString());
+		}
+	}
+	
+	//save the sales invoice
+	protected void saveInvoice(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("inv_num").equals("")) {
+			SalesInvoiceHeader salesInvoiceHeader = new SalesInvoiceHeader();
+			salesInvoiceHeader.setNumber(Integer.parseInt(request.getParameter("inv_num")));
+			salesInvoiceHeader.setDate(new Date());
+
+			User user = new User();
+			user.setId(1);
+			salesInvoiceHeader.setUser(user);
+			Client client = new Client();
+			client.setId(Integer.parseInt(request.getParameter("client")));
+			salesInvoiceHeader.setClient(client);
+			Inventory inventory = new Inventory();
+			inventory.setId(Integer.parseInt(request.getParameter("inventory")));
+			salesInvoiceHeader.setInventory(inventory);
+			Cache cache = new Cache();
+			cache.setId(Integer.parseInt(request.getParameter("cache")));
+			salesInvoiceHeader.setCache(cache);
+			salesInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
+			salesInvoiceHeader.setDiscount(request.getParameter("discount"));
+			salesInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
+			salesInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("paid")));
+			salesInvoiceHeader.setRemain(Double.parseDouble(request.getParameter("remain")));
+			salesInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
+			int id = EntityService.addObject(salesInvoiceHeader);
+			System.out.println(id);
 		}
 	}
 }

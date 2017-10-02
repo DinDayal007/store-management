@@ -1,11 +1,15 @@
 package com.storemanagement.entities;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -46,6 +50,8 @@ public class SalesInvoiceHeader {
 	private double remain;
 	@Column(name = "FINAL_TOTAL")
 	private double finalTotal;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "salesInvoiceHeader")
+	private Collection<SalesInvoiceDetails> salesInvoiceDetails = new ArrayList<SalesInvoiceDetails>();
 	public int getId() {
 		return id;
 	}
@@ -106,10 +112,29 @@ public class SalesInvoiceHeader {
 	public void setTax(int tax) {
 		this.tax = tax;
 	}
+	public double getPaid() {
+		return paid;
+	}
+	public void setPaid(double paid) {
+		this.paid = paid;
+	}
+	public double getRemain() {
+		return remain;
+	}
+	public void setRemain(double remain) {
+		this.remain = remain;
+	}
 	public double getFinalTotal() {
 		return finalTotal;
 	}
 	public void setFinalTotal(double finalTotal) {
 		this.finalTotal = finalTotal;
+	}
+	public Collection<SalesInvoiceDetails> getSalesInvoiceDetails() {
+		return salesInvoiceDetails;
+	}
+	public void setSalesInvoiceDetails(
+			Collection<SalesInvoiceDetails> salesInvoiceDetails) {
+		this.salesInvoiceDetails = salesInvoiceDetails;
 	}
 }
