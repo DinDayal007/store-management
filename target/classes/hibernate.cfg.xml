@@ -35,5 +35,7 @@
         <mapping class="com.storemanagement.entities.Cache"/>
         <mapping class="com.storemanagement.entities.SalesInvoiceHeader"/>
         <mapping class="com.storemanagement.entities.SalesInvoiceDetails"/>
+        <mapping class="com.storemanagement.entities.PurchaseInvoiceHeader"/>
+        <mapping class="com.storemanagement.entities.PurchaseInvoiceDetails"/>
     </session-factory>
 </hibernate-configuration>

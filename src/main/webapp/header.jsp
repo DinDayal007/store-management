@@ -92,6 +92,17 @@
                             </ul>
                         </li>
                         <li>
+                            <a href="#"><i class="fa fa-credit-card fa-fw"></i> المشتريات<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="http://localhost:8080/store-management/purchases">فاتورة شراء جديدة</a>
+                                </li>
+                                <li>
+                                    <a href="http://localhost:8080/store-management/purchases/invoices.jsp">فواتير الشراء</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="http://localhost:8080/store-management/items"><i class="fa fa-list fa-fw"></i> الأصناف</a>
                         </li>
                         <li>
