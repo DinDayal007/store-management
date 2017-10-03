@@ -110,7 +110,7 @@ public class SalesController extends HttpServlet {
 	//save the sales invoice
 	protected void saveInvoice(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("inv_num").equals("") && request.getParameter("finalTotal").equals("")) {
+		if(!request.getParameter("inv_num").equals("") && !request.getParameter("finalTotal").equals("")) {
 			SalesInvoiceHeader salesInvoiceHeader = new SalesInvoiceHeader();
 			salesInvoiceHeader.setNumber(Integer.parseInt(request.getParameter("inv_num")));
 			salesInvoiceHeader.setDate(new Date());

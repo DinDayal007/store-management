@@ -13,22 +13,22 @@
     <title>برنامج إدارة المبيعات</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="css/plugins/timeline.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management/css/plugins/timeline.css" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link href="css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management/css/plugins/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/store-management/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -84,41 +84,41 @@
                             <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> المبيعات<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="sales">فاتورة بيع جديدة</a>
+                                    <a href="http://localhost:8080/store-management/sales">فاتورة بيع جديدة</a>
                                 </li>
                                 <li>
-                                    <a href="#">فاتورة مرتجع بيع</a>
+                                    <a href="http://localhost:8080/store-management/sales/invoices.jsp">فواتير البيع</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="items"><i class="fa fa-list fa-fw"></i> الأصناف</a>
+                            <a href="http://localhost:8080/store-management/items"><i class="fa fa-list fa-fw"></i> الأصناف</a>
                         </li>
                         <li>
-                            <a href="groups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الرئيسية</a>
+                            <a href="http://localhost:8080/store-management/groups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الرئيسية</a>
                         </li>
 						
 						<li>
-                            <a href="subgroups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الفرعية</a>
+                            <a href="http://localhost:8080/store-management/subgroups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الفرعية</a>
                         </li>
 						
                         <li>
-                            <a href="units"><i class="fa fa-cubes fa-fw"></i> وحدات الأصناف</a>
+                            <a href="http://localhost:8080/store-management/units"><i class="fa fa-cubes fa-fw"></i> وحدات الأصناف</a>
                         </li>
                         <li>
-                            <a href="suppliers"><i class="fa fa-truck fa-fw"></i> الموردين</a>
+                            <a href="http://localhost:8080/store-management/suppliers"><i class="fa fa-truck fa-fw"></i> الموردين</a>
                         </li>
                         <li>
-                            <a href="clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
+                            <a href="http://localhost:8080/store-management/clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
                         </li>
                         <li>
-                            <a href="caches"><i class="fa fa-money fa-fw"></i> الخزائن</a>
+                            <a href="http://localhost:8080/store-management/caches"><i class="fa fa-money fa-fw"></i> الخزائن</a>
                         </li>
                         <li>
-                            <a href="inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
+                            <a href="http://localhost:8080/store-management/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
                         </li>
                         <li>
-                            <a href="users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
+                            <a href="http://localhost:8080/store-management/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
                         </li>
 
                     </ul>

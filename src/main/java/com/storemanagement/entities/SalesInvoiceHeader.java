@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class SalesInvoiceHeader {
 	private double remain;
 	@Column(name = "FINAL_TOTAL")
 	private double finalTotal;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "salesInvoiceHeader")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "salesInvoiceHeader", fetch = FetchType.EAGER)
 	private Collection<SalesInvoiceDetails> salesInvoiceDetails = new ArrayList<SalesInvoiceDetails>();
 	public int getId() {
 		return id;
