@@ -13,6 +13,7 @@ import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.SubGroup;
 import com.storemanagement.entities.User;
@@ -109,31 +110,57 @@ public class SalesController extends HttpServlet {
 	//save the sales invoice
 	protected void saveInvoice(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("inv_num").equals("")) {
+		if(!request.getParameter("inv_num").equals("") && request.getParameter("finalTotal").equals("")) {
 			SalesInvoiceHeader salesInvoiceHeader = new SalesInvoiceHeader();
 			salesInvoiceHeader.setNumber(Integer.parseInt(request.getParameter("inv_num")));
 			salesInvoiceHeader.setDate(new Date());
-
+			salesInvoiceHeader.setType(Integer.parseInt(request.getParameter("inv_type")));
+			if(salesInvoiceHeader.getType() == 1) {
+				salesInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("paid")));
+				salesInvoiceHeader.setRemain(Double.parseDouble(request.getParameter("remain")));
+			}else {
+				salesInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("finalTotal")));
+				salesInvoiceHeader.setRemain(0);
+			}
 			User user = new User();
 			user.setId(1);
 			salesInvoiceHeader.setUser(user);
 			Client client = new Client();
 			client.setId(Integer.parseInt(request.getParameter("client")));
-			salesInvoiceHeader.setClient(client);
+			if(client.getId() == 0)
+				salesInvoiceHeader.setClient(null);
+			else salesInvoiceHeader.setClient(client);
 			Inventory inventory = new Inventory();
 			inventory.setId(Integer.parseInt(request.getParameter("inventory")));
 			salesInvoiceHeader.setInventory(inventory);
-			Cache cache = new Cache();
-			cache.setId(Integer.parseInt(request.getParameter("cache")));
+			int cacheId = Integer.parseInt(request.getParameter("cache"));
+			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
 			salesInvoiceHeader.setCache(cache);
 			salesInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
-			salesInvoiceHeader.setDiscount(request.getParameter("discount"));
-			salesInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
-			salesInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("paid")));
-			salesInvoiceHeader.setRemain(Double.parseDouble(request.getParameter("remain")));
+			if(Integer.parseInt(request.getParameter("discountType")) == 0)
+				salesInvoiceHeader.setDiscount(request.getParameter("discount") + " %");
+			else salesInvoiceHeader.setDiscount(request.getParameter("discount") + " EGP");
+			if(request.getParameter("tax").equals(""))
+				salesInvoiceHeader.setTax(0);
+			else salesInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
 			salesInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
-			int id = EntityService.addObject(salesInvoiceHeader);
-			System.out.println(id);
+			cache.setQyt(cache.getQyt() + salesInvoiceHeader.getPaid());
+			EntityService.updateObject(cache);
+			EntityService.addObject(salesInvoiceHeader);
+			
+			String[] itemIds = request.getParameter("itemIds").split(",");
+			String[] itemQty = request.getParameter("itemQty").split(",");
+			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			for(int i = 0; i < itemIds.length; i++) {
+				SalesInvoiceDetails salesInvoiceDetails = new SalesInvoiceDetails();
+				salesInvoiceDetails.setSalesInvoiceHeader(salesInvoiceHeader);
+				Item item = new Item();
+				item.setId(Integer.parseInt(itemIds[i]));
+				salesInvoiceDetails.setItem(item);
+				salesInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
+				salesInvoiceDetails.setPrice(Integer.parseInt(itemTotal[i]));
+				EntityService.addObject(salesInvoiceDetails);
+			}
 		}
 	}
 }

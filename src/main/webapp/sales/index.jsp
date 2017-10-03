@@ -28,7 +28,7 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<form action="" method="post">
+			<form action="" method="post" id="saveInvoiceForm">
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group form-inline">
@@ -221,12 +221,12 @@ $(document).ready(function(){
 	function addRows(id, code, name, price){
 		i++;
 		$('#item-rows').append('<tr id="row' + i + '">' + 
-		'<input type="hidden" name="item_id[]" value = "' + id + '"/>' +
+		'<input type="hidden" class="itemId" name="itemId[]" value = "' + id + '"/>' +
 		'<td><input class="form-control" value="' + code + '" type="text" name="item_code[]" autofocus disabled /></td>' +
 		'<td><input class="form-control" value="' + name + '" type="text" name="item_name[]" disabled /></td>' + 
-		'<td><input class="form-control itemPrice" value="' + price + '" type="number" name="item_price[]" min="1" disabled /></td>' +
-		'<td><input class="form-control itemQty" value="1" type="number" name="item_qty[]" min="1" /></td>' +
-		'<td><input class="form-control itemTotal" value="' + price +'" type="number" name="item_total[]" min="1" disabled /></td>' +
+		'<td><input class="form-control itemPrice" value="' + price + '" type="number" name="itemPrice[]" min="1" disabled /></td>' +
+		'<td><input class="form-control itemQty" value="1" type="number" name="itemQty[]" min="1" /></td>' +
+		'<td><input class="form-control itemTotal" value="' + price +'" type="number" name="itemTotal[]" min="1" disabled /></td>' +
 		'<td><button class="btn btn-danger btn-remove" name="remove" id="' + i + '"><i class="fa fa-close"></i></button></td>' +
 		'</tr>');
 		sumTotal();
@@ -328,6 +328,46 @@ $(document).ready(function(){
 			success : function(data){
 				$('#item').html(data);
 			}
+		});
+	});
+
+	//submit the form
+	$('#saveInvoiceForm').on('submit', function(e){
+		e.preventDefault();
+		var itemIds = $('input.itemId[type=hidden]').map(function() {
+		       return $(this).val(); }).get().join();
+		var itemQty = $('input.itemQty[type=number]').map(function() {
+		       return $(this).val(); }).get().join();
+		var itemTotal = $('input.itemTotal[type=number]').map(function() {
+		       return $(this).val(); }).get().join();
+		var inv_num = $('#inv_num').val();
+		var inv_type = $('#inv_type').val();
+		var paid = $('#paid').val();
+		var remain = $('#remain').val();
+		var finalTotal = $('#finalTotal').val();
+		var client = $('#client').val();
+		var inventory = $('#inventory').val();
+		var cache = $('#cache').val();
+		var totalPrice = $('#totalPrice').val();
+		var discountType = $('#discountType').val();
+		var discount = $('#discount').val();
+		var tax = $('#tax').val();
+		$.ajax({
+			url : "/store-management/sales",
+			method : "POST",
+			data : {
+				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal,
+				inv_num : inv_num, inv_type :inv_type, paid : paid,
+				remain : remain, finalTotal : finalTotal, client : client,
+				inventory : inventory, cache : cache, totalPrice :totalPrice,
+				discountType : discountType, discount : discount, tax : tax,
+				action : "save"
+			},
+			dataType : "text",
+			success : function(data){
+				alert("تم حفظ الفاتورة بنجاح");
+				location.reload();
+			}	
 		});
 	});
 })

@@ -26,6 +26,8 @@ public class SalesInvoiceHeader {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
 	private Date date;
+	@Column(name = "TYPE")
+	private int type;
 	@OneToOne
 	@JoinColumn(name = "USER_ID", referencedColumnName = "ID")
 	private User user;
@@ -69,6 +71,12 @@ public class SalesInvoiceHeader {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	public User getUser() {
 		return user;
