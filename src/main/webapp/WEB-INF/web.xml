@@ -86,4 +86,10 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.SalesController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>PurchasesController</servlet-name>
+  	<display-name>PurchasesController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.PurchasesController</servlet-class>
+  </servlet>
 </web-app>

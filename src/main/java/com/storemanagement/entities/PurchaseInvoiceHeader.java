@@ -1,6 +1,7 @@
 package com.storemanagement.entities;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,11 +26,12 @@ public class PurchaseInvoiceHeader {
 	private int number;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
+	private Date date;
 	@OneToOne
 	@JoinColumn(name = "USER_ID", referencedColumnName = "ID")
 	private User user;
 	@OneToOne
-	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
+	@JoinColumn(name = "SUPPLIER_ID", referencedColumnName = "ID")
 	private Supplier supplier;
 	@OneToOne
 	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
@@ -58,6 +60,12 @@ public class PurchaseInvoiceHeader {
 	}
 	public void setNumber(int number) {
 		this.number = number;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	public User getUser() {
 		return user;
