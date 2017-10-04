@@ -16,7 +16,7 @@ public class SalesInvoiceDetails {
 	@Column(name = "ID")
 	private int id;
 	@ManyToOne
-	@JoinColumn(name = "SALESINVOICEHEADER_ID")
+	@JoinColumn(name = "SALES_INVOICE_HEADER_ID")
 	private SalesInvoiceHeader salesInvoiceHeader;
 	@OneToOne
 	@JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")

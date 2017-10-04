@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.utils.DateUtil"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Item"%>
 <%@page import="com.storemanagement.entities.MainGroup"%>
@@ -16,6 +17,7 @@ List<Client> clients = (List<Client>) request.getAttribute("clients");
 List<Inventory> inventories = (List<Inventory>) request.getAttribute("inventories");
 List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups");
+String invNumber = DateUtil.getDate();
 %>
 <div class="row">
 	<div class="col-lg-12">
@@ -33,7 +35,7 @@ List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups"
 				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_num">رقم الفاتورة</label> 
-						<input style="width: 30%" class="form-control" type="number" id="inv_num" name="inv_num" value="1" readonly />
+						<input style="width: 50%" class="form-control" type="number" id="inv_num" name="inv_num" value="<%= invNumber %>" readonly />
 					</div>
 					<div class="form-group form-inline">
 						<label for="client">العميل</label> 

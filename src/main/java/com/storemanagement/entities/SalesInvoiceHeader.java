@@ -23,7 +23,7 @@ public class SalesInvoiceHeader {
 	@Column(name = "ID")
 	private int id;
 	@Column(name = "NUMBER")
-	private int number;
+	private String number;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
 	private Date date;
@@ -61,10 +61,10 @@ public class SalesInvoiceHeader {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public Date getDate() {
