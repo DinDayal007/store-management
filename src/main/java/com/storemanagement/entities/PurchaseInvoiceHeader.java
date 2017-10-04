@@ -27,6 +27,8 @@ public class PurchaseInvoiceHeader {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
 	private Date date;
+	@Column(name = "TYPE")
+	private int type;
 	@OneToOne
 	@JoinColumn(name = "USER_ID", referencedColumnName = "ID")
 	private User user;
@@ -45,6 +47,10 @@ public class PurchaseInvoiceHeader {
 	private String discount;
 	@Column(name = "TAX")
 	private int tax;
+	@Column(name = "PAID")
+	private double paid;
+	@Column(name = "REMAIN")
+	private double remain;
 	@Column(name = "FINAL_TOTAL")
 	private double finalTotal;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseInvoiceHeader", fetch = FetchType.EAGER)
@@ -66,6 +72,12 @@ public class PurchaseInvoiceHeader {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
 	public User getUser() {
 		return user;
@@ -108,6 +120,18 @@ public class PurchaseInvoiceHeader {
 	}
 	public void setTax(int tax) {
 		this.tax = tax;
+	}
+	public double getPaid() {
+		return paid;
+	}
+	public void setPaid(double paid) {
+		this.paid = paid;
+	}
+	public double getRemain() {
+		return remain;
+	}
+	public void setRemain(double remain) {
+		this.remain = remain;
 	}
 	public double getFinalTotal() {
 		return finalTotal;

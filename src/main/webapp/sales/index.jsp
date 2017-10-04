@@ -252,7 +252,7 @@ $(document).ready(function(){
 		sumTotal();
 	});
 	
-	//modify price eachn time a change is happened to quantity
+	//modify price each time a change is happened to quantity
 	$(document).on('change keyup', '.itemQty', function(){
 		var qty = $(this).val();
 		var price = $(this).closest('td').prev().find('input').val();
