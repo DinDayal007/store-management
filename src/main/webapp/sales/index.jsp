@@ -54,7 +54,7 @@ String invNumber = DateUtil.getDate();
 				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_date">التاريخ</label> 
-						<input style="width: 40%" class="form-control" type="text" id="inv_date" name="inv_date" value="<%= new SimpleDateFormat("dd-MM-yyyy").format(new Date()) %>" disabled />
+						<input style="width: 40%" class="form-control" type="text" id="inv_date" name="inv_date" value="<%= new SimpleDateFormat("dd-MM-yyyy").format(new Date()) %>" readonly />
 					</div>
 					<div class="form-group form-inline">
 						<label for="inventory">المخزن</label> 
