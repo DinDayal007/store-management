@@ -59,6 +59,7 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
                     			
 	                        	<label class="key">الخزنة</label>
 	                        	<label class="value"><%= salesInvoiceHeader.getCache().getName() %></label>
+	                        	<input type="hidden" id="cache" value="<%= salesInvoiceHeader.getCache().getId() %>" />
 	                        	
 	                        	<label class="key">العميل</label>
                     			<label class="value"><%= salesInvoiceHeader.getClient() == null ? "عميل نقدي" : salesInvoiceHeader.getClient().getName() %></label>
@@ -203,20 +204,37 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
     	$('#saveReturnInvoice').click(function(){
     		var i = 0;
     		var id = <%= id %>;
+    		var cache = $('#cache').val();
     		var total = parseFloat($('#finalTotalReturnValue').text());
-    		var itemArr = [];
-    		var qtyArr = [];
-    		var totalArr = [];
+    		var itemIds = [];
+    		var itemQty = [];
+    		var itemTotal = [];
         	$('input:checked').each(function(){
-        		itemArr[i] = $(this).val();
-        		qtyArr[i] = $(this).closest('td').prev().prev().find('input').val();
-        		totalArr[i] = $(this).closest('td').prev().text();
+        		itemIds[i] = $(this).val();
+        		itemQty[i] = $(this).closest('td').prev().prev().find('input').val();
+        		itemTotal[i] = $(this).closest('td').prev().text();
         		i++;
         	});
         	if(i > 0){
-        		alert(itemArr);
-            	alert(qtyArr);
-            	alert(totalArr);
+        		itemIds = '"' + itemIds + '"';
+        		itemQty = '"' + itemQty + '"';
+        		itemTotal = '"' + itemTotal + '"';
+        		$.ajax({
+        			url : "/store-management/return-invoices",
+        			method : "POST",
+        			data : {
+        				salesInvoiceId : id, total : total, cache : cache,
+        				itemIds : itemIds, itemQty : itemQty,
+						itemTotal : itemTotal, action : "1"
+        			},
+        			dataType : "text",
+        			success : function(data){
+        				if(data){
+        					alert("تم حفظ الفاتورة بنجاح");
+        					location.reload();
+        				}
+        			}
+        		});
         	}else alert('يجب اختيار صنف او اكثر لاضافة فاتورة المرتجع');
     	});
     })

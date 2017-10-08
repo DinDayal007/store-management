@@ -37,5 +37,7 @@
         <mapping class="com.storemanagement.entities.SalesInvoiceDetails"/>
         <mapping class="com.storemanagement.entities.PurchaseInvoiceHeader"/>
         <mapping class="com.storemanagement.entities.PurchaseInvoiceDetails"/>
+        <mapping class="com.storemanagement.entities.ReturnSalesInvoiceHeader"/>
+        <mapping class="com.storemanagement.entities.ReturnSalesInvoiceDetails"/>
     </session-factory>
 </hibernate-configuration>
