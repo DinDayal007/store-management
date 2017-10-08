@@ -161,6 +161,7 @@ public class SalesController extends HttpServlet {
 				salesInvoiceDetails.setPrice(Integer.parseInt(itemTotal[i]));
 				EntityService.addObject(salesInvoiceDetails);
 			}
+			response.getWriter().print("saved!");
 		}
 	}
 }

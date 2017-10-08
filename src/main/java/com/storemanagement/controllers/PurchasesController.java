@@ -159,6 +159,7 @@ public class PurchasesController extends HttpServlet {
 				purchaseInvoiceDetails.setPrice(Integer.parseInt(itemTotal[i]));
 				EntityService.addObject(purchaseInvoiceDetails);
 			}
+			response.getWriter().print("saved!");
 		}
 	}
 }

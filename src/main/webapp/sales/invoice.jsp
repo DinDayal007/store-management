@@ -90,7 +90,7 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
                         <div class="table-responsive" style="margin-top: 20px">
 							<table class="table table-striped table-bordered table-hover">
 								<thead>
-									<tr>
+									<tr class="header">
 										<th>كود الصنف</th>
 										<th>اسم الصنف</th>
 										<th>السعر</th>
@@ -100,16 +100,25 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 								</thead>
 								<tbody>
 									<% for(SalesInvoiceDetails detail : invoiceDetails){ %>
-									<tr>
+									<tr class="detail">
 										<td><%= detail.getItem().getCode() %></td>
 										<td><%= detail.getItem().getName() %></td>
 										<td><%= detail.getItem().getPrice() %></td>
-										<td><%= detail.getQty() %></td>
+										<td class="qty"><%= detail.getQty() %></td>
 										<td><%= detail.getPrice() %></td>
 									</tr>
 									<% } %>
 								</tbody>
 							</table>
+						</div>
+						<div class="row">
+							<div class="col-md-2 col-md-offset-10">
+								<button class="btn btn-primary" id="convertToReturn">تحويل لفاتورة مرتجع</button>
+							</div>
+							<div class="col-md-3 col-md-offset-9 hidden" id="saveInv">
+								<button class="btn btn-primary" id="saveReturnInvoice">حفظ فاتورة مرتجع جديدة</button>
+								<button class="btn btn-default" id="cancelReturnInvoice">الغاء</button>
+							</div>
 						</div>
                     </div>
                 </div>
@@ -122,7 +131,40 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
-
+    <script>
+    $(document).ready(function(){
+    	//add the decrease qty button
+    	$('#convertToReturn').click(function(){
+    		$('.header').append('<th>تقليل</th>');
+    		$('.detail').append('<td><button class="btn btn-danger decreaseQty"><i class="fa fa-minus" aria-hidden="true"></i></button></td>');
+    		$(this).addClass('hidden');
+    		$('#saveInv').removeClass('hidden');
+    	});
+    	//cancel saving the return invoice
+    	$('#cancelReturnInvoice').click(function(){
+    		location.reload();
+    	});
+    	
+    	//for each button decrease the qty by 1
+    	$(document).on('click', '.decreaseQty', function(){
+    		var qty = $(this).closest('td').prev().prev().text();
+    		if(qty >= 1 ){
+    			qty--;
+    			$(this).closest('td').prev().prev().text(qty);
+    			var total = qty * $(this).closest('td').prev().prev().prev().text();
+    			$(this).closest('td').prev().text(total);
+    		}else $(this).addClass('disabled');
+    	});
+    	
+    	//save return invoice
+    	$('#saveReturnInvoice').click(function(){
+    		sum = 0;
+    		$('.qty').each(function(){
+    			sum += parseInt($(this).text());
+    		});
+    		alert(sum);
+    	});
+    })
+	</script>
 </body>
-
 </html>

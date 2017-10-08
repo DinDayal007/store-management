@@ -181,7 +181,7 @@ String invNumber = DateUtil.getDate();
 						<div class="form-group form-inline">
 							<input type="hidden" name="action" value="save" />
 							<input type="submit" class="btn btn-lg btn-primary" value="طباعة الفاتورة" />
-							<a href="#"><button class="btn btn-lg btn-default">خروج</button></a>
+							<a href="purchases/invoices.jsp"><button class="btn btn-lg btn-default" type="button">خروج</button></a>
 						</div>
 						</form>
 					</div>
@@ -357,8 +357,10 @@ $(document).ready(function(){
 			},
 			dataType : "text",
 			success : function(data){
-				alert("تم حفظ الفاتورة بنجاح");
-				location.reload();
+				if(data){
+					alert("تم حفظ الفاتورة بنجاح");
+					location.reload();
+				}
 			}	
 		});
 	});

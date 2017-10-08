@@ -52,7 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">برنامج إدارة المبيعات</a>
+                <a class="navbar-brand" href="/store-management">برنامج إدارة المبيعات</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -87,7 +87,10 @@
                                     <a href="http://localhost:8080/store-management/sales">فاتورة بيع جديدة</a>
                                 </li>
                                 <li>
-                                    <a href="http://localhost:8080/store-management/sales/invoices.jsp">فواتير البيع</a>
+                                    <a href="http://localhost:8080/store-management/sales/invoices.jsp">متابعة فواتبر البيع</a>
+                                </li>
+                                <li>
+                                    <a href="http://localhost:8080/store-management/sales/return-invoices.jsp">متابعة فواتبر المرتجع</a>
                                 </li>
                             </ul>
                         </li>
@@ -98,7 +101,10 @@
                                     <a href="http://localhost:8080/store-management/purchases">فاتورة شراء جديدة</a>
                                 </li>
                                 <li>
-                                    <a href="http://localhost:8080/store-management/purchases/invoices.jsp">فواتير الشراء</a>
+                                    <a href="http://localhost:8080/store-management/purchases/invoices.jsp">متابعة فواتبر الشراء</a>
+                                </li>
+                                <li>
+                                    <a href="http://localhost:8080/store-management/purchases/return-invoices.jsp">متابعة فواتبر المرتجع</a>
                                 </li>
                             </ul>
                         </li>
