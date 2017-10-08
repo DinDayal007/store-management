@@ -68,7 +68,7 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
                     		</div>
                     		<div class="col-md-6">
                     			<label class="key">إجمالى الفاتورة</label>
-	                        	<label class="value"><%= salesInvoiceHeader.getTotal() + " EGP" %></label>
+	                        	<label class="value" id="invTotal"><%= salesInvoiceHeader.getTotal() + " EGP" %></label>
                     			                    			             			
                     			<label class="key">قيمة الخصم</label>
                     			<label class="value"><%= salesInvoiceHeader.getDiscount() %></label>
@@ -80,10 +80,10 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 	                        	<label class="value"><%= salesInvoiceHeader.getFinalTotal() + " EGP" %></label>
 	                        	
 	                        	<label class="key">المدفوع</label>
-                    			<label class="value"><%= salesInvoiceHeader.getPaid() + " EGP" %></label>
+                    			<label class="value" id="invPaid"><%= salesInvoiceHeader.getPaid() + " EGP" %></label>
                     			                    			
                     			<label class="key">الباقى</label>
-                    			<label class="value"><%= salesInvoiceHeader.getRemain() + " EGP" %></label>
+                    			<label class="value" id="invRemain"><%= salesInvoiceHeader.getRemain() + " EGP" %></label>
                     		</div>
                     	</div>
                     	<h3>تفاصيل الفاتورة</h3>
@@ -101,10 +101,11 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 								<tbody>
 									<% for(SalesInvoiceDetails detail : invoiceDetails){ %>
 									<tr class="detail">
+										<input type="hidden" class="itemId" name="itemId[]" value = "<%= detail.getItem().getId() %>"/>
 										<td><%= detail.getItem().getCode() %></td>
 										<td><%= detail.getItem().getName() %></td>
 										<td><%= detail.getItem().getPrice() %></td>
-										<td class="qty"><%= detail.getQty() %></td>
+										<td><%= detail.getQty() %></td>
 										<td><%= detail.getPrice() %></td>
 									</tr>
 									<% } %>
@@ -115,7 +116,13 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 							<div class="col-md-2 col-md-offset-10">
 								<button class="btn btn-primary" id="convertToReturn">تحويل لفاتورة مرتجع</button>
 							</div>
-							<div class="col-md-3 col-md-offset-9 hidden" id="saveInv">
+							<div class="col-md-6 hidden" id="totalReturn">
+								<label class="key">إجمالى الأصناف المرتجعة</label>
+	                        	<label class="value" id="TotalReturnValue">0 EGP</label>
+	                        	<label class="key">إجمالى فاتورة المرتجع النهائى</label>
+	                        	<label class="value" id="finalTotalReturnValue">0 EGP</label>
+							</div>
+							<div class="col-md-3 col-md-offset-3 hidden" id="saveInv">
 								<button class="btn btn-primary" id="saveReturnInvoice">حفظ فاتورة مرتجع جديدة</button>
 								<button class="btn btn-default" id="cancelReturnInvoice">الغاء</button>
 							</div>
@@ -136,33 +143,81 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
     	//add the decrease qty button
     	$('#convertToReturn').click(function(){
     		$('.header').append('<th>تقليل</th>');
-    		$('.detail').append('<td><button class="btn btn-danger decreaseQty"><i class="fa fa-minus" aria-hidden="true"></i></button></td>');
+    		$('.detail').append('<td><input type="checkbox" class="form-check-input decreaseQty"/></td>');
     		$(this).addClass('hidden');
     		$('#saveInv').removeClass('hidden');
+    		$('#totalReturn').removeClass('hidden');
+    		assignItemIdToCheckboxVal();
     	});
     	//cancel saving the return invoice
     	$('#cancelReturnInvoice').click(function(){
     		location.reload();
     	});
     	
-    	//for each button decrease the qty by 1
-    	$(document).on('click', '.decreaseQty', function(){
+    	var items = $('input[type="hidden"][name="itemId[]"]').map(function(){
+    		  return this.getAttribute("value"); }).get();
+    	function assignItemIdToCheckboxVal(){
+    		var i = 0;
+    		$('input[type=checkbox]').each(function(){
+    				$(this).val(items[i]);
+    				i++;
+    		});
+    	}
+    	
+    	//allow user to decrease qty which min = 1 and max = qty
+    	$(document).on('change', '.decreaseQty', function(){
     		var qty = $(this).closest('td').prev().prev().text();
-    		if(qty >= 1 ){
-    			qty--;
-    			$(this).closest('td').prev().prev().text(qty);
-    			var total = qty * $(this).closest('td').prev().prev().prev().text();
-    			$(this).closest('td').prev().text(total);
-    		}else $(this).addClass('disabled');
+    		if(this.checked){
+    			$(this).closest('td').prev().prev().text('').append('<input type="number" class="form-control quantity" min="1" max="' + qty + '" value="' + qty + '" />');
+    		} else{
+    			var delQty = parseFloat($(this).closest('td').prev().text()) / parseFloat($(this).closest('td').prev().prev().prev().text());
+    			$(this).closest('td').prev().prev().text(delQty);
+    		}
+    		sumReturnTotal();
     	});
+    	
+    	//modify price each time a change is happened to quantity
+    	$(document).on('change keyup', '.quantity', function(){
+    		var qty = $(this).val();
+    		var price = $(this).closest('td').prev().text();
+    		$(this).closest('td').next().text(qty * price);
+    		sumReturnTotal();
+    	});
+    	
+    	//sum returnTotal
+    	function sumReturnTotal(){
+    		var sum = 0;
+    		//loop through checked chekboxs
+        	$('input:checked').each(function(){
+				sum += parseFloat($(this).closest('td').prev().text());
+        	});
+    		$('#TotalReturnValue').text(sum + " EGP");
+    		if(sum == parseInt($('#invTotal').text()))
+    			$('#finalTotalReturnValue').text($('#invPaid').text());
+    		else {
+    			$('#finalTotalReturnValue').text(sum - parseInt($('#invRemain').text()) + " EGP");
+    		}
+    	}
     	
     	//save return invoice
     	$('#saveReturnInvoice').click(function(){
-    		sum = 0;
-    		$('.qty').each(function(){
-    			sum += parseInt($(this).text());
-    		});
-    		alert(sum);
+    		var i = 0;
+    		var id = <%= id %>;
+    		var total = parseFloat($('#finalTotalReturnValue').text());
+    		var itemArr = [];
+    		var qtyArr = [];
+    		var totalArr = [];
+        	$('input:checked').each(function(){
+        		itemArr[i] = $(this).val();
+        		qtyArr[i] = $(this).closest('td').prev().prev().find('input').val();
+        		totalArr[i] = $(this).closest('td').prev().text();
+        		i++;
+        	});
+        	if(i > 0){
+        		alert(itemArr);
+            	alert(qtyArr);
+            	alert(totalArr);
+        	}else alert('يجب اختيار صنف او اكثر لاضافة فاتورة المرتجع');
     	});
     })
 	</script>
