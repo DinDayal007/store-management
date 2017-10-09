@@ -1,5 +1,14 @@
+<%@page import="com.storemanagement.services.InventoryService"%>
+<%@page import="com.storemanagement.entities.Inventory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+int id = Integer.parseInt(request.getParameter("id"));
+Inventory inventory = new Inventory();
+inventory.setId(id);
+int inventoriesCount = InventoryService.getInvoicesFromInventory(inventory);
+if(inventoriesCount > 0) response.sendRedirect("/store-management/inventories/delete-error.jsp");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +42,7 @@
                                 	<p class="lead">هل انت متأكد من حذف هذا المخزن ؟</p>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
+                                <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
                                 <a href="/store-management/inventories"><button type="button" class="btn btn-default">الغاء</button></a>

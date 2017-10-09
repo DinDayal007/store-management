@@ -1,14 +1,5 @@
-<%@page import="com.storemanagement.services.InvoiceService"%>
-<%@page import="com.storemanagement.entities.Item"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-int id = Integer.parseInt(request.getParameter("id"));
-Item item = new Item();
-item.setId(id);
-int invoicesCount = InvoiceService.getInvoicesFromItem(item);
-if(invoicesCount > 0) response.sendRedirect("/store-management/items/delete-error.jsp");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,18 +27,12 @@ if(invoicesCount > 0) response.sendRedirect("/store-management/items/delete-erro
                         <h3 class="panel-title">حذف صنف</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/items">
-                            <fieldset>
-                                <div class="form-group">
-                                	<p class="lead">هل انت متأكد من حذف هذا الصنف ؟</p>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <input type="hidden" name="id" value="<%= id %>" />
-                                <input type="hidden" name="action" value="delete" />
-                                <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/items"><button type="button" class="btn btn-default">الغاء</button></a>
-                            </fieldset>
-                        </form>
+	                    <fieldset>
+	                        <div class="form-group">
+	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذا الصنف لأنه تم التعامل معه فى الفواتير سابقا</p>
+	                        </div>
+	                        <a href="/store-management/items"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                    </fieldset>
                     </div>
                 </div>
             </div>

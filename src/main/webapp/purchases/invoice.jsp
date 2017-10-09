@@ -1,13 +1,14 @@
+<%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="com.storemanagement.entities.PurchaseInvoiceDetails"%>
 <%@page import="java.util.List"%>
-<%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.PurchaseInvoiceHeader"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 int id = Integer.parseInt(request.getParameter("id"));
-PurchaseInvoiceHeader purchaseInvoiceHeader = (PurchaseInvoiceHeader) EntityService.getObject(PurchaseInvoiceHeader.class, id);
+PurchaseInvoiceHeader purchaseInvoiceHeader = (PurchaseInvoiceHeader) InvoiceService.getObject(PurchaseInvoiceHeader.class, id);
 List<PurchaseInvoiceDetails> invoiceDetails = (List<PurchaseInvoiceDetails>) purchaseInvoiceHeader.getPurchaseInvoiceDetails();
+boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoiceHeader);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,6 +114,7 @@ List<PurchaseInvoiceDetails> invoiceDetails = (List<PurchaseInvoiceDetails>) pur
 								</tbody>
 							</table>
 						</div>
+						<% if(!hasReturnInvoice){ %>
 						<div class="row">
 							<div class="col-md-2 col-md-offset-10">
 								<button class="btn btn-primary" id="convertToReturn">تحويل لفاتورة مرتجع</button>
@@ -128,6 +130,7 @@ List<PurchaseInvoiceDetails> invoiceDetails = (List<PurchaseInvoiceDetails>) pur
 								<button class="btn btn-default" id="cancelReturnInvoice">الغاء</button>
 							</div>
 						</div>
+						<% } %>
                     </div>
                 </div>
             </div>

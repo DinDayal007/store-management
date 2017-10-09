@@ -1,5 +1,16 @@
+<%@page import="com.storemanagement.services.ItemService"%>
+<%@page import="com.storemanagement.entities.Item"%>
+<%@page import="java.util.List"%>
+<%@page import="com.storemanagement.entities.SubGroup"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+int id = Integer.parseInt(request.getParameter("id"));
+SubGroup subGroup = new SubGroup();
+subGroup.setId(id);
+List<Item> items = ItemService.getItemsFromSubGroup(subGroup);
+if(items.size() > 0) response.sendRedirect("/store-management/subgroups/delete-error.jsp");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +44,7 @@
                                 	<p class="lead">هل انت متأكد من حذف هذه المجموعة ؟</p>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
+                                <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
                                 <a href="/store-management/subgroups"><button type="button" class="btn btn-default">الغاء</button></a>

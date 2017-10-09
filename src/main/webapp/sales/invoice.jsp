@@ -1,13 +1,14 @@
+<%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="java.util.List"%>
 <%@page import="com.storemanagement.entities.SalesInvoiceDetails"%>
-<%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.SalesInvoiceHeader"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 int id = Integer.parseInt(request.getParameter("id"));
-SalesInvoiceHeader salesInvoiceHeader = (SalesInvoiceHeader) EntityService.getObject(SalesInvoiceHeader.class, id);
+SalesInvoiceHeader salesInvoiceHeader = (SalesInvoiceHeader) InvoiceService.getObject(SalesInvoiceHeader.class, id);
 List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvoiceHeader.getSalesInvoiceDetails();
+boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHeader);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,6 +114,7 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 								</tbody>
 							</table>
 						</div>
+						<% if(!hasReturnInvoice){ %>
 						<div class="row">
 							<div class="col-md-2 col-md-offset-10">
 								<button class="btn btn-primary" id="convertToReturn">تحويل لفاتورة مرتجع</button>
@@ -128,6 +130,7 @@ List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvo
 								<button class="btn btn-default" id="cancelReturnInvoice">الغاء</button>
 							</div>
 						</div>
+						<% } %>
                     </div>
                 </div>
             </div>

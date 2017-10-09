@@ -1,5 +1,16 @@
+<%@page import="com.storemanagement.services.InvoiceService"%>
+<%@page import="com.storemanagement.entities.SalesInvoiceHeader"%>
+<%@page import="java.util.List"%>
+<%@page import="com.storemanagement.entities.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+int id = Integer.parseInt(request.getParameter("id"));
+Client client = new Client();
+client.setId(id);
+List<SalesInvoiceHeader> salesInvoiceHeaders = InvoiceService.getSalesInvoicesFromClient(client);
+if(salesInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/clients/delete-error.jsp");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +44,7 @@
                                 	<p class="lead">هل انت متأكد من حذف هذا العميل ؟</p>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="hidden" name="id" value="<%= request.getParameter("id") %>" />
+                                <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
                                 <a href="/store-management/clients"><button type="button" class="btn btn-default">الغاء</button></a>

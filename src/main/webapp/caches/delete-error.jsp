@@ -1,14 +1,5 @@
-<%@page import="com.storemanagement.services.CacheService"%>
-<%@page import="com.storemanagement.entities.Cache"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-int id = Integer.parseInt(request.getParameter("id"));
-Cache cache = new Cache();
-cache.setId(id);
-int invoicesCount = CacheService.getInvoicesFromCache(cache);
-if(invoicesCount > 0) response.sendRedirect("/store-management/caches/delete-error.jsp");
-%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,18 +27,12 @@ if(invoicesCount > 0) response.sendRedirect("/store-management/caches/delete-err
                         <h3 class="panel-title">حذف خزنة</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/caches">
-                            <fieldset>
-                                <div class="form-group">
-                                	<p class="lead">هل انت متأكد من حذف هذه الخزنة ؟</p>
-                                </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <input type="hidden" name="id" value="<%= id %>" />
-                                <input type="hidden" name="action" value="delete" />
-                                <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/caches"><button type="button" class="btn btn-default">الغاء</button></a>
-                            </fieldset>
-                        </form>
+	                    <fieldset>
+	                        <div class="form-group">
+	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذه الخزنة حيث انها تحتوى على تعاملات مالية سابقة</p>
+	                        </div>
+	                        <a href="/store-management/caches"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                    </fieldset>
                     </div>
                 </div>
             </div>
