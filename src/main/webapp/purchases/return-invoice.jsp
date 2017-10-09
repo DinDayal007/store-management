@@ -1,13 +1,13 @@
-<%@page import="com.storemanagement.entities.ReturnSalesInvoiceDetails"%>
+<%@page import="com.storemanagement.entities.ReturnPurchaseInvoiceDetails"%>
 <%@page import="java.util.List"%>
 <%@page import="com.storemanagement.services.EntityService"%>
-<%@page import="com.storemanagement.entities.ReturnSalesInvoiceHeader"%>
+<%@page import="com.storemanagement.entities.ReturnPurchaseInvoiceHeader"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 int id = Integer.parseInt(request.getParameter("id"));
-ReturnSalesInvoiceHeader returnSalesInvoiceHeader = (ReturnSalesInvoiceHeader) EntityService.getObject(ReturnSalesInvoiceHeader.class, id);
-List<ReturnSalesInvoiceDetails> invoiceDetails = (List<ReturnSalesInvoiceDetails>) returnSalesInvoiceHeader.getReturnSalesInvoiceDetails();
+ReturnPurchaseInvoiceHeader returnPurchaseInvoiceHeader = (ReturnPurchaseInvoiceHeader) EntityService.getObject(ReturnPurchaseInvoiceHeader.class, id);
+List<ReturnPurchaseInvoiceDetails> invoiceDetails = (List<ReturnPurchaseInvoiceDetails>) returnPurchaseInvoiceHeader.getReturnPurchaseInvoiceDetails();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +18,7 @@ List<ReturnSalesInvoiceDetails> invoiceDetails = (List<ReturnSalesInvoiceDetails
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | متابعة فاتورة مرتجع البيع</title>
+    <title>برنامج إدارة المبيعات | متابعة فاتورة مرتجع الشراء</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -39,24 +39,24 @@ List<ReturnSalesInvoiceDetails> invoiceDetails = (List<ReturnSalesInvoiceDetails
             <div class="col-md-10 col-md-offset-1">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
-                        <h3 class="panel-title" style="float: right;">فاتورة مرتجع البيع</h3>
-                        <a href="/store-management/sales/return-invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <h3 class="panel-title" style="float: right;">فاتورة مرتجع الشراء</h3>
+                        <a href="/store-management/purchases/return-invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body" style="overflow: hidden; text-align: center;">
                     	<div class="row">
                     		<div class="col-md-6">
                     			<label class="key">رقم الفاتورة</label>
-                    			<label class="value"><%= returnSalesInvoiceHeader.getNumber() %></label>
+                    			<label class="value"><%= returnPurchaseInvoiceHeader.getNumber() %></label>
                     			                    				                        	                    				                        	                    			
                     			<label class="key">مستخدم النظام</label>
-	                        	<label class="value"><%= returnSalesInvoiceHeader.getUser().getName() %></label>
+	                        	<label class="value"><%= returnPurchaseInvoiceHeader.getUser().getName() %></label>
                     		</div>
                     		<div class="col-md-6">
                     			<label class="key">تاريخ الفاتورة</label>
-                    			<label class="value"><%= returnSalesInvoiceHeader.getDate() %></label>
+                    			<label class="value"><%= returnPurchaseInvoiceHeader.getDate() %></label>
                     			
                     			<label class="key">إجمالى الفاتورة</label>
-	                        	<label class="value" id="invTotal"><%= returnSalesInvoiceHeader.getTotal() + " EGP" %></label>
+	                        	<label class="value" id="invTotal"><%= returnPurchaseInvoiceHeader.getTotal() + " EGP" %></label>
                     		</div>
                     	</div>
                     	<h3>تفاصيل الفاتورة</h3>
@@ -72,7 +72,7 @@ List<ReturnSalesInvoiceDetails> invoiceDetails = (List<ReturnSalesInvoiceDetails
 									</tr>
 								</thead>
 								<tbody>
-									<% for(ReturnSalesInvoiceDetails detail : invoiceDetails){ %>
+									<% for(ReturnPurchaseInvoiceDetails detail : invoiceDetails){ %>
 									<tr class="detail">
 										<td><%= detail.getItem().getCode() %></td>
 										<td><%= detail.getItem().getName() %></td>

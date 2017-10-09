@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.Item;
+import com.storemanagement.entities.PurchaseInvoiceHeader;
+import com.storemanagement.entities.ReturnPurchaseInvoiceDetails;
+import com.storemanagement.entities.ReturnPurchaseInvoiceHeader;
 import com.storemanagement.entities.ReturnSalesInvoiceDetails;
 import com.storemanagement.entities.ReturnSalesInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
@@ -24,11 +27,13 @@ public class ReturnInvoicesController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("action").equals("1"))
-			saveReturnInvoice(request, response);
+			saveReturnSalesInvoice(request, response);
+		else if(request.getParameter("action").equals("2"))
+			saveReturnPurchaseInvoice(request, response);
 	}
 	
 	//add new sales return invoice
-	protected void saveReturnInvoice(HttpServletRequest request,
+	protected void saveReturnSalesInvoice(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("salesInvoiceId").equals("") && !request.getParameter("total").equals("")) {
 			int id = Integer.parseInt(request.getParameter("salesInvoiceId"));
@@ -60,6 +65,44 @@ public class ReturnInvoicesController extends HttpServlet {
 				returnSalesInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
 				returnSalesInvoiceDetails.setPrice(Double.parseDouble(itemTotal[i]));
 				EntityService.addObject(returnSalesInvoiceDetails);
+			}
+			response.getWriter().print("saved!");response.getWriter().print("saved!");
+		}
+	}
+	
+	//add new sales return invoice
+	protected void saveReturnPurchaseInvoice(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("purchaseInvoiceId").equals("") && !request.getParameter("total").equals("")) {
+			int id = Integer.parseInt(request.getParameter("purchaseInvoiceId"));
+			ReturnPurchaseInvoiceHeader returnPurchaseInvoiceHeader = new ReturnPurchaseInvoiceHeader();
+			PurchaseInvoiceHeader purchaseInvoiceHeader = new PurchaseInvoiceHeader();
+			purchaseInvoiceHeader.setId(id);
+			returnPurchaseInvoiceHeader.setPurchaseInvoiceHeader(purchaseInvoiceHeader);
+			returnPurchaseInvoiceHeader.setNumber("1");
+			returnPurchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("total")));
+			returnPurchaseInvoiceHeader.setDate(new Date());
+			User user = new User();
+			user.setId(1);
+			returnPurchaseInvoiceHeader.setUser(user);
+			int cacheId = Integer.parseInt(request.getParameter("cache"));
+			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
+			cache.setQyt(cache.getQyt() + returnPurchaseInvoiceHeader.getTotal());
+			EntityService.updateObject(cache);
+			EntityService.addObject(returnPurchaseInvoiceHeader);
+			
+			String[] itemIds = request.getParameter("itemIds").replaceAll("\"", "").split(",");
+			String[] itemQty = request.getParameter("itemQty").replaceAll("\"", "").split(",");
+			String[] itemTotal = request.getParameter("itemTotal").replaceAll("\"", "").split(",");
+			for(int i = 0; i < itemIds.length; i++) {
+				ReturnPurchaseInvoiceDetails returnPurchaseInvoiceDetails = new ReturnPurchaseInvoiceDetails();
+				returnPurchaseInvoiceDetails.setReturnPurchaseInvoiceHeader(returnPurchaseInvoiceHeader);
+				Item item = new Item();
+				item.setId(Integer.parseInt(itemIds[i]));
+				returnPurchaseInvoiceDetails.setItem(item);
+				returnPurchaseInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
+				returnPurchaseInvoiceDetails.setPrice(Double.parseDouble(itemTotal[i]));
+				EntityService.addObject(returnPurchaseInvoiceDetails);
 			}
 			response.getWriter().print("saved!");
 		}
