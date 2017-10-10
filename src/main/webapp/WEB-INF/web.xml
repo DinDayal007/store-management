@@ -104,6 +104,12 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.BranchesController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>CacheMovementController</servlet-name>
+  	<display-name>CacheMovementController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.CacheMovementController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>

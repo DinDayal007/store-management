@@ -18,6 +18,9 @@ public class CacheMovement {
 	@Column(name = "ID")
 	private int id;
 	@OneToOne
+	@JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+	private User user;
+	@OneToOne
 	@JoinColumn(name = "CACHE_ID", referencedColumnName = "ID")
 	private Cache cache;
 	@OneToOne
@@ -37,6 +40,12 @@ public class CacheMovement {
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 	public Cache getCache() {
 		return cache;
