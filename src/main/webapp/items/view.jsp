@@ -63,10 +63,6 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        		<td class="value"><label><%= item.getUnit().getName() %></label></td>
 	                        	</tr>
 	                        	<tr>
-	                        		<td class="key"><label>اسم المورد</label></td>
-	                        		<td class="value"><label><%= item.getSupplier().getName() %></label></td>
-	                        	</tr>
-	                        	<tr>
 	                        		<td class="key"><label>السعر</label></td>
 	                        		<td class="value"><label><%= item.getPrice() %> EGP</label></td>
 	                        	</tr>
@@ -89,6 +85,10 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        	<tr>
 	                        		<td class="key"><label>تاريخ إنتهاء الصلاحية</label></td>
 	                        		<td class="value"><label><%= item.getExpirationDate() %></label></td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td class="key"><label>وصف الصنف</label></td>
+	                        		<td class="value"><label><%= item.getDescription() %></label></td>
 	                        	</tr>
 	                        </thead>
                         </table>

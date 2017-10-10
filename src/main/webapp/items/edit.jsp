@@ -11,7 +11,6 @@ int id = Integer.parseInt(request.getParameter("id"));
 Item item = (Item) EntityService.getObject(Item.class, id);
 List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainGroup.class);
 List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
-List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier.class);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,15 +68,6 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
 	                        			<% } %>
 	                        		</select>
                             	</div>
-                            	<div class="form-group">
-                            		<label for="suppliers">اختر المورد</label>
-	                        		<select class="form-control" name="suppliers" id="suppliers" required>
-	                        			<option value="" disabled>اختر المورد</option>
-	                        			<% for(Supplier supplier : suppliers){ %>
-	                        			<option value="<%= supplier.getId() %>" <%= supplier.getId() == item.getSupplier().getId() ? "selected" : "" %>><%= supplier.getName() %></option>
-	                        			<% } %>
-	                        		</select>
-                            	</div>
                                 <div class="form-group">
                                 	<label for="item_name">اسم الصنف</label>
                                     <input class="form-control" placeholder="اسم الصنف" value="<%= item.getName() %>" name="item_name" type="text" id="item_name" required>
@@ -110,6 +100,10 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
                                 	<label for="item_expirationDate">تاريخ انتهاء الصلاحية</label>
                                     <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" value="<%= item.getExpirationDate() %>" name="item_expirationDate" type="date" min="1" id="item_expirationDate" required>
                                 	<input type="hidden" name="action" value="edit" />
+                                </div>
+                                <div class="form-group">
+                                	<label for="description">الوصف</label>
+                                	<textarea class="form-control" name="description" id="description" placeholder="وصف الصنف"><%= item.getDescription() %></textarea>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="hidden" name="id" value="<%= id %>" />

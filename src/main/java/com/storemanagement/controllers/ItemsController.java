@@ -1,6 +1,5 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SubGroup;
-import com.storemanagement.entities.Supplier;
 import com.storemanagement.entities.Unit;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
@@ -50,18 +48,16 @@ public class ItemsController extends HttpServlet {
 			subGroup.setId(Integer.parseInt(request.getParameter("subGroups")));
 			Unit unit = new Unit();
 			unit.setId(Integer.parseInt(request.getParameter("units")));
-			Supplier supplier = new Supplier();
-			supplier.setId(Integer.parseInt(request.getParameter("suppliers")));
 			Item item = new Item();
 			item.setSubGroup(subGroup);
 			item.setUnit(unit);
-			item.setSupplier(supplier);
 			item.setCode(request.getParameter("item_code"));
 			item.setName(request.getParameter("item_name"));
 			item.setPrice(Double.parseDouble(request.getParameter("item_price")));
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
+			item.setDescription(request.getParameter("description"));
 			try {
 				item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
 				item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
@@ -80,19 +76,17 @@ public class ItemsController extends HttpServlet {
 			subGroup.setId(Integer.parseInt(request.getParameter("subGroups")));
 			Unit unit = new Unit();
 			unit.setId(Integer.parseInt(request.getParameter("units")));
-			Supplier supplier = new Supplier();
-			supplier.setId(Integer.parseInt(request.getParameter("suppliers")));
 			Item item = new Item();
 			item.setId(id);
 			item.setSubGroup(subGroup);
 			item.setUnit(unit);
-			item.setSupplier(supplier);
 			item.setCode(request.getParameter("item_code"));
 			item.setName(request.getParameter("item_name"));
 			item.setPrice(Double.parseDouble(request.getParameter("item_price")));
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
+			item.setDescription(request.getParameter("description"));
 			try {
 				item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
 				item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));

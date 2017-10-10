@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,9 +32,6 @@ public class Item {
 	private String home;
 	@Column(name = "TAX")
 	private double tax;
-	@OneToOne
-	@JoinColumn(name = "SUPPLIER_ID", referencedColumnName = "ID")
-	private Supplier supplier;
 	@Column(name = "MIN_LIMIT")
 	private int minLimit;
 	@Column(name = "MAX_LIMIT")
@@ -47,6 +45,9 @@ public class Item {
 	@ManyToOne
 	@JoinColumn(name = "SUBGROUP_ID")
 	private SubGroup subGroup;
+	@Lob
+	@Column(name = "DESCRIPTION")
+	private String description;
 	public int getId() {
 		return id;
 	}
@@ -89,12 +90,6 @@ public class Item {
 	public void setTax(double tax) {
 		this.tax = tax;
 	}
-	public Supplier getSupplier() {
-		return supplier;
-	}
-	public void setSupplier(Supplier supplier) {
-		this.supplier = supplier;
-	}
 	public int getMinLimit() {
 		return minLimit;
 	}
@@ -124,5 +119,11 @@ public class Item {
 	}
 	public void setSubGroup(SubGroup subGroup) {
 		this.subGroup = subGroup;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

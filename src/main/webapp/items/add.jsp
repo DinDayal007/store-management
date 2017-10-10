@@ -8,7 +8,6 @@
 <% 
 List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainGroup.class);
 List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
-List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier.class);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +26,9 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
     <link href="../css/sb-admin-2.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="../css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
-	
+	<style>
+		textarea {resize: vertical;}
+	</style>
 </head>
 <body>
 
@@ -65,15 +66,6 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
 	                        			<% } %>
 	                        		</select>
                             	</div>
-                            	<div class="form-group">
-                            		<label for="suppliers">اختر المورد</label>
-	                        		<select class="form-control" name="suppliers" id="suppliers" required>
-	                        			<option value="" disabled>اختر المورد</option>
-	                        			<% for(Supplier supplier : suppliers){ %>
-	                        			<option value="<%= supplier.getId() %>"><%= supplier.getName() %></option>
-	                        			<% } %>
-	                        		</select>
-                            	</div>
                                 <div class="form-group">
                                 	<label for="item_name">اسم الصنف</label>
                                     <input class="form-control" placeholder="اسم الصنف" name="item_name" type="text" id="item_name" required>
@@ -106,6 +98,10 @@ List<Supplier> suppliers = (List<Supplier>) EntityService.getAllObjects(Supplier
                                 	<label for="item_expirationDate">تاريخ انتهاء الصلاحية</label>
                                     <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" name="item_expirationDate" type="date" min="1" id="item_expirationDate" required>
                                 	<input type="hidden" name="action" value="add" />
+                                </div>
+                                <div class="form-group">
+                                	<label for="description">الوصف</label>
+                                	<textarea class="form-control" name="description" id="description" placeholder="وصف الصنف"></textarea>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="حفظ" />
