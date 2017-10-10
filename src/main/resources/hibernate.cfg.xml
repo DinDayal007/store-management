@@ -41,5 +41,7 @@
         <mapping class="com.storemanagement.entities.ReturnSalesInvoiceDetails"/>
         <mapping class="com.storemanagement.entities.ReturnPurchaseInvoiceHeader"/>
         <mapping class="com.storemanagement.entities.ReturnPurchaseInvoiceDetails"/>
+        <mapping class="com.storemanagement.entities.Branch"/>
+        <mapping class="com.storemanagement.entities.CacheMovement"/>
     </session-factory>
 </hibernate-configuration>

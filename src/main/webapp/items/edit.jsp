@@ -38,7 +38,7 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
-                        <h3 class="panel-title" style="float: right;">تعديل صنف جديد</h3>
+                        <h3 class="panel-title" style="float: right;">تعديل صنف</h3>
                     	<a href="/store-management/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">

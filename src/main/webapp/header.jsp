@@ -135,6 +135,9 @@
                             <a href="http://localhost:8080/store-management/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
                         </li>
                         <li>
+                            <a href="http://localhost:8080/store-management/branches"><i class="fa fa-th-large fa-fw"></i> الفروع</a>
+                        </li>
+                        <li>
                             <a href="http://localhost:8080/store-management/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
                         </li>
 

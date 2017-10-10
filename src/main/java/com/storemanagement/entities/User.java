@@ -23,6 +23,15 @@ public class User {
 	private Role role;
 	@Column(name = "STATUS")
 	private int status;
+	@OneToOne
+	@JoinColumn(name = "CACHE_ID", referencedColumnName = "ID")
+	private Cache cache;
+	@OneToOne
+	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
+	private Inventory inventory;
+	@OneToOne
+	@JoinColumn(name = "BRANCH_ID", referencedColumnName = "ID")
+	private Branch branch;
 	public int getId() {
 		return id;
 	}
@@ -52,5 +61,23 @@ public class User {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	public Cache getCache() {
+		return cache;
+	}
+	public void setCache(Cache cache) {
+		this.cache = cache;
+	}
+	public Inventory getInventory() {
+		return inventory;
+	}
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
+	}
+	public Branch getBranch() {
+		return branch;
+	}
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 }

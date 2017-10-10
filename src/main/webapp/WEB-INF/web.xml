@@ -98,6 +98,12 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.ReturnInvoicesController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>BranchesController</servlet-name>
+  	<display-name>BranchesController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.BranchesController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>
