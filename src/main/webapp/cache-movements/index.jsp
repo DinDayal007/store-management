@@ -18,7 +18,7 @@
                         <div class="panel-heading">
                             <a href="cache-movements/add.html"><button class="btn btn-lg btn-primary">إضافة حركة خزنة جديدة</button></a>
                         </div>
-                        <!-- /.panel-heading -->
+                        
                         <%
                         List<CacheMovement> cacheMovements = (List<CacheMovement>) request.getAttribute("cacheMovements");
                         int i = 0;
