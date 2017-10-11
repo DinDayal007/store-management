@@ -19,6 +19,7 @@
                         <!-- /.panel-heading -->
                         <%
                         List<User> users = (List<User>) request.getAttribute("users");
+                        int i = 0;
                         %>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -29,6 +30,9 @@
                                             <th>اسم المستخدم</th>
                                             <th>كلمة السر</th>
                                             <th>دور المستخدم</th>
+                                            <th>المخزن</th>
+                                            <th>الفرع</th>
+                                            <th>الخزنة</th>
                                             <th>تعديل</th>
                                             <th>حظر</th>
                                             <th>حذف نهائى</th>
@@ -36,13 +40,16 @@
                                     </thead>
                                     <tbody>
                                         <% for(User user : users){
-                                        	int i = 0;
+                                        	i++;
                                         %>
                                         <tr>
                                             <td><%= i %></td>
                                             <td><%= user.getName() %></td>
                                             <td><%= user.getPassword() %></td>
                                             <td><%= user.getRole().getName() %></td>
+                                            <td><%= user.getInventory().getName() %></td>
+                                            <td><%= user.getBranch().getName() %></td>
+                                            <td><%= user.getCache().getName() %></td>
                                             <td><a href="editUser.jsp?id=<%= user.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
                                             <td><a href="blockUser.jsp?id=<%= user.getId() %>"><button class="btn btn-default"><i class="fa fa-ban"></i></button></a></td>
                                             <td><a href="deleteUser.jsp?id=<%= user.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
