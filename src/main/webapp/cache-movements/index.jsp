@@ -25,7 +25,7 @@
                         %>
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -48,7 +48,7 @@
                                             <th><%= cacheMovement.getBranch().getName() %></th>
                                             <th><%= cacheMovement.getCache().getName() %></th>
                                             <th><%= cacheMovement.getDate() %></th>
-                                            <th><%= cacheMovement.getType() == 0 ? "مصروفات" : "إيرادات" %></th>
+                                            <th><%= cacheMovement.getType() == 0 ? "مصروفات" : "ايرادات" %></th>
                                             <th><%= cacheMovement.getAmount() %> EGP</th>
                                             <th><%= cacheMovement.getDescription() %></th>
                                         </tr>
