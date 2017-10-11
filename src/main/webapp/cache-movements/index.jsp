@@ -18,7 +18,7 @@
                         <div class="panel-heading">
                             <a href="cache-movements/add.html"><button class="btn btn-lg btn-primary">إضافة حركة خزنة جديدة</button></a>
                         </div>
-                        
+                        <!-- /.panel-heading -->
                         <%
                         List<CacheMovement> cacheMovements = (List<CacheMovement>) request.getAttribute("cacheMovements");
                         int i = 0;
@@ -48,8 +48,8 @@
                                             <th><%= cacheMovement.getBranch().getName() %></th>
                                             <th><%= cacheMovement.getCache().getName() %></th>
                                             <th><%= cacheMovement.getDate() %></th>
-                                            <th><%= cacheMovement.getType() %></th>
-                                            <th><%= cacheMovement.getAmount() %> + EGP</th>
+                                            <th><%= cacheMovement.getType() == 0 ? "مصروفات" : "إيرادات" %></th>
+                                            <th><%= cacheMovement.getAmount() %> EGP</th>
                                             <th><%= cacheMovement.getDescription() %></th>
                                         </tr>
 										<% } %>

@@ -142,7 +142,7 @@ public class PurchasesController extends HttpServlet {
 				purchaseInvoiceHeader.setTax(0);
 			else purchaseInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
 			purchaseInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
-			cache.setQyt(cache.getQyt() - purchaseInvoiceHeader.getFinalTotal());
+			cache.setQty(cache.getQty() - purchaseInvoiceHeader.getFinalTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(purchaseInvoiceHeader);
 			

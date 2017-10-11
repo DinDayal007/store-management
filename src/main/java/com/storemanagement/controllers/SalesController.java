@@ -144,7 +144,7 @@ public class SalesController extends HttpServlet {
 				salesInvoiceHeader.setTax(0);
 			else salesInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
 			salesInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
-			cache.setQyt(cache.getQyt() + salesInvoiceHeader.getPaid());
+			cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
 			EntityService.updateObject(cache);
 			EntityService.addObject(salesInvoiceHeader);
 			

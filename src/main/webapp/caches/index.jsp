@@ -41,7 +41,7 @@
                                         <tr>
                                             <td><%= i %></td>
                                             <td><%= cache.getName() %></td>
-                                            <td><%= cache.getQyt() %> EGP</td>
+                                            <td><%= cache.getQty() %> EGP</td>
                                             <td><a href="caches/edit.jsp?id=<%= cache.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
                                             <td><a href="caches/delete.jsp?id=<%= cache.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>

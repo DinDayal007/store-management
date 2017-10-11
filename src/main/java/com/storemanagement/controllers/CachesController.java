@@ -35,7 +35,7 @@ public class CachesController extends HttpServlet {
 		if(!request.getParameter("cache_name").equals("") && !request.getParameter("cache_qty").equals("")) {
 			Cache cache = new Cache();
 			cache.setName(request.getParameter("cache_name"));
-			cache.setQyt(Double.parseDouble(request.getParameter("cache_qty")));
+			cache.setQty(Double.parseDouble(request.getParameter("cache_qty")));
 			EntityService.addObject(cache);
 		}
 	}
@@ -47,7 +47,7 @@ public class CachesController extends HttpServlet {
 			Cache cache = new Cache();
 			cache.setId(id);
 			cache.setName(request.getParameter("cache_name"));
-			cache.setQyt(Double.parseDouble(request.getParameter("cache_qty")));
+			cache.setQty(Double.parseDouble(request.getParameter("cache_qty")));
 			EntityService.updateObject(cache);
 		}
 	}

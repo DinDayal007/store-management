@@ -15,7 +15,7 @@ public class Cache {
 	@Column(name = "NAME")
 	private String name;
 	@Column(name = "QTY")
-	private double qyt;
+	private double qty;
 	public int getId() {
 		return id;
 	}
@@ -28,10 +28,10 @@ public class Cache {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getQyt() {
-		return qyt;
+	public double getQty() {
+		return qty;
 	}
-	public void setQyt(double qyt) {
-		this.qyt = qyt;
+	public void setQty(double qty) {
+		this.qty = qty;
 	}
 }

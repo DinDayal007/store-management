@@ -44,7 +44,7 @@ Cache cache = (Cache) EntityService.getObject(Cache.class, id);
                                 </div>
                                 <div class="form-group">
                                 	<label for="cache_description">المبلغ المتوفر</label>
-                                    <input class="form-control" placeholder="المبلغ المتوفر" value="<%= cache.getQyt() %>" name="cache_qty" type="number" id="cache_qty" required>
+                                    <input class="form-control" placeholder="المبلغ المتوفر" value="<%= cache.getQty() %>" name="cache_qty" type="number" id="cache_qty" required readonly>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="hidden" name="id" value="<%= id %>" />
