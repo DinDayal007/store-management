@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,10 +38,16 @@
                         <h3 class="panel-title">من فضلك سجل الدخول</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" action="/store-management/home" method="post">
+                        	<% if(null != request.getAttribute("error")){ %>
+						        <div class="alert alert-danger">
+						        	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								  	<strong><%= request.getAttribute("error") %></strong>
+								</div>
+						    <% } %>
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="الاسم" name="email" type="email" autofocus required>
+                                    <input class="form-control" placeholder="الاسم" name="name" type="text" autofocus required>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="الرقم السري" name="password" type="password" required>

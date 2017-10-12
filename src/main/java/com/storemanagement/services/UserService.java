@@ -20,8 +20,17 @@ public class UserService extends EntityService {
 		return users.size() > 0;
 	}
 	//login using name and password
-	public User login() {
-		return null;
+	public static User login(String name, String password) {
+		User user = null;
+		try {
+			openSession();
+			user = (User) getSession().createQuery("from User where name = :name and password = :password").setParameter("name", name).setParameter("password", password).uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return user;
 	}
 	//block user or unblock user
 	public boolean blockOrUnblock() {
