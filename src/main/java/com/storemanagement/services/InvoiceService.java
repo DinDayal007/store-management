@@ -1,4 +1,5 @@
 package com.storemanagement.services;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.criterion.Projections;
 import com.storemanagement.entities.Client;
@@ -94,55 +95,27 @@ public class InvoiceService extends EntityService {
 		return headers.size() > 0;
 	}
 	//return sales invoice max number
-	public static long getSalesInvoicesNumber(){
-		long number = 0;
+	public static List<Long> getInvoicesNumbers(){
+		Long salesInvoicenumber = null,
+		purchaseInvoicenumber = null,
+		returnSalesInvoicenumber = null,
+		returnPurchaseInvoicenumber = null;
+		List<Long> invoiceNumbers = new ArrayList<>();
 		try {
 			openSession();
-			number = (Long) getSession().createCriteria(SalesInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
+			salesInvoicenumber = (Long) getSession().createCriteria(SalesInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
+			purchaseInvoicenumber = (Long) getSession().createCriteria(PurchaseInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
+			returnSalesInvoicenumber = (Long) getSession().createCriteria(ReturnSalesInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
+			returnPurchaseInvoicenumber = (Long) getSession().createCriteria(ReturnPurchaseInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
+			invoiceNumbers.add(salesInvoicenumber == null ? 1 : salesInvoicenumber);
+			invoiceNumbers.add(purchaseInvoicenumber == null ? 1 : purchaseInvoicenumber);
+			invoiceNumbers.add(returnSalesInvoicenumber == null ? 1 : returnSalesInvoicenumber);
+			invoiceNumbers.add(returnPurchaseInvoicenumber == null ? 1 : returnPurchaseInvoicenumber);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			closeSession();
 		}
-		return number + 1;
-	}
-	//return purchase invoice max number
-	public static long getPurchaseInvoicesNumber(){
-		long number = 0;
-		try {
-			openSession();
-			number = (Long) getSession().createCriteria(PurchaseInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			closeSession();
-		}
-		return number + 1;
-	}
-	//return sales return invoice max number
-	public static long getReturnSalesInvoicesNumber(){
-		long number = 0;
-		try {
-			openSession();
-			number = (Long) getSession().createCriteria(ReturnSalesInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			closeSession();
-		}
-		return number + 1;
-	}
-	//return purchase return invoice max number
-	public static long getReturnPurchaseInvoicesNumber(){
-		long number = 0;
-		try {
-			openSession();
-			number = (Long) getSession().createCriteria(ReturnPurchaseInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			closeSession();
-		}
-		return number + 1;
+		return invoiceNumbers;
 	}
 }

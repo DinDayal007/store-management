@@ -10,10 +10,10 @@ public class InvoicesCounterUtil {
 	 */
 	private static HashMap<Integer, Long> invoicesCounter  = new HashMap<>();
 	public static void initializeValues() {
-		invoicesCounter.put(1, InvoiceService.getSalesInvoicesNumber());
-		invoicesCounter.put(2, InvoiceService.getPurchaseInvoicesNumber());
-		invoicesCounter.put(3, InvoiceService.getReturnSalesInvoicesNumber());
-		invoicesCounter.put(4, InvoiceService.getReturnPurchaseInvoicesNumber());
+		invoicesCounter.put(1, InvoiceService.getInvoicesNumbers().get(0));
+		invoicesCounter.put(2, InvoiceService.getInvoicesNumbers().get(1));
+		invoicesCounter.put(3, InvoiceService.getInvoicesNumbers().get(2));
+		invoicesCounter.put(4, InvoiceService.getInvoicesNumbers().get(3));
 	}
 	public static HashMap<Integer, Long> getInvoicesCounter(){
 		return invoicesCounter;
