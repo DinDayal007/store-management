@@ -67,7 +67,7 @@
                         <li><a href="settings"><i class="fa fa-gear fa-fw"></i> لوحة التحكم</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> تسجيل الخروج</a>
+                        <li><a href="/store-management/logout"><i class="fa fa-sign-out fa-fw"></i> تسجيل الخروج</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

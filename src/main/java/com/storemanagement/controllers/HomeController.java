@@ -11,12 +11,11 @@ import com.storemanagement.services.UserService;
 @WebServlet("/home")
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		HttpSession httpSession = request.getSession();
 		if(null == httpSession.getAttribute("user"))
-			request.getRequestDispatcher("index.jsp").forward(request, response);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		else response.sendRedirect("sales");
 	}
 

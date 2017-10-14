@@ -23,7 +23,7 @@ public class PurchaseInvoiceHeader {
 	@Column(name = "ID")
 	private int id;
 	@Column(name = "NUMBER")
-	private String number;
+	private long number;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
 	private Date date;
@@ -61,10 +61,10 @@ public class PurchaseInvoiceHeader {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getNumber() {
+	public long getNumber() {
 		return number;
 	}
-	public void setNumber(String number) {
+	public void setNumber(long number) {
 		this.number = number;
 	}
 	public Date getDate() {

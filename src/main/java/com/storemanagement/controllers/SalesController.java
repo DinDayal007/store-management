@@ -20,6 +20,7 @@ import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
 import com.storemanagement.services.ItemService;
+import com.storemanagement.utils.InvoicesCounterUtil;
 @WebServlet("/sales")
 public class SalesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -112,7 +113,7 @@ public class SalesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("inv_num").equals("") && !request.getParameter("finalTotal").equals("")) {
 			SalesInvoiceHeader salesInvoiceHeader = new SalesInvoiceHeader();
-			salesInvoiceHeader.setNumber(request.getParameter("inv_num"));
+			salesInvoiceHeader.setNumber(InvoicesCounterUtil.getSalesInvoiceCounter());
 			salesInvoiceHeader.setDate(new Date());
 			salesInvoiceHeader.setType(Integer.parseInt(request.getParameter("inv_type")));
 			if(salesInvoiceHeader.getType() == 1) {
@@ -147,6 +148,7 @@ public class SalesController extends HttpServlet {
 			cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
 			EntityService.updateObject(cache);
 			EntityService.addObject(salesInvoiceHeader);
+			InvoicesCounterUtil.incrementSalesInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").split(",");
 			String[] itemQty = request.getParameter("itemQty").split(",");

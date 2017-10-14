@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.utils.InvoicesCounterUtil"%>
 <%@page import="com.storemanagement.utils.DateUtil"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
 <%@page import="com.storemanagement.services.EntityService"%>
@@ -17,7 +18,7 @@ List<Supplier> suppliers = (List<Supplier>) request.getAttribute("suppliers");
 List<Inventory> inventories = (List<Inventory>) request.getAttribute("inventories");
 List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups");
-String invNumber = DateUtil.getDate();
+long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 %>
 <div class="row">
 	<div class="col-lg-12">

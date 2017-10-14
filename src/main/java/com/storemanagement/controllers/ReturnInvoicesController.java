@@ -16,6 +16,7 @@ import com.storemanagement.entities.ReturnSalesInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
+import com.storemanagement.utils.InvoicesCounterUtil;
 
 public class ReturnInvoicesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +42,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			SalesInvoiceHeader salesInvoiceHeader = new SalesInvoiceHeader();
 			salesInvoiceHeader.setId(id);
 			returnSalesInvoiceHeader.setSalesInvoiceHeader(salesInvoiceHeader);
-			returnSalesInvoiceHeader.setNumber("1");
+			returnSalesInvoiceHeader.setNumber(InvoicesCounterUtil.getReturnSalesInvoiceCounter());
 			returnSalesInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("total")));
 			returnSalesInvoiceHeader.setDate(new Date());
 			User user = new User();
@@ -52,6 +53,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			cache.setQty(cache.getQty() - returnSalesInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(returnSalesInvoiceHeader);
+			InvoicesCounterUtil.incrementReturnSalesInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").replaceAll("\"", "").split(",");
 			String[] itemQty = request.getParameter("itemQty").replaceAll("\"", "").split(",");
@@ -79,7 +81,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			PurchaseInvoiceHeader purchaseInvoiceHeader = new PurchaseInvoiceHeader();
 			purchaseInvoiceHeader.setId(id);
 			returnPurchaseInvoiceHeader.setPurchaseInvoiceHeader(purchaseInvoiceHeader);
-			returnPurchaseInvoiceHeader.setNumber("1");
+			returnPurchaseInvoiceHeader.setNumber(InvoicesCounterUtil.getReturnSPurchaseInvoiceCounter());
 			returnPurchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("total")));
 			returnPurchaseInvoiceHeader.setDate(new Date());
 			User user = new User();
@@ -90,6 +92,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			cache.setQty(cache.getQty() + returnPurchaseInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(returnPurchaseInvoiceHeader);
+			InvoicesCounterUtil.incrementReturnPurechaseInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").replaceAll("\"", "").split(",");
 			String[] itemQty = request.getParameter("itemQty").replaceAll("\"", "").split(",");
