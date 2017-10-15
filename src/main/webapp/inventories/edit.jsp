@@ -1,3 +1,5 @@
+<%@page import="com.storemanagement.entities.Branch"%>
+<%@page import="java.util.List"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Inventory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +7,7 @@
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 Inventory inventory = (Inventory) EntityService.getObject(Inventory.class, id);
+List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +41,15 @@ Inventory inventory = (Inventory) EntityService.getObject(Inventory.class, id);
                     <div class="panel-body">
                         <form method="post" action="/store-management/inventories">
                             <fieldset>
+                            	<div class="form-group">
+                            		<label for="inventory_branch">الفرع التابع له المخزن</label>
+                                   	<select class="form-control" name="inventory_branch" id="inventory_branch" required>
+                                   		<option value="">اختر الفرع التابع له المخزن</option>
+                                   		<% for(Branch branch :branchs){ %>
+                                   			<option value="<%= branch.getId() %>" <%= inventory.getBranch().getId() == branch.getId() ? "selected" : "" %>><%= branch.getName() %></option>
+                                   		<% } %>
+                                   	</select>
+                            	</div>
                                 <div class="form-group">
                                 	<label for="inventory_name">اسم المخزن</label>
                                     <input class="form-control" placeholder="اسم المخزن" name="inventory_name" value="<%= inventory.getName() %>" type="text" id="inventory_name" autofocus required>

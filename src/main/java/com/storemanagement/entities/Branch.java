@@ -1,10 +1,14 @@
 package com.storemanagement.entities;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @Table(name = "BRANCHES")
@@ -20,6 +24,8 @@ public class Branch {
 	@Lob
 	@Column(name = "DESCRIPTION")
 	private String description;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "branch")
+	private Collection<Inventory> inventories = new ArrayList<Inventory>();
 	public int getId() {
 		return id;
 	}
@@ -43,5 +49,11 @@ public class Branch {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Collection<Inventory> getInventories() {
+		return inventories;
+	}
+	public void setInventories(Collection<Inventory> inventories) {
+		this.inventories = inventories;
 	}
 }

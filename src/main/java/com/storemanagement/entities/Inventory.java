@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name = "INVENTORIES")
@@ -16,6 +18,9 @@ public class Inventory {
 	private String name;
 	@Column(name = "DESCRIPTION")
 	private String description;
+	@ManyToOne
+	@JoinColumn(name = "BRANCH_ID")
+	private Branch branch;
 	public int getId() {
 		return id;
 	}
@@ -33,5 +38,11 @@ public class Inventory {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Branch getBranch() {
+		return branch;
+	}
+	public void setBranch(Branch branch) {
+		this.branch = branch;
 	}
 }

@@ -14,7 +14,7 @@
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<a href="inventories/add.html"><button class="btn btn-lg btn-primary">إضافة مخزن جديد</button></a>
+						<a href="inventories/add.jsp"><button class="btn btn-lg btn-primary">إضافة مخزن جديد</button></a>
 					</div>
 					<!-- /.panel-heading -->
 					<%
@@ -29,6 +29,7 @@
 										<th>#</th>
 										<th>اسم المخزن</th>
 										<th>وصف المخزن</th>
+										<th>الفرع التابع له</th>
 										<th>تعديل</th>
 										<th>حذف</th>
 									</tr>
@@ -42,6 +43,7 @@
                                             <td><%= i %></td>
                                             <td><%= inventory.getName() %></td>
                                             <td><%= inventory.getDescription() %></td>
+                                            <td><%= inventory.getBranch().getName() %></td>
                                             <td><a href="inventories/edit.jsp?id=<%= inventory.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
                                             <td><a href="inventories/delete.jsp?id=<%= inventory.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>

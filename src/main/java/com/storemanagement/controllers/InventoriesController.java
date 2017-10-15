@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.services.EntityService;
 @WebServlet("/inventories")
@@ -35,9 +36,12 @@ public class InventoriesController extends HttpServlet {
 		if(!request.getParameter("inventory_name").equals("")) {
 			String name = request.getParameter("inventory_name");
 			String description = request.getParameter("inventory_description");
+			Branch branch = new Branch();
+			branch.setId(Integer.parseInt(request.getParameter("inventory_branch")));
 			Inventory inventory = new Inventory();
 			inventory.setName(name);
 			inventory.setDescription(description);
+			inventory.setBranch(branch);
 			EntityService.addObject(inventory);
 		}
 	}
@@ -48,10 +52,13 @@ public class InventoriesController extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			String name = request.getParameter("inventory_name");
 			String description = request.getParameter("inventory_description");
+			Branch branch = new Branch();
+			branch.setId(Integer.parseInt(request.getParameter("inventory_branch")));
 			Inventory inventory = new Inventory();
 			inventory.setId(id);
 			inventory.setName(name);
 			inventory.setDescription(description);
+			inventory.setBranch(branch);
 			EntityService.updateObject(inventory);
 		}
 	}
