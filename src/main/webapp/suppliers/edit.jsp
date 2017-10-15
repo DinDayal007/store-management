@@ -54,15 +54,15 @@ Supplier supplier = (Supplier) EntityService.getObject(Supplier.class, id);
                                 </div>
                                 <div class="form-group">
                                 	<label for="supplier_phone">رقم الهاتف</label>
-                                    <input class="form-control" placeholder="رقم الهاتف" value="<%= supplier.getPhone() %>" name="supplier_phone" type="text" id="supplier_phone">
+                                    <input class="form-control" placeholder="رقم الهاتف" value="<%= supplier.getPhone() %>" name="supplier_phone" type="number" id="supplier_phone">
                                 </div>
                                 <div class="form-group">
                                 	<label for="supplier_mobile1">رقم الموبايل 1</label>
-                                    <input class="form-control" placeholder="رقم الموبايل 1" value="<%= supplier.getMobile1() %>" name="supplier_mobile1" type="text" id="supplier_mobile1">
+                                    <input class="form-control" placeholder="رقم الموبايل 1" value="<%= supplier.getMobile1() %>" name="supplier_mobile1" type="number" id="supplier_mobile1">
                                 </div>
                                 <div class="form-group">
                                 	<label for="supplier_mobile2">رقم الموبايل 2</label>
-                                    <input class="form-control" placeholder="رقم الموبايل 2" value="<%= supplier.getMobile2() %>" name="supplier_mobile2" type="text" id="supplier_mobile2">
+                                    <input class="form-control" placeholder="رقم الموبايل 2" value="<%= supplier.getMobile2() %>" name="supplier_mobile2" type="number" id="supplier_mobile2">
                                 </div>
                                 <div class="form-group">
                                 	<label for="supplier_description">وصف المورد</label>

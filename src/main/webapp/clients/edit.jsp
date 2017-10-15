@@ -54,15 +54,15 @@ Client client = (Client) EntityService.getObject(Client.class, id);
                                 </div>
                                 <div class="form-group">
                                 	<label for="client_phone">رقم الهاتف</label>
-                                    <input class="form-control" placeholder="رقم الهاتف" value="<%= client.getPhone() %>" name="client_phone" type="text" id="client_phone">
+                                    <input class="form-control" placeholder="رقم الهاتف" value="<%= client.getPhone() %>" name="client_phone" type="number" id="client_phone">
                                 </div>
                                 <div class="form-group">
                                 	<label for="client_mobile1">رقم الموبايل 1</label>
-                                    <input class="form-control" placeholder="رقم الموبايل 1" value="<%= client.getMobile1() %>" name="client_mobile1" type="text" id="client_mobile1">
+                                    <input class="form-control" placeholder="رقم الموبايل 1" value="<%= client.getMobile1() %>" name="client_mobile1" type="number" id="client_mobile1">
                                 </div>
                                 <div class="form-group">
                                 	<label for="client_mobile2">رقم الموبايل 2</label>
-                                    <input class="form-control" placeholder="رقم الموبايل 2" value="<%= client.getMobile2() %>" name="client_mobile2" type="text" id="client_mobile2">
+                                    <input class="form-control" placeholder="رقم الموبايل 2" value="<%= client.getMobile2() %>" name="client_mobile2" type="number" id="client_mobile2">
                                 </div>
                                 <div class="form-group">
                                 	<label for="client_description">وصف العميل</label>

@@ -123,15 +123,17 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
 	$(document).ready(function(){
 		$('#mainGroups').change(function(){
 			var mainGroup_id = $(this).val();
-			$.ajax({
-				url : "/store-management/items",
-				method : "POST",
-				data : {mainGroup_id : mainGroup_id, action : "1"},
-				dataType : "text",
-				success : function(data){
-					$('#subGroups').html(data);
-				}
-			});
+			if(mainGroup_id != ''){
+				$.ajax({
+					url : "/store-management/items",
+					method : "POST",
+					data : {mainGroup_id : mainGroup_id, action : "1"},
+					dataType : "text",
+					success : function(data){
+						$('#subGroups').html(data);
+					}
+				});
+			}
 		});
 	})
 	</script>

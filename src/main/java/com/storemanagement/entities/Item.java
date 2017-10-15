@@ -48,6 +48,15 @@ public class Item {
 	@Lob
 	@Column(name = "DESCRIPTION")
 	private String description;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATED_DATE")
+	private Date createdDate;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LAST_UPDATED_DATE")
+	private Date lastUpdatedDate;
+	@OneToOne
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "ID")
+	private User createdBy;
 	public int getId() {
 		return id;
 	}
@@ -125,5 +134,23 @@ public class Item {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+	public User getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 }
