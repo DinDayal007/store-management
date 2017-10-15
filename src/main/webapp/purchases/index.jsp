@@ -183,7 +183,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 </div>
 <!-- /#page-wrapper -->
 
-<jsp:include page="../footer.jsp" />
+<jsp:include page="../footer.html" />
 <style>
 hr{margin-top: 10px; margin-bottom: 10px;}
 </style>

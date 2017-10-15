@@ -14,7 +14,7 @@
 
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="unit.html"><button class="btn btn-lg btn-primary">إضافة مستخدم جديد</button></a>
+                            <a href="users/add.jsp"><button class="btn btn-lg btn-primary">إضافة مستخدم جديد</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%
@@ -23,15 +23,15 @@
                         %>
                         <div class="panel-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>اسم المستخدم</th>
                                             <th>كلمة السر</th>
                                             <th>دور المستخدم</th>
-                                            <th>المخزن</th>
                                             <th>الفرع</th>
+                                            <th>المخزن</th>
                                             <th>الخزنة</th>
                                             <th>تعديل</th>
                                             <th>حظر</th>
@@ -47,12 +47,12 @@
                                             <td><%= user.getName() %></td>
                                             <td><%= user.getPassword() %></td>
                                             <td><%= user.getRole().getName() %></td>
+                                            <td><%= user.getInventory().getBranch().getName() %></td>
                                             <td><%= user.getInventory().getName() %></td>
-                                            <td><%= user.getBranch().getName() %></td>
                                             <td><%= user.getCache().getName() %></td>
-                                            <td><a href="editUser.jsp?id=<%= user.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="blockUser.jsp?id=<%= user.getId() %>"><button class="btn btn-default"><i class="fa fa-ban"></i></button></a></td>
-                                            <td><a href="deleteUser.jsp?id=<%= user.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><a href="#"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
+                                            <td><a href="#"><button class="btn btn-default"><i class="fa fa-ban"></i></button></a></td>
+                                            <td><a href="#"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>
                                         <% } %>
                                     </tbody>
@@ -68,4 +68,4 @@
         </div>
         <!-- /#page-wrapper -->
 
-<jsp:include page="../footer.jsp" />
+<jsp:include page="../footer.html" />

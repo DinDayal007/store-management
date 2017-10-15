@@ -29,9 +29,6 @@ public class User {
 	@OneToOne
 	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
 	private Inventory inventory;
-	@OneToOne
-	@JoinColumn(name = "BRANCH_ID", referencedColumnName = "ID")
-	private Branch branch;
 	public int getId() {
 		return id;
 	}
@@ -73,11 +70,5 @@ public class User {
 	}
 	public void setInventory(Inventory inventory) {
 		this.inventory = inventory;
-	}
-	public Branch getBranch() {
-		return branch;
-	}
-	public void setBranch(Branch branch) {
-		this.branch = branch;
 	}
 }

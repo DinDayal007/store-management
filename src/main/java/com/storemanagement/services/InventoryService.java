@@ -1,9 +1,11 @@
 package com.storemanagement.services;
 
 import java.util.List;
+import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
+import com.storemanagement.entities.User;
 
 public class InventoryService extends EntityService {
 	public static int getInvoicesFromInventory(Inventory inventory) {
@@ -28,5 +30,37 @@ public class InventoryService extends EntityService {
 			closeSession();
 		}
 		return sum;
+	}
+	
+	public static List<Inventory> getInventoriesFromBranch(Branch branch){
+		List<Inventory> inventories = null;
+		try {
+			openSession();
+			inventories = getSession()
+					.createQuery(
+							"from Inventory where branch.id = :branchId")
+					.setParameter("branchId", branch.getId()).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return inventories;
+	}
+	//get users from a branch
+	public static boolean hasInventoriesFromBranch(Branch branch) {
+		List<Inventory> inventories = null;
+		try {
+			openSession();
+			inventories = getSession()
+					.createQuery(
+							"from Inventory where branch.id = :branchId")
+					.setParameter("branchId", branch.getId()).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return inventories.size() > 0;
 	}
 }

@@ -9,12 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات | حذف فرع</title>
+    <title>برنامج إدارة المبيعات | خطأ فى الصلاحية</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="../css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/sb-admin-2.css" rel="stylesheet">
 	
 </head>
 <body>
@@ -24,21 +24,21 @@
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">حذف فرع</h3>
+                        <h3 class="panel-title">خطأ فى الصلاحية</h3>
                     </div>
                     <div class="panel-body">
-	                    <fieldset>
-	                        <div class="form-group">
-	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذا الفرع حيث انه يحتوى على مخازن</p>
-	                        </div>
-	                        <a href="/store-management/branches"><button type="button" class="btn btn-primary">رجوع</button></a>
-	                    </fieldset>
+                        <fieldset>
+                            <div class="form-group">
+                            	<p class="lead text-danger">عفوا لا تمتلك الصلاحية لمشاهدة هذه الصفحة</p>
+                            </div>
+                            <a href="/store-management/sales"><button type="button" class="btn btn-primary">رجوع</button></a>
+                        </fieldset>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    
 </body>
 
 </html>

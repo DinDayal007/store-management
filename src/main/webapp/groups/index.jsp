@@ -55,4 +55,4 @@
         </div>
         <!-- /#page-wrapper -->
         
-<jsp:include page="../footer.jsp" />
+<jsp:include page="../footer.html" />
