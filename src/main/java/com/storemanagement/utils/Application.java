@@ -13,7 +13,7 @@ import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 public class Application {
 	public static void main(String[] args) {
-		
+				
 //		Cache cache = new Cache();
 //		cache.setName("احمد");
 //		cache.setQyt(650);

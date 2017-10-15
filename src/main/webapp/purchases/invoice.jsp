@@ -49,43 +49,28 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
                     			<label class="key">رقم الفاتورة</label>
                     			<label class="value"><%= purchaseInvoiceHeader.getNumber() %></label>
                     			
-                    			<label class="key">تاريخ الفاتورة</label>
-                    			<label class="value"><%= purchaseInvoiceHeader.getDate() %></label>
-                    			
                     			<label class="key">طريقة الدفع</label>
                     			<label class="value"><%= purchaseInvoiceHeader.getType() == 0 ? "فورى" : "آجل" %></label>
 	                        	
-	                        	<label class="key">المخزن</label>
-                    			<label class="value"><%= purchaseInvoiceHeader.getInventory().getName() %></label>
-                    			
 	                        	<label class="key">الخزنة</label>
 	                        	<label class="value"><%= purchaseInvoiceHeader.getCache().getName() %></label>
 	                        	<input type="hidden" id="cache" value="<%= purchaseInvoiceHeader.getCache().getId() %>" />
 	                        	
-	                        	<label class="key">المورد</label>
-                    			<label class="value"><%= purchaseInvoiceHeader.getSupplier().getName() %></label>
-                    			
                     			<label class="key">مستخدم النظام</label>
 	                        	<label class="value"><%= purchaseInvoiceHeader.getUser().getName() %></label>
                     		</div>
                     		<div class="col-md-6">
+                    			<label class="key">تاريخ الفاتورة</label>
+                    			<label class="value"><%= purchaseInvoiceHeader.getDate() %></label>
+                    			
+                    			<label class="key">المخزن</label>
+                    			<label class="value"><%= purchaseInvoiceHeader.getInventory().getName() %></label>
+                    			
+                    			<label class="key">المورد</label>
+                    			<label class="value"><%= purchaseInvoiceHeader.getSupplier().getName() %></label>
+                    			
                     			<label class="key">إجمالى الفاتورة</label>
 	                        	<label class="value"  id="invTotal"><%= purchaseInvoiceHeader.getTotal() + " EGP" %></label>
-                    			                    			             			
-                    			<label class="key">قيمة الخصم</label>
-                    			<label class="value"><%= purchaseInvoiceHeader.getDiscount() %></label>
-                    			
-                    			<label class="key">قيمة الضريبة</label>
-                    			<label class="value"><%= purchaseInvoiceHeader.getTax() + " %" %></label>
-                    			
-	                        	<label class="key">الاجمالى النهائى</label>
-	                        	<label class="value"><%= purchaseInvoiceHeader.getFinalTotal() + " EGP" %></label>
-	                        	
-	                        	<label class="key">المدفوع</label>
-                    			<label class="value" id="invPaid"><%= purchaseInvoiceHeader.getPaid() + " EGP" %></label>
-                    			                    			
-                    			<label class="key">الباقى</label>
-                    			<label class="value" id="invRemain"><%= purchaseInvoiceHeader.getRemain() + " EGP" %></label>
                     		</div>
                     	</div>
                     	<h3>تفاصيل الفاتورة</h3>
@@ -122,8 +107,8 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
 							<div class="col-md-6 hidden" id="totalReturn">
 								<label class="key">إجمالى الأصناف المرتجعة</label>
 	                        	<label class="value" id="TotalReturnValue">0 EGP</label>
-	                        	<label class="key">إجمالى فاتورة المرتجع النهائى</label>
-	                        	<label class="value" id="finalTotalReturnValue">0 EGP</label>
+<!-- 	                        	<label class="key">إجمالى فاتورة المرتجع النهائى</label> -->
+<!-- 	                        	<label class="value" id="finalTotalReturnValue">0 EGP</label> -->
 							</div>
 							<div class="col-md-3 col-md-offset-3 hidden" id="saveInv">
 								<button class="btn btn-primary" id="saveReturnInvoice">حفظ فاتورة مرتجع جديدة</button>
@@ -196,11 +181,11 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
 				sum += parseFloat($(this).closest('td').prev().text());
         	});
     		$('#TotalReturnValue').text(sum + " EGP");
-    		if(sum == parseInt($('#invTotal').text()))
-    			$('#finalTotalReturnValue').text($('#invPaid').text());
-    		else {
-    			$('#finalTotalReturnValue').text(sum - parseInt($('#invRemain').text()) + " EGP");
-    		}
+//     		if(sum == parseInt($('#invTotal').text()))
+//     			$('#finalTotalReturnValue').text($('#invPaid').text());
+//     		else {
+//     			$('#finalTotalReturnValue').text(sum - parseInt($('#invRemain').text()) + " EGP");
+//     		}
     	}
     	
     	//save return invoice
@@ -208,7 +193,7 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
     		var i = 0;
     		var id = <%= id %>;
     		var cache = $('#cache').val();
-    		var total = parseFloat($('#finalTotalReturnValue').text());
+    		var total = parseFloat($('#TotalReturnValue').text());
     		var itemIds = [];
     		var itemQty = [];
     		var itemTotal = [];

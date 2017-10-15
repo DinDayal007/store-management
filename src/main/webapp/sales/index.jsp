@@ -69,10 +69,11 @@ long invNumber = InvoicesCounterUtil.getSalesInvoiceCounter();
 				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_type">نوع الفاتورة</label> 
-						<select class="form-control" id="inv_type" name="inv_type">
+<!-- 						<select class="form-control" id="inv_type" name="inv_type">
 							<option value="0">فوري</option>
 							<option value="1">آجل</option>
-						</select>
+ 							</select> -->
+ 						<input type="text" class="form-control" name="inv_type" id="inv_type" value="فوري" readonly />
 					</div>
 					<div class="form-group form-inline">
 						<label for="cache">الخزنة</label> 
@@ -344,10 +345,13 @@ $(document).ready(function(){
 		var itemTotal = $('input.itemTotal[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
 		var inv_num = $('#inv_num').val();
-		var inv_type = $('#inv_type').val();
-		var paid = $('#paid').val();
-		var remain = $('#remain').val();
+//		var inv_type = $('#inv_type').val();
+// 		var paid = $('#paid').val();
+// 		var remain = $('#remain').val();
 		var finalTotal = $('#finalTotal').val();
+		var paid = $('#finalTotal').val();
+		var remain = 0;
+		var inv_type = 0;
 		var client = $('#client').val();
 		var inventory = $('#inventory').val();
 		var cache = $('#cache').val();
@@ -355,6 +359,8 @@ $(document).ready(function(){
 		var discountType = $('#discountType').val();
 		var discount = $('#discount').val();
 		var tax = $('#tax').val();
+		if(discount == '') discount = 0;
+		if(tax == '') tax = 0;
 		$.ajax({
 			url : "/store-management/sales",
 			method : "POST",

@@ -42,7 +42,7 @@ List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = EntityService.getAllObjects
 							<td><%= purchaseInvoiceHeader.getNumber() %></td>
 							<td><%= purchaseInvoiceHeader.getDate() %></td>
 							<td><%= purchaseInvoiceHeader.getUser().getName() %></td>
-							<td><%= purchaseInvoiceHeader.getFinalTotal() %></td>
+							<td><%= purchaseInvoiceHeader.getTotal() %></td>
 							<td><%= purchaseInvoiceHeader.getType() == 0 ? "فورى" : "اجل" %></td>
 							<td><%= purchaseInvoiceHeader.getInventory().getName() %></td>
 							<td><%= purchaseInvoiceHeader.getCache().getName() %></td>

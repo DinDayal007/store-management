@@ -64,10 +64,11 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_type">نوع الفاتورة</label> 
-						<select class="form-control" id="inv_type" name="inv_type">
+<!-- 						<select class="form-control" id="inv_type" name="inv_type">
 							<option value="0">فوري</option>
 							<option value="1">آجل</option>
-						</select>
+						</select> -->
+						<input type="text" class="form-control" name="inv_type" id="inv_type" value="فوري" readonly />
 					</div>
 					<div class="form-group form-inline">
 						<label for="cache">الخزنة</label> 
@@ -134,48 +135,36 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 		</div>
 		<div class="panel-footer">
 				<div class="row" id="completeSale">
-					<div class="col-md-3">
+					<div class="col-md-6">
 						<div class="form-group form-inline">
 							<label for="totalPrice">إجمالى الفاتورة</label>
 							<input type="number" style="width: 40%;" class="form-control" value="0" name="totalPrice" id="totalPrice" readonly />
 						</div>
 					</div>
-					<div class="col-md-3">
-						<div class="form-group form-inline">
-							<select name="discountType" id="discountType" class="form-control">
-								<option value="0">خصم نسبة</option>
-								<option value="1">خصم مبلغ</option>
-							</select>
-							<input type="number" style="width: 40%;" class="form-control" placeholder="%" min="1" name="discount" id="discount" />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-inline">
-							<label for="tax">ضرائب بعد الخصم</label>
-							<input type="number" class="form-control" placeholder="%" min="1" name="tax" id="tax" />
-						</div>
-					</div>
+					
 				</div>
-				<div class="row">
-					<div class="col-md-3 hideInMonetary hidden">
-						<div class="form-group form-inline">
-							<label for="paid">المدفوع</label>
-							<input type="number" style="width: 40%;" class="form-control" min="1" name="paid" id="paid" />
-						</div>
-					</div>
-					<div class="col-md-3 hideInMonetary hidden">
-						<div class="form-group form-inline">
-							<label for="remain">الباقى</label>
-							<input type="number" style="width: 40%;" class="form-control" min="1" name="remain" id="remain" readonly />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group form-inline">
-							<label for="finalTotal">الاجمالى النهائي</label>
-							<input type="number" class="form-control" min="1" name="finalTotal" id="finalTotal" readonly />
-						</div>
-					</div>
-				</div>
+				
+<!-- 				<div class="row"> -->
+<!-- 					<div class="col-md-3 hideInMonetary hidden"> -->
+<!-- 						<div class="form-group form-inline"> -->
+<!-- 							<label for="paid">المدفوع</label> -->
+<!-- 							<input type="number" style="width: 40%;" class="form-control" min="1" name="paid" id="paid" /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-3 hideInMonetary hidden"> -->
+<!-- 						<div class="form-group form-inline"> -->
+<!-- 							<label for="remain">الباقى</label> -->
+<!-- 							<input type="number" style="width: 40%;" class="form-control" min="1" name="remain" id="remain" readonly /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 					<div class="col-md-6"> -->
+<!-- 						<div class="form-group form-inline"> -->
+<!-- 							<label for="finalTotal">الاجمالى النهائي</label> -->
+<!-- 							<input type="number" class="form-control" min="1" name="finalTotal" id="finalTotal" readonly /> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+
 				<hr />
 				<div class="row">
 					<div class="col-md-3 col-md-offset-9">
@@ -334,26 +323,25 @@ $(document).ready(function(){
 		var itemTotal = $('input.itemTotal[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
 		var inv_num = $('#inv_num').val();
-		var inv_type = $('#inv_type').val();
-		var paid = $('#paid').val();
-		var remain = $('#remain').val();
-		var finalTotal = $('#finalTotal').val();
+		var inv_type = 0;
 		var supplier = $('#supplier').val();
 		var inventory = $('#inventory').val();
 		var cache = $('#cache').val();
 		var totalPrice = $('#totalPrice').val();
-		var discountType = $('#discountType').val();
-		var discount = $('#discount').val();
-		var tax = $('#tax').val();
+// 		var inv_type = $('#inv_type').val();
+// 		var paid = $('#paid').val();
+// 		var remain = $('#remain').val();
+//		var finalTotal = $('#finalTotal').val();
+// 		var discountType = $('#discountType').val();
+// 		var discount = $('#discount').val();
+// 		var tax = $('#tax').val();
 		$.ajax({
 			url : "/store-management/purchases",
 			method : "POST",
 			data : {
 				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal,
-				inv_num : inv_num, inv_type :inv_type, paid : paid,
-				remain : remain, finalTotal : finalTotal, supplier : supplier,
+				inv_num : inv_num, inv_type :inv_type, supplier : supplier,
 				inventory : inventory, cache : cache, totalPrice :totalPrice,
-				discountType : discountType, discount : discount, tax : tax,
 				action : "save"
 			},
 			dataType : "text",

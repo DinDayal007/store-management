@@ -111,18 +111,18 @@ public class PurchasesController extends HttpServlet {
 	//save the sales invoice
 	protected void saveInvoice(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("inv_num").equals("") && !request.getParameter("finalTotal").equals("")) {
+		if(!request.getParameter("inv_num").equals("") && !request.getParameter("inv_type").equals("")) {
 			PurchaseInvoiceHeader purchaseInvoiceHeader = new PurchaseInvoiceHeader();
-			purchaseInvoiceHeader.setNumber(InvoicesCounterUtil.getPurchaseInvoiceCounter());
+			purchaseInvoiceHeader.setNumber(Long.parseLong(request.getParameter("inv_num")));
 			purchaseInvoiceHeader.setDate(new Date());
 			purchaseInvoiceHeader.setType(Integer.parseInt(request.getParameter("inv_type")));
-			if(purchaseInvoiceHeader.getType() == 1) {
-				purchaseInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("paid")));
-				purchaseInvoiceHeader.setRemain(Double.parseDouble(request.getParameter("remain")));
-			}else {
-				purchaseInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("finalTotal")));
-				purchaseInvoiceHeader.setRemain(0);
-			}
+//			if(purchaseInvoiceHeader.getType() == 1) {
+//				purchaseInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("paid")));
+//				purchaseInvoiceHeader.setRemain(Double.parseDouble(request.getParameter("remain")));
+//			}else {
+//				purchaseInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("finalTotal")));
+//				purchaseInvoiceHeader.setRemain(0);
+//			}
 			User user = new User();
 			user.setId(1);
 			purchaseInvoiceHeader.setUser(user);
@@ -136,14 +136,14 @@ public class PurchasesController extends HttpServlet {
 			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
 			purchaseInvoiceHeader.setCache(cache);
 			purchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
-			if(Integer.parseInt(request.getParameter("discountType")) == 0)
-				purchaseInvoiceHeader.setDiscount(request.getParameter("discount") + " %");
-			else purchaseInvoiceHeader.setDiscount(request.getParameter("discount") + " EGP");
-			if(request.getParameter("tax").equals(""))
-				purchaseInvoiceHeader.setTax(0);
-			else purchaseInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
-			purchaseInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
-			cache.setQty(cache.getQty() - purchaseInvoiceHeader.getFinalTotal());
+//			if(Integer.parseInt(request.getParameter("discountType")) == 0)
+//				purchaseInvoiceHeader.setDiscount(request.getParameter("discount") + " %");
+//			else purchaseInvoiceHeader.setDiscount(request.getParameter("discount") + " EGP");
+//			if(request.getParameter("tax").equals(""))
+//				purchaseInvoiceHeader.setTax(0);
+//			else purchaseInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
+//			purchaseInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
+			cache.setQty(cache.getQty() - purchaseInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(purchaseInvoiceHeader);
 			InvoicesCounterUtil.incrementPurchaseInvoiceCounter();

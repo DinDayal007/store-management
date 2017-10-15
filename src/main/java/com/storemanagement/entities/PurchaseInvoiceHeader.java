@@ -43,16 +43,16 @@ public class PurchaseInvoiceHeader {
 	private Cache cache;
 	@Column(name = "TOTAL")
 	private double total;
-	@Column(name = "DISCOUNT")
-	private String discount;
-	@Column(name = "TAX")
-	private int tax;
-	@Column(name = "PAID")
-	private double paid;
-	@Column(name = "REMAIN")
-	private double remain;
-	@Column(name = "FINAL_TOTAL")
-	private double finalTotal;
+//	@Column(name = "DISCOUNT")
+//	private String discount;
+//	@Column(name = "TAX")
+//	private int tax;
+//	@Column(name = "PAID")
+//	private double paid;
+//	@Column(name = "REMAIN")
+//	private double remain;
+//	@Column(name = "FINAL_TOTAL")
+//	private double finalTotal;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseInvoiceHeader", fetch = FetchType.EAGER)
 	private Collection<PurchaseInvoiceDetails> purchaseInvoiceDetails = new ArrayList<PurchaseInvoiceDetails>();
 	public int getId() {
@@ -109,36 +109,36 @@ public class PurchaseInvoiceHeader {
 	public void setTotal(double total) {
 		this.total = total;
 	}
-	public String getDiscount() {
-		return discount;
-	}
-	public void setDiscount(String discount) {
-		this.discount = discount;
-	}
-	public int getTax() {
-		return tax;
-	}
-	public void setTax(int tax) {
-		this.tax = tax;
-	}
-	public double getPaid() {
-		return paid;
-	}
-	public void setPaid(double paid) {
-		this.paid = paid;
-	}
-	public double getRemain() {
-		return remain;
-	}
-	public void setRemain(double remain) {
-		this.remain = remain;
-	}
-	public double getFinalTotal() {
-		return finalTotal;
-	}
-	public void setFinalTotal(double finalTotal) {
-		this.finalTotal = finalTotal;
-	}
+//	public String getDiscount() {
+//		return discount;
+//	}
+//	public void setDiscount(String discount) {
+//		this.discount = discount;
+//	}
+//	public int getTax() {
+//		return tax;
+//	}
+//	public void setTax(int tax) {
+//		this.tax = tax;
+//	}
+//	public double getPaid() {
+//		return paid;
+//	}
+//	public void setPaid(double paid) {
+//		this.paid = paid;
+//	}
+//	public double getRemain() {
+//		return remain;
+//	}
+//	public void setRemain(double remain) {
+//		this.remain = remain;
+//	}
+//	public double getFinalTotal() {
+//		return finalTotal;
+//	}
+//	public void setFinalTotal(double finalTotal) {
+//		this.finalTotal = finalTotal;
+//	}
 	public Collection<PurchaseInvoiceDetails> getPurchaseInvoiceDetails() {
 		return purchaseInvoiceDetails;
 	}

@@ -107,10 +107,10 @@ public class InvoiceService extends EntityService {
 			purchaseInvoicenumber = (Long) getSession().createCriteria(PurchaseInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
 			returnSalesInvoicenumber = (Long) getSession().createCriteria(ReturnSalesInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
 			returnPurchaseInvoicenumber = (Long) getSession().createCriteria(ReturnPurchaseInvoiceHeader.class).setProjection(Projections.max("number")).uniqueResult();
-			invoiceNumbers.add(salesInvoicenumber == null ? 1 : salesInvoicenumber);
-			invoiceNumbers.add(purchaseInvoicenumber == null ? 1 : purchaseInvoicenumber);
-			invoiceNumbers.add(returnSalesInvoicenumber == null ? 1 : returnSalesInvoicenumber);
-			invoiceNumbers.add(returnPurchaseInvoicenumber == null ? 1 : returnPurchaseInvoicenumber);
+			invoiceNumbers.add(salesInvoicenumber == null ? 1 : salesInvoicenumber + 1);
+			invoiceNumbers.add(purchaseInvoicenumber == null ? 1 : purchaseInvoicenumber + 1);
+			invoiceNumbers.add(returnSalesInvoicenumber == null ? 1 : returnSalesInvoicenumber + 1);
+			invoiceNumbers.add(returnPurchaseInvoicenumber == null ? 1 : returnPurchaseInvoicenumber + 1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
