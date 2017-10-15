@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/inventories")
 public class InventoriesController extends HttpServlet {
@@ -38,10 +40,14 @@ public class InventoriesController extends HttpServlet {
 			String description = request.getParameter("inventory_description");
 			Branch branch = new Branch();
 			branch.setId(Integer.parseInt(request.getParameter("inventory_branch")));
+			User createdBy = (User) request.getSession().getAttribute("user");
 			Inventory inventory = new Inventory();
 			inventory.setName(name);
 			inventory.setDescription(description);
 			inventory.setBranch(branch);
+			inventory.setCreatedDate(new Date());
+			inventory.setLastUpdatedDate(new Date());
+			inventory.setCreatedBy(createdBy);
 			EntityService.addObject(inventory);
 		}
 	}
@@ -59,6 +65,7 @@ public class InventoriesController extends HttpServlet {
 			inventory.setName(name);
 			inventory.setDescription(description);
 			inventory.setBranch(branch);
+			inventory.setLastUpdatedDate(new Date());
 			EntityService.updateObject(inventory);
 		}
 	}

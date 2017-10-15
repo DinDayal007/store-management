@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Supplier;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/suppliers")
 public class SuppliersController extends HttpServlet {
@@ -33,6 +35,7 @@ public class SuppliersController extends HttpServlet {
 	protected void add(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("supplier_name").equals("")) {
+			User createdBy = (User) request.getSession().getAttribute("user");
 			Supplier supplier = new Supplier();
 			supplier.setName(request.getParameter("supplier_name"));
 			supplier.setCode(request.getParameter("supplier_code"));
@@ -41,6 +44,9 @@ public class SuppliersController extends HttpServlet {
 			supplier.setPhone(request.getParameter("supplier_phone"));
 			supplier.setMobile1(request.getParameter("supplier_mobile1"));
 			supplier.setMobile2(request.getParameter("supplier_mobile2"));
+			supplier.setCreatedDate(new Date());
+			supplier.setLastUpdatedDate(new Date());
+			supplier.setCreatedBy(createdBy);
 			EntityService.addObject(supplier);
 		}
 	}
@@ -58,6 +64,7 @@ public class SuppliersController extends HttpServlet {
 			supplier.setPhone(request.getParameter("supplier_phone"));
 			supplier.setMobile1(request.getParameter("supplier_mobile1"));
 			supplier.setMobile2(request.getParameter("supplier_mobile2"));
+			supplier.setLastUpdatedDate(new Date());
 			EntityService.updateObject(supplier);
 		}
 	}

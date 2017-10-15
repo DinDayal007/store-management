@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -70,12 +71,16 @@ public class UsersController extends HttpServlet {
 			cache.setId(Integer.parseInt(request.getParameter("user_cache")));
 			Inventory inventory = new Inventory();
 			inventory.setId(Integer.parseInt(request.getParameter("user_inventory")));
+			User createdBy = (User) request.getSession().getAttribute("user");
 			User user = new User();
 			user.setName(request.getParameter("user_name"));
 			user.setPassword(request.getParameter("user_password"));
 			user.setRole(role);
 			user.setCache(cache);
 			user.setInventory(inventory);
+			user.setCreatedDate(new Date());
+			user.setLastUpdatedDate(new Date());
+			user.setCreatedBy(createdBy);
 			EntityService.addObject(user);
 		}
 	}

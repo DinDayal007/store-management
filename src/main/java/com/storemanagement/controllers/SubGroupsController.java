@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SubGroup;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.GroupService;
 @WebServlet("/subgroups")
 public class SubGroupsController extends HttpServlet {
@@ -47,6 +49,10 @@ public class SubGroupsController extends HttpServlet {
 			SubGroup subGroup = new SubGroup();
 			subGroup.setName(name);
 			subGroup.setMainGroup(mainGroup);
+			User createdBy = (User) request.getSession().getAttribute("user");
+			subGroup.setCreatedDate(new Date());
+			subGroup.setLastUpdatedDate(new Date());
+			subGroup.setCreatedBy(createdBy);
 			GroupService.addObject(subGroup);
 		}
 	}
@@ -63,6 +69,7 @@ public class SubGroupsController extends HttpServlet {
 			subGroup.setId(id);
 			subGroup.setName(name);
 			subGroup.setMainGroup(mainGroup);
+			subGroup.setLastUpdatedDate(new Date());
 			GroupService.updateObject(subGroup);
 		}
 	}

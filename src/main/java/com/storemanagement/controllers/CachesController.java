@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/caches")
 public class CachesController extends HttpServlet {
@@ -33,9 +35,13 @@ public class CachesController extends HttpServlet {
 	protected void add(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("cache_name").equals("") && !request.getParameter("cache_qty").equals("")) {
+			User createdBy = (User) request.getSession().getAttribute("user");
 			Cache cache = new Cache();
 			cache.setName(request.getParameter("cache_name"));
 			cache.setQty(Double.parseDouble(request.getParameter("cache_qty")));
+			cache.setCreatedDate(new Date());
+			cache.setLastUpdatedDate(new Date());
+			cache.setCreatedBy(createdBy);
 			EntityService.addObject(cache);
 		}
 	}
@@ -48,6 +54,7 @@ public class CachesController extends HttpServlet {
 			cache.setId(id);
 			cache.setName(request.getParameter("cache_name"));
 			cache.setQty(Double.parseDouble(request.getParameter("cache_qty")));
+			cache.setLastUpdatedDate(new Date());
 			EntityService.updateObject(cache);
 		}
 	}

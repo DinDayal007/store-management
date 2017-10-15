@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/groups")
 public class GroupsController extends HttpServlet {
@@ -34,8 +36,12 @@ public class GroupsController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("group_name").equals("")) {
 			String name = request.getParameter("group_name");
+			User createdBy = (User) request.getSession().getAttribute("user");
 			MainGroup mainGroup = new MainGroup();
 			mainGroup.setName(name);
+			mainGroup.setCreatedDate(new Date());
+			mainGroup.setLastUpdatedDate(new Date());
+			mainGroup.setCreatedBy(createdBy);
 			EntityService.addObject(mainGroup);
 		}
 	}
@@ -48,6 +54,7 @@ public class GroupsController extends HttpServlet {
 			MainGroup mainGroup = new MainGroup();
 			mainGroup.setId(id);
 			mainGroup.setName(name);
+			mainGroup.setLastUpdatedDate(new Date());
 			EntityService.updateObject(mainGroup);
 		}
 	}

@@ -1,13 +1,14 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.transaction.Transactional;
 import com.storemanagement.entities.Client;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/clients")
 public class ClientsController extends HttpServlet {
@@ -34,6 +35,7 @@ public class ClientsController extends HttpServlet {
 	protected void add(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("client_name").equals("")) {
+			User createdBy = (User) request.getSession().getAttribute("user");
 			Client client = new Client();
 			client.setName(request.getParameter("client_name"));
 			client.setCode(request.getParameter("client_code"));
@@ -42,6 +44,9 @@ public class ClientsController extends HttpServlet {
 			client.setPhone(request.getParameter("client_phone"));
 			client.setMobile1(request.getParameter("client_mobile1"));
 			client.setMobile2(request.getParameter("client_mobile2"));
+			client.setCreatedDate(new Date());
+			client.setLastUpdatedDate(new Date());
+			client.setCreatedBy(createdBy);
 			EntityService.addObject(client);
 		}
 	}
@@ -59,6 +64,7 @@ public class ClientsController extends HttpServlet {
 			client.setPhone(request.getParameter("client_phone"));
 			client.setMobile1(request.getParameter("client_mobile1"));
 			client.setMobile2(request.getParameter("client_mobile2"));
+			client.setLastUpdatedDate(new Date());
 			EntityService.updateObject(client);
 		}
 	}

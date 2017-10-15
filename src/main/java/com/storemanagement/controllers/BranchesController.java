@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/branches")
 public class BranchesController extends HttpServlet {
@@ -31,10 +33,14 @@ public class BranchesController extends HttpServlet {
 	protected void add(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("branch_name").equals("")) {
+			User createdBy = (User) request.getSession().getAttribute("user");
 			Branch branch = new Branch();
 			branch.setName(request.getParameter("branch_name"));
 			branch.setAddress(request.getParameter("branch_address"));
 			branch.setDescription(request.getParameter("branch_description"));
+			branch.setCreatedDate(new Date());
+			branch.setLastUpdatedDate(new Date());
+			branch.setCreatedBy(createdBy);
 			EntityService.addObject(branch);
 		}
 	}
@@ -48,6 +54,7 @@ public class BranchesController extends HttpServlet {
 			branch.setName(request.getParameter("branch_name"));
 			branch.setAddress(request.getParameter("branch_address"));
 			branch.setDescription(request.getParameter("branch_description"));
+			branch.setLastUpdatedDate(new Date());
 			EntityService.updateObject(branch);
 		}
 	}

@@ -13,6 +13,7 @@ import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SubGroup;
 import com.storemanagement.entities.Unit;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
 import com.storemanagement.services.ItemService;
@@ -69,6 +70,10 @@ public class ItemsController extends HttpServlet {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			User createdBy = (User) request.getSession().getAttribute("user");
+			item.setCreatedDate(new Date());
+			item.setLastUpdatedDate(new Date());
+			item.setCreatedBy(createdBy);
 			EntityService.addObject(item);
 		}
 	}
@@ -98,6 +103,7 @@ public class ItemsController extends HttpServlet {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			item.setLastUpdatedDate(new Date());
 			EntityService.updateObject(item);
 		}
 	}
