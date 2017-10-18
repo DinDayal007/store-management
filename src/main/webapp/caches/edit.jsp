@@ -42,11 +42,8 @@ Cache cache = (Cache) EntityService.getObject(Cache.class, id);
                                 	<label for="cache_name">اسم الخزنة</label>
                                     <input class="form-control" placeholder="اسم الخزنة" value="<%= cache.getName() %>" name="cache_name" type="text" id="cache_name" autofocus required>
                                 </div>
-                                <div class="form-group">
-                                	<label for="cache_description">المبلغ المتوفر</label>
-                                    <input class="form-control" placeholder="المبلغ المتوفر" value="<%= cache.getQty() %>" name="cache_qty" type="number" id="cache_qty" required readonly>
-                                </div>
                                 <!-- Change this to a button or input when using this as a form -->
+                                <input type="hidden" name="cache_qty" value="<%= cache.getQty() %>" />
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="edit" />
                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="تعديل" />

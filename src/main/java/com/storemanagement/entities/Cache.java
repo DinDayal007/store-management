@@ -22,13 +22,13 @@ public class Cache {
 	@Column(name = "QTY")
 	private double qty;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_DATE")
+	@Column(name = "CREATED_DATE", updatable = false)
 	private Date createdDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LAST_UPDATED_DATE")
 	private Date lastUpdatedDate;
 	@OneToOne
-	@JoinColumn(name = "CREATED_BY", referencedColumnName = "ID")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "ID", updatable = false)
 	private User createdBy;
 	public int getId() {
 		return id;

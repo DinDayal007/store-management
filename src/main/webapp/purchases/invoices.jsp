@@ -18,7 +18,7 @@ List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = EntityService.getAllObjects
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<a href="/store-management/purchases"><button class="btn btn-lg btn-primary">إضافة فاتورة شراء جديدة</button></a>
+			<a href="/store-management/reports?r=p" target="_blank"><button class="btn btn-lg btn-primary">طباعة فواتير المشتريات</button></a>
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesInvoices" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d59b097f-1c5f-485f-8a98-d45ae31427de">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="inventory" class="java.lang.String"/>
+	<field name="cache" class="java.lang.String"/>
+	<field name="user" class="java.lang.String"/>
+	<field name="client" class="java.lang.String"/>
+	<field name="total" class="java.lang.String"/>
+	<field name="tax" class="java.lang.String"/>
+	<field name="discount" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="number" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="24" width="200" height="30" uuid="b85c9150-d96b-4328-a457-d12c5892c90f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[فواتير المبيعات]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="110" height="30" uuid="b46976de-fdc7-4f10-a981-60a5d0238617"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="6edb3d98-c04f-44d9-a782-e782f441a7fb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="480" y="0" width="100" height="30" uuid="9f21e593-dd9c-4e81-ac5a-2685c21b609e"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="67" height="30" forecolor="#4D4545" uuid="147a308a-d121-4200-9fae-45c0d77e588c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[المخزن]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="67" y="0" width="61" height="30" forecolor="#4D4545" uuid="d362f4fa-e34d-41d5-b25c-ac6437f11dfb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[الخزنة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="0" width="61" height="30" forecolor="#4D4545" uuid="7b53fbb8-c571-45fd-937d-8698e6a882c6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[المستخدم]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="0" width="61" height="30" forecolor="#4D4545" uuid="67947b3b-6fd4-4f03-aa0c-dce32322f8a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[العميل]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="61" height="30" forecolor="#4D4545" uuid="23b4ce38-b6d5-4f49-be06-f5178ba2d05a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[إجمالى الفاتورة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="0" width="61" height="30" forecolor="#4D4545" uuid="c03a3dc9-f5ef-4daf-8c61-9728171a5dff"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[الضريبة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="0" width="61" height="30" forecolor="#4D4545" uuid="4e8a1978-47c2-4694-b6cc-171fdd805e5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[الخصم]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="0" width="61" height="30" forecolor="#4D4545" uuid="9374b864-9e2d-4ab3-9a4b-0ee8b94556b9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[التاريخ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="494" y="0" width="61" height="30" forecolor="#4D4545" uuid="30b80536-f39f-4fd3-a0cf-93fdf18cdba3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<text><![CDATA[رقم الفاتورة]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="36" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="6" width="67" height="30" forecolor="#0F1580" uuid="4a5109b3-fe8c-49d1-a946-85593ede2af6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{inventory}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="6" width="61" height="30" forecolor="#0F1580" uuid="848d6868-c37d-43c0-88f4-806705ec6c94"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cache}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="128" y="6" width="61" height="30" forecolor="#0F1580" uuid="0f4a3447-304d-4cad-a610-c7311cb8b679"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="189" y="6" width="61" height="30" forecolor="#0F1580" uuid="095f82cb-1da4-4c84-b1b9-cd9dbff72d29"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{client}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="6" width="61" height="30" forecolor="#0F1580" uuid="59f0b8a3-4b45-441f-b15b-1c6e581e8a23"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="311" y="6" width="61" height="30" forecolor="#0F1580" uuid="caa6bdec-d1b8-49f6-baf3-6bdf190e865b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tax}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="372" y="6" width="61" height="30" forecolor="#0F1580" uuid="b69d8466-7e96-4752-8b91-a47fde6d9845"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="6" width="61" height="30" forecolor="#0F1580" uuid="b1774a32-a790-43f0-97a6-12bb310ed1a1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="494" y="6" width="61" height="30" forecolor="#0F1580" uuid="275fa776-2101-41e8-b0cc-7b4ef7b126d7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="31" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="1" y="0" width="109" height="30" uuid="3e136dbb-a7d9-47af-a92f-cc3a1ec49369"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
+encoding//src/main/resources/PurchaseInvoice.jrxml=UTF-8
+encoding//src/main/resources/reports/PurchaseInvoices.jrxml=UTF-8
+encoding//src/main/resources/reports/SalesInvoices.jrxml=UTF-8
 encoding//src/main/webapp/groups/add.html=UTF-8
 encoding//src/main/webapp/header.jsp=UTF-8
 encoding//src/main/webapp/inventories/index.jsp=UTF-8

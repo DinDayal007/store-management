@@ -34,11 +34,11 @@ public class CachesController extends HttpServlet {
 	//add new cache
 	protected void add(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("cache_name").equals("") && !request.getParameter("cache_qty").equals("")) {
+		if(!request.getParameter("cache_name").equals("")) {
 			User createdBy = (User) request.getSession().getAttribute("user");
 			Cache cache = new Cache();
 			cache.setName(request.getParameter("cache_name"));
-			cache.setQty(Double.parseDouble(request.getParameter("cache_qty")));
+			cache.setQty(0);
 			cache.setCreatedDate(new Date());
 			cache.setLastUpdatedDate(new Date());
 			cache.setCreatedBy(createdBy);
