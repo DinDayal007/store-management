@@ -75,6 +75,7 @@ public class UsersController extends HttpServlet {
 			User user = new User();
 			user.setName(request.getParameter("user_name"));
 			user.setPassword(request.getParameter("user_password"));
+			user.setStatus(1);
 			user.setRole(role);
 			user.setCache(cache);
 			user.setInventory(inventory);

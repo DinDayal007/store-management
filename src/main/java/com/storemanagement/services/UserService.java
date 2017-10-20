@@ -6,7 +6,7 @@ public class UserService extends EntityService {
 		User user = null;
 		try {
 			openSession();
-			user = (User) getSession().createQuery("from User where name = :name and password = :password").setParameter("name", name).setParameter("password", password).uniqueResult();
+			user = (User) getSession().createQuery("from User where name = :name and password = :password and status = 1").setParameter("name", name).setParameter("password", password).uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

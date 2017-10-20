@@ -33,9 +33,9 @@
                                             <th>الفرع</th>
                                             <th>المخزن</th>
                                             <th>الخزنة</th>
-                                            <th>تعديل</th>
-                                            <th>حظر</th>
-                                            <th>حذف نهائى</th>
+<!--                                             <th>تعديل</th> -->
+<!--                                             <th>حظر</th> -->
+<!--                                             <th>حذف نهائى</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -47,12 +47,12 @@
                                             <td><%= user.getName() %></td>
                                             <td><%= user.getPassword() %></td>
                                             <td><%= user.getRole().getName() %></td>
-                                            <td><%= user.getInventory().getBranch().getName() %></td>
-                                            <td><%= user.getInventory().getName() %></td>
-                                            <td><%= user.getCache().getName() %></td>
-                                            <td><a href="#"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
-                                            <td><a href="#"><button class="btn btn-default"><i class="fa fa-ban"></i></button></a></td>
-                                            <td><a href="#"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
+                                            <td><%= user.getInventory() == null ? "" : user.getInventory().getBranch().getName() %></td>
+                                            <td><%= user.getInventory() == null ? "" : user.getInventory().getName() %></td>
+                                            <td><%= user.getCache() == null ? "" : user.getCache().getName() %></td>
+<!--                                             <td><a href="#"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td> -->
+<!--                                             <td><a href="#"><button class="btn btn-default"><i class="fa fa-ban"></i></button></a></td> -->
+<!--                                             <td><a href="#"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td> -->
                                         </tr>
                                         <% } %>
                                     </tbody>
