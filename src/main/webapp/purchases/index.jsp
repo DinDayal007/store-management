@@ -52,14 +52,12 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 						<label for="inv_date">التاريخ</label> 
 						<input style="width: 40%" class="form-control" type="text" id="inv_date" name="inv_date" value="<%= new SimpleDateFormat("dd-MM-yyyy").format(new Date()) %>" readonly />
 					</div>
-					<div class="form-group form-inline">
-						<label for="inventory">المخزن</label> 
-						<select class="form-control" id="inventory" name="inventory">
-							<% for(Inventory inventory : inventories){ %>
-							<option value="<%= inventory.getId() %>"><%= inventory.getName() %></option>
-							<% } %>
-						</select>
-					</div>
+<!-- 					<div class="form-group form-inline"> -->
+<!-- 						<label for="inventory">المخزن</label>  -->
+<!-- 						<select class="form-control" id="inventory" name="inventory"> -->
+							
+<!-- 						</select> -->
+<!-- 					</div> -->
 				</div>
 				<div class="col-md-4">
 					<div class="form-group form-inline">
@@ -70,14 +68,12 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 						</select> -->
 						<input type="text" class="form-control" name="inv_type" id="inv_type" value="فوري" readonly />
 					</div>
-					<div class="form-group form-inline">
-						<label for="cache">الخزنة</label> 
-						<select class="form-control" id="cache" name="cache">
-							<% for(Cache cache : caches){ %>
-							<option value="<%= cache.getId() %>"><%= cache.getName() %></option>
-							<% } %>
-						</select>
-					</div>
+<!-- 					<div class="form-group form-inline"> -->
+<!-- 						<label for="cache">الخزنة</label>  -->
+<!-- 						<select class="form-control" id="cache" name="cache"> -->
+							
+<!-- 						</select> -->
+<!-- 					</div> -->
 				</div>
 			</div>
 			<hr />
@@ -325,8 +321,8 @@ $(document).ready(function(){
 		var inv_num = $('#inv_num').val();
 		var inv_type = 0;
 		var supplier = $('#supplier').val();
-		var inventory = $('#inventory').val();
-		var cache = $('#cache').val();
+// 		var inventory = $('#inventory').val();
+// 		var cache = $('#cache').val();
 		var totalPrice = $('#totalPrice').val();
 // 		var inv_type = $('#inv_type').val();
 // 		var paid = $('#paid').val();
@@ -341,7 +337,8 @@ $(document).ready(function(){
 			data : {
 				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal,
 				inv_num : inv_num, inv_type :inv_type, supplier : supplier,
-				inventory : inventory, cache : cache, totalPrice :totalPrice,
+				//inventory : inventory, cache : cache,
+				totalPrice :totalPrice,
 				action : "save"
 			},
 			dataType : "text",

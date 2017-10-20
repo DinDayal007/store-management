@@ -35,7 +35,7 @@ public class ReportsUtil {
 			map.put("date", header.getDate().toString());
 			map.put("discount", header.getDiscount());
 			map.put("tax", header.getTax() + " %");
-			map.put("total", header.getTotal());
+			map.put("total", header.getFinalTotal());
 			Client client = header.getClient();
 			if(null == client) map.put("client", "عميل نقدى");
 			else map.put("client", client.getName());

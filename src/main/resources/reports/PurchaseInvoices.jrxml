@@ -172,7 +172,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[إجمالى الرصيد]]></text>
+				<text><![CDATA[إجمالى الفواتير]]></text>
 			</staticText>
 			<textField pattern="# EGP">
 				<reportElement mode="Opaque" x="0" y="0" width="82" height="20" forecolor="#2C1780" backcolor="#E6E6E6" uuid="ee55bcd2-8a12-4f6c-9a61-7f23a7c483a4">

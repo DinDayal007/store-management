@@ -123,17 +123,20 @@ public class PurchasesController extends HttpServlet {
 //				purchaseInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("finalTotal")));
 //				purchaseInvoiceHeader.setRemain(0);
 //			}
-			User user = new User();
-			user.setId(1);
+//			User user = new User();
+//			user.setId(1);
+			User user = (User) request.getSession().getAttribute("user");
 			purchaseInvoiceHeader.setUser(user);
 			Supplier supplier = new Supplier();
 			supplier.setId(Integer.parseInt(request.getParameter("supplier")));
 			purchaseInvoiceHeader.setSupplier(supplier);
-			Inventory inventory = new Inventory();
-			inventory.setId(Integer.parseInt(request.getParameter("inventory")));
+//			Inventory inventory = new Inventory();
+//			inventory.setId(Integer.parseInt(request.getParameter("inventory")));
+			Inventory inventory = user.getInventory();
 			purchaseInvoiceHeader.setInventory(inventory);
-			int cacheId = Integer.parseInt(request.getParameter("cache"));
-			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
+//			int cacheId = Integer.parseInt(request.getParameter("cache"));
+//			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
+			Cache cache = user.getCache();
 			purchaseInvoiceHeader.setCache(cache);
 			purchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
 //			if(Integer.parseInt(request.getParameter("discountType")) == 0)

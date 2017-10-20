@@ -123,19 +123,20 @@ public class SalesController extends HttpServlet {
 				salesInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("finalTotal")));
 				salesInvoiceHeader.setRemain(0);
 			}
-			User user = new User();
-			user.setId(1);
+			User user = (User) request.getSession().getAttribute("user");
 			salesInvoiceHeader.setUser(user);
 			Client client = new Client();
 			client.setId(Integer.parseInt(request.getParameter("client")));
 			if(client.getId() == 0)
 				salesInvoiceHeader.setClient(null);
 			else salesInvoiceHeader.setClient(client);
-			Inventory inventory = new Inventory();
-			inventory.setId(Integer.parseInt(request.getParameter("inventory")));
+			//Inventory inventory = new Inventory();
+			//inventory.setId(Integer.parseInt(request.getParameter("inventory")));
+			Inventory inventory = user.getInventory();
 			salesInvoiceHeader.setInventory(inventory);
-			int cacheId = Integer.parseInt(request.getParameter("cache"));
-			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
+			//int cacheId = Integer.parseInt(request.getParameter("cache"));
+			//Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
+			Cache cache = user.getCache();
 			salesInvoiceHeader.setCache(cache);
 			salesInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
 			if(Integer.parseInt(request.getParameter("discountType")) == 0)
