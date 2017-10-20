@@ -1,9 +1,11 @@
 package com.storemanagement.utils;
 import java.util.Date;
+import java.util.List;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
+import com.storemanagement.entities.ItemMovement;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.Role;
 import com.storemanagement.entities.SubGroup;
@@ -13,7 +15,10 @@ import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 public class Application {
 	public static void main(String[] args) {
-				
+		
+//		List<ItemMovement> itemMovements = EntityService.getAllObjects(ItemMovement.class);
+//		System.out.println("****************************************");
+//		System.out.println("size of list from view is " + itemMovements.size());
 //		Cache cache = new Cache();
 //		cache.setName("احمد");
 //		cache.setQyt(650);

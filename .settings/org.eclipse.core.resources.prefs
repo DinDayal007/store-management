@@ -1,5 +1,7 @@
 eclipse.preferences.version=1
-encoding//src/main/resources/PurchaseInvoice.jrxml=UTF-8
+encoding//src/main/resources/reports/CacheMovementSum.jrxml=UTF-8
+encoding//src/main/resources/reports/CachesQty.jrxml=UTF-8
+encoding//src/main/resources/reports/ItemMovements.jrxml=UTF-8
 encoding//src/main/resources/reports/PurchaseInvoices.jrxml=UTF-8
 encoding//src/main/resources/reports/SalesInvoices.jrxml=UTF-8
 encoding//src/main/webapp/groups/add.html=UTF-8

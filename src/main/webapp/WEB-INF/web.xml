@@ -142,8 +142,18 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.ReportsController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>CacheSumController</servlet-name>
+  	<display-name>CacheSumController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.CacheSumController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CacheSumController</servlet-name>
+  	<url-pattern>/cache-sum</url-pattern>
   </servlet-mapping>
 </web-app>

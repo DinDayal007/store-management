@@ -141,6 +141,9 @@
                             <a href="http://localhost:8080/store-management/cache-movements"><i class="fa fa-money fa-fw"></i> حركة الخزنة</a>
                         </li>
                         <li>
+                            <a href="http://localhost:8080/store-management/cache-sum"><i class="fa fa-credit-card fa-fw"></i> كشف حساب حركة الخزنة</a>
+                        </li>
+                        <li>
                             <a href="http://localhost:8080/store-management/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
                         </li>
 
