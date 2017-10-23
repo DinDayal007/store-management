@@ -1,10 +1,13 @@
 package com.storemanagement.utils;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
+import com.storemanagement.entities.ItemBalance;
 import com.storemanagement.entities.ItemMovement;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.Role;
@@ -13,8 +16,28 @@ import com.storemanagement.entities.Supplier;
 import com.storemanagement.entities.Unit;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
+import com.storemanagement.services.ItemService;
 public class Application {
 	public static void main(String[] args) {
+		List<ItemBalance> itemBalances = ItemService.getItemBalance(7, 1);
+		System.out.println(itemBalances.size());
+		
+//		CacheMovement cacheMovement = new CacheMovement();
+//		cacheMovement.setAmount(500);
+//		cacheMovement.setCache(null);
+//		cacheMovement.setDate(new Date());
+//		cacheMovement.setDescription("");
+//		cacheMovement.setInventory(null);
+//		cacheMovement.setType(0);
+//		cacheMovement.setUser(null);
+//		EntityService.addObject(cacheMovement);
+		
+//		Unit unit = new Unit();
+//		unit.setName("دستة");
+//		unit.setDescription("دستة دستة دستة");
+//		unit.setQty(12);
+//		unit.setCreatedDate(new Date());
+//		EntityService.addObject(unit);
 		
 //		List<ItemMovement> itemMovements = EntityService.getAllObjects(ItemMovement.class);
 //		System.out.println("****************************************");

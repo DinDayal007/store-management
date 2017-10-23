@@ -21,6 +21,8 @@ public class Unit {
 	private String name;
 	@Column(name = "DESCRIPTION")
 	private String description;
+	@Column(name = "QTY")
+	private int qty;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "CREATED_DATE")
 	private Date createdDate;
@@ -47,6 +49,12 @@ public class Unit {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public int getQty() {
+		return qty;
+	}
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 	public Date getCreatedDate() {
 		return createdDate;

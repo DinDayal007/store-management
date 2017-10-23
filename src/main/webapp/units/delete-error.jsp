@@ -29,7 +29,7 @@
                     <div class="panel-body">
                         <fieldset>
                             <div class="form-group">
-                            	<p class="lead text-danger">عفوا لا يمكن حذف هذه الوحدة لأنها مرتبطة ببعض الأصناف</p>
+                            	<p class="lead text-danger">عفوا لا يمكن حذف هذه الوحدة لأنها مرتبطة بفواتير البيع والشراء</p>
                             </div>
                             <a href="/store-management/units"><button type="button" class="btn btn-primary">رجوع</button></a>
                         </fieldset>

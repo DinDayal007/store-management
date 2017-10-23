@@ -1,6 +1,5 @@
-<%@page import="com.storemanagement.entities.Item"%>
+<%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="java.util.List"%>
-<%@page import="com.storemanagement.services.ItemService"%>
 <%@page import="com.storemanagement.entities.Unit"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,8 +7,8 @@
 int id = Integer.parseInt(request.getParameter("id"));
 Unit unit = new Unit();
 unit.setId(id);
-List<Item> items = ItemService.getItemsFromUnit(unit);
-if(items.size() > 0) response.sendRedirect("/store-management/units/delete-error.jsp");
+boolean hasInvoices = InvoiceService.hasDetailsFromUnit(unit);
+if(hasInvoices) response.sendRedirect("/store-management/units/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">

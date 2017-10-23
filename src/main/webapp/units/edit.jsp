@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Unit"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -5,6 +6,7 @@
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 Unit unit = (Unit) EntityService.getObject(Unit.class, id);
+boolean hasInvoices = InvoiceService.hasDetailsFromUnit(unit);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,9 +46,18 @@ Unit unit = (Unit) EntityService.getObject(Unit.class, id);
                                 </div>
                                 <div class="form-group">
                                 	<label for="unit_description">وصف الوحدة</label>
-                                    <input class="form-control" placeholder="وصف الوحدة" name="unit_description" value="<%= unit.getDescription() %>" type="text" id="unit_description" autofocus>
+                                    <input class="form-control" placeholder="وصف الوحدة" name="unit_description" value="<%= unit.getDescription() %>" type="text" id="unit_description">
                                 </div>
+                                <% if(!hasInvoices){ %>
+                                <div class="form-group">
+                                	<label for="unit_qty">كمية الوحدة</label>
+                                    <input class="form-control" placeholder="كمية الوحدة" name="unit_qty" value="<%= unit.getQty() %>" type="number" min="1" id="unit_qty">
+                                </div>
+                                <% } else { %>
+                                <input type="hidden" name="unit_qty" value="<%= unit.getQty() %>" />
+                                <% } %>
                                 <!-- Change this to a button or input when using this as a form -->
+                                
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="edit" />
                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="تعديل" />

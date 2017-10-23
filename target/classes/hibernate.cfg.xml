@@ -45,5 +45,6 @@
         <mapping class="com.storemanagement.entities.CacheMovement"/>
         <mapping class="com.storemanagement.entities.ItemMovement"/>
         <mapping class="com.storemanagement.entities.CacheMovementSum"/>
+        <mapping class="com.storemanagement.entities.ItemBalance"/>
     </session-factory>
 </hibernate-configuration>

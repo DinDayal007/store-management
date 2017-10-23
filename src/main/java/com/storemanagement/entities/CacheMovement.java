@@ -24,8 +24,8 @@ public class CacheMovement {
 	@JoinColumn(name = "CACHE_ID", referencedColumnName = "ID")
 	private Cache cache;
 	@OneToOne
-	@JoinColumn(name = "BRANCH_ID", referencedColumnName = "ID")
-	private Branch branch;
+	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
+	private Inventory inventory;
 	@Temporal(TemporalType.DATE)
 	@Column(name = "DATE")
 	private Date date;
@@ -53,11 +53,11 @@ public class CacheMovement {
 	public void setCache(Cache cache) {
 		this.cache = cache;
 	}
-	public Branch getBranch() {
-		return branch;
+	public Inventory getInventory() {
+		return inventory;
 	}
-	public void setBranch(Branch branch) {
-		this.branch = branch;
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 	public Date getDate() {
 		return date;

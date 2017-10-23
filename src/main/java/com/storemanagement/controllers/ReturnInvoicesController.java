@@ -45,8 +45,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			returnSalesInvoiceHeader.setNumber(InvoicesCounterUtil.getReturnSalesInvoiceCounter());
 			returnSalesInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("total")));
 			returnSalesInvoiceHeader.setDate(new Date());
-			User user = new User();
-			user.setId(1);
+			User user = (User) request.getSession().getAttribute("user");
 			returnSalesInvoiceHeader.setUser(user);
 			int cacheId = Integer.parseInt(request.getParameter("cache"));
 			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
@@ -84,8 +83,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			returnPurchaseInvoiceHeader.setNumber(InvoicesCounterUtil.getReturnSPurchaseInvoiceCounter());
 			returnPurchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("total")));
 			returnPurchaseInvoiceHeader.setDate(new Date());
-			User user = new User();
-			user.setId(1);
+			User user = (User) request.getSession().getAttribute("user");
 			returnPurchaseInvoiceHeader.setUser(user);
 			int cacheId = Integer.parseInt(request.getParameter("cache"));
 			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);

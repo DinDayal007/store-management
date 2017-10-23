@@ -59,10 +59,6 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        		<td class="value"><label><%= item.getName() %></label></td>
 	                        	</tr>
 	                        	<tr>
-	                        		<td class="key"><label>نوع الوحدة</label></td>
-	                        		<td class="value"><label><%= item.getUnit().getName() %></label></td>
-	                        	</tr>
-	                        	<tr>
 	                        		<td class="key"><label>السعر</label></td>
 	                        		<td class="value"><label><%= item.getPrice() %> EGP</label></td>
 	                        	</tr>

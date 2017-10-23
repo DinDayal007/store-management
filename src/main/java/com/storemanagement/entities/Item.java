@@ -23,9 +23,6 @@ public class Item {
 	private String code;
 	@Column(name = "NAME")
 	private String name;
-	@OneToOne
-	@JoinColumn(name = "UNIT_ID", referencedColumnName = "ID")
-	private Unit unit;
 	@Column(name = "PRICE")
 	private double price;
 	@Column(name = "HOME")
@@ -74,12 +71,6 @@ public class Item {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Unit getUnit() {
-		return unit;
-	}
-	public void setUnit(Unit unit) {
-		this.unit = unit;
 	}
 	public double getPrice() {
 		return price;

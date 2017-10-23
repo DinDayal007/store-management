@@ -29,6 +29,7 @@
                                             <th>#</th>
                                             <th>اسم الوحدة</th>
                                             <th>وصف الوحدة</th>
+                                            <th>كمية الوحدة</th>
                                             <th>تعديل</th>
                                             <th>حذف</th>
                                         </tr>
@@ -42,6 +43,7 @@
                                             <td><%= i %></td>
                                             <td><%= unit.getName() %></td>
                                             <td><%= unit.getDescription() %></td>
+                                            <td><%= unit.getQty() %></td>
                                             <td><a href="units/edit.jsp?id=<%= unit.getId() %>"><button class="btn btn-success"><i class="fa fa-edit"></i></button></a></td>
                                             <td><a href="units/delete.jsp?id=<%= unit.getId() %>"><button class="btn btn-danger"><i class="fa fa-close"></i></button></a></td>
                                         </tr>

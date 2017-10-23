@@ -129,19 +129,24 @@
                             <a href="http://localhost:8080/store-management/clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/caches"><i class="fa fa-money fa-fw"></i> الخزائن</a>
-                        </li>
-                        <li>
-                            <a href="http://localhost:8080/store-management/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
+                        	<a href="#"><i class="fa fa-money fa-fw"></i> الخزائن<span class="fa arrow"></span></a>
+                        	<ul class="nav nav-second-level">
+                        		<li>
+                                    <a href="http://localhost:8080/store-management/caches">أرصدة الخزنة</a>
+                                </li>
+                                <li>
+                            		<a href="http://localhost:8080/store-management/cache-movements">حركة الخزنة</a>
+                        		</li>
+                        		<li>
+                            		<a href="http://localhost:8080/store-management/cache-sum">كشف حساب حركة الخزنة</a>
+                       			 </li>
+                        	</ul>
                         </li>
                         <li>
                             <a href="http://localhost:8080/store-management/branches"><i class="fa fa-th-large fa-fw"></i> الفروع</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/cache-movements"><i class="fa fa-money fa-fw"></i> حركة الخزنة</a>
-                        </li>
-                        <li>
-                            <a href="http://localhost:8080/store-management/cache-sum"><i class="fa fa-credit-card fa-fw"></i> كشف حساب حركة الخزنة</a>
+                            <a href="http://localhost:8080/store-management/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
                         </li>
                         <li>
                             <a href="http://localhost:8080/store-management/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>

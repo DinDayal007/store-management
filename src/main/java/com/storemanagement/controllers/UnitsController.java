@@ -41,6 +41,7 @@ public class UnitsController extends HttpServlet {
 			Unit unit = new Unit();
 			unit.setName(name);
 			unit.setDescription(description);
+			unit.setQty(Integer.parseInt(request.getParameter("unit_qty")));
 			unit.setCreatedDate(new Date());
 			unit.setLastUpdatedDate(new Date());
 			unit.setCreatedBy(createdBy);
@@ -58,6 +59,7 @@ public class UnitsController extends HttpServlet {
 			unit.setId(id);
 			unit.setName(name);
 			unit.setDescription(description);
+			unit.setQty(Integer.parseInt(request.getParameter("unit_qty")));
 			unit.setLastUpdatedDate(new Date());
 			EntityService.updateObject(unit);
 		}

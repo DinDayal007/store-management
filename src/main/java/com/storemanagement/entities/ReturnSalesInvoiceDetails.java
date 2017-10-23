@@ -25,6 +25,9 @@ public class ReturnSalesInvoiceDetails {
 	private int qty;
 	@Column(name = "PRICE")
 	private double price;
+	@OneToOne
+	@JoinColumn(name = "UNIT_ID", referencedColumnName = "ID")
+	private Unit unit;
 	public int getId() {
 		return id;
 	}
@@ -55,5 +58,11 @@ public class ReturnSalesInvoiceDetails {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public Unit getUnit() {
+		return unit;
+	}
+	public void setUnit(Unit unit) {
+		this.unit = unit;
 	}
 }

@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SubGroup;
-import com.storemanagement.entities.Unit;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
@@ -52,11 +51,8 @@ public class ItemsController extends HttpServlet {
 		if(!request.getParameter("item_name").equals("") && !request.getParameter("item_code").equals("")) {
 			SubGroup subGroup = new SubGroup();
 			subGroup.setId(Integer.parseInt(request.getParameter("subGroups")));
-			Unit unit = new Unit();
-			unit.setId(Integer.parseInt(request.getParameter("units")));
 			Item item = new Item();
 			item.setSubGroup(subGroup);
-			item.setUnit(unit);
 			item.setCode(request.getParameter("item_code"));
 			item.setName(request.getParameter("item_name"));
 			item.setPrice(Double.parseDouble(request.getParameter("item_price")));
@@ -84,12 +80,9 @@ public class ItemsController extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			SubGroup subGroup = new SubGroup();
 			subGroup.setId(Integer.parseInt(request.getParameter("subGroups")));
-			Unit unit = new Unit();
-			unit.setId(Integer.parseInt(request.getParameter("units")));
 			Item item = new Item();
 			item.setId(id);
 			item.setSubGroup(subGroup);
-			item.setUnit(unit);
 			item.setCode(request.getParameter("item_code"));
 			item.setName(request.getParameter("item_name"));
 			item.setPrice(Double.parseDouble(request.getParameter("item_price")));

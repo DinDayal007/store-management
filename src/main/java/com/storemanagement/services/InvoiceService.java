@@ -5,11 +5,16 @@ import org.hibernate.criterion.Projections;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
+import com.storemanagement.entities.PurchaseInvoiceDetails;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
+import com.storemanagement.entities.ReturnPurchaseInvoiceDetails;
 import com.storemanagement.entities.ReturnPurchaseInvoiceHeader;
+import com.storemanagement.entities.ReturnSalesInvoiceDetails;
 import com.storemanagement.entities.ReturnSalesInvoiceHeader;
+import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.Supplier;
+import com.storemanagement.entities.Unit;
 public class InvoiceService extends EntityService {
 	public static List<PurchaseInvoiceHeader> getPurchaseInvoicesFromSupplier( Supplier supplier) {
 		List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = null;
@@ -117,5 +122,42 @@ public class InvoiceService extends EntityService {
 			closeSession();
 		}
 		return invoiceNumbers;
+	}
+	//check if invoices details have this unit
+	public static boolean hasDetailsFromUnit(Unit unit){
+		List<SalesInvoiceDetails> salesInvoiceDetails = null;
+		List<PurchaseInvoiceDetails> purchaseInvoiceDetails = null;
+		List<ReturnSalesInvoiceDetails> returnSalesInvoiceDetails = null;
+		List<ReturnPurchaseInvoiceDetails> returnPurchaseInvoiceDetails = null;
+		try {
+			openSession();
+			salesInvoiceDetails = getSession().createQuery(
+					"from SalesInvoiceDetails where unit.id = :unitId")
+					.setParameter("unitId", unit.getId()).list();
+			if (salesInvoiceDetails.size() > 0) return true;
+			else {
+				purchaseInvoiceDetails = getSession().createQuery(
+						"from PurchaseInvoiceDetails where unit.id = :unitId")
+						.setParameter("unitId", unit.getId()).list();
+			}
+			if(purchaseInvoiceDetails.size() > 0) return true;
+			else {
+				returnSalesInvoiceDetails = getSession().createQuery(
+						"from ReturnSalesInvoiceDetails where unit.id = :unitId")
+						.setParameter("unitId", unit.getId()).list();
+			}
+			if(returnSalesInvoiceDetails.size() > 0) return true;
+			else {
+				returnPurchaseInvoiceDetails = getSession().createQuery(
+						"from ReturnPurchaseInvoiceDetails where unit.id = :unitId")
+						.setParameter("unitId", unit.getId()).list();
+			}
+			if(returnPurchaseInvoiceDetails.size() > 0) return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return false;
 	}
 }

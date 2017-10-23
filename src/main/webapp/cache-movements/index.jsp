@@ -30,7 +30,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>المستخدم</th>
-                                            <th>الفرع</th>
+                                            <th>المخزن</th>
                                             <th>الخزنة</th>
                                             <th>التاريخ</th>
                                             <th>النوع</th>
@@ -45,7 +45,7 @@
 										<tr>
                                             <td><%= i %></td>
                                             <th><%= cacheMovement.getUser().getName() %></th>
-                                            <th><%= cacheMovement.getBranch().getName() %></th>
+                                            <th><%= cacheMovement.getInventory().getName() %></th>
                                             <th><%= cacheMovement.getCache().getName() %></th>
                                             <th><%= cacheMovement.getDate() %></th>
                                             <th><%= cacheMovement.getType() == 0 ? "مصروفات" : "ايرادات" %></th>

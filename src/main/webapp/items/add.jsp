@@ -58,15 +58,6 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
                                     </select>
                                 </div>
                                 <div class="form-group">
-                            		<label for="units">اختر وحدة الصنف</label>
-	                        		<select class="form-control" name="units" id="units" required>
-	                        			<option value="" disabled>اختر الوحدة</option>
-	                        			<% for(Unit unit : units){ %>
-	                        			<option value="<%= unit.getId() %>"><%= unit.getName() %></option>
-	                        			<% } %>
-	                        		</select>
-                            	</div>
-                                <div class="form-group">
                                 	<label for="item_name">اسم الصنف</label>
                                     <input class="form-control" placeholder="اسم الصنف" name="item_name" type="text" id="item_name" required>
                                 </div>

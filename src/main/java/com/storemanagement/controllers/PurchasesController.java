@@ -136,7 +136,8 @@ public class PurchasesController extends HttpServlet {
 			purchaseInvoiceHeader.setInventory(inventory);
 //			int cacheId = Integer.parseInt(request.getParameter("cache"));
 //			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
-			Cache cache = user.getCache();
+			int cacheId = user.getCache().getId();
+			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
 			purchaseInvoiceHeader.setCache(cache);
 			purchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
 //			if(Integer.parseInt(request.getParameter("discountType")) == 0)

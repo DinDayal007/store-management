@@ -1,6 +1,5 @@
 <%@page import="com.storemanagement.entities.Item"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
-<%@page import="com.storemanagement.entities.Unit"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.MainGroup"%>
 <%@page import="java.util.List"%>
@@ -10,7 +9,6 @@
 int id = Integer.parseInt(request.getParameter("id"));
 Item item = (Item) EntityService.getObject(Item.class, id);
 List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainGroup.class);
-List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,15 +57,6 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
                                     	<option value="<%= item.getSubGroup().getId() %>"><%= item.getSubGroup().getName() %></option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                            		<label for="units">اختر وحدة الصنف</label>
-	                        		<select class="form-control" name="units" id="units" required>
-	                        			<option value="" disabled>اختر الوحدة</option>
-	                        			<% for(Unit unit : units){ %>
-	                        			<option value="<%= unit.getId() %>" <%= unit.getId() == item.getUnit().getId() ? "selected" : "" %>><%= unit.getName() %></option>
-	                        			<% } %>
-	                        		</select>
-                            	</div>
                                 <div class="form-group">
                                 	<label for="item_name">اسم الصنف</label>
                                     <input class="form-control" placeholder="اسم الصنف" value="<%= item.getName() %>" name="item_name" type="text" id="item_name" required>

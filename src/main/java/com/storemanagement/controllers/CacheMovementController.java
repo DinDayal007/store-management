@@ -7,9 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
+import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/cache-movements")
@@ -39,16 +39,13 @@ public class CacheMovementController extends HttpServlet {
 			cacheMovement.setAmount(Integer.parseInt(request.getParameter("movement_amount")));
 			cacheMovement.setDescription(request.getParameter("movement_description"));
 			cacheMovement.setDate(new Date());
-			User user = new User();
-			user.setId(1);
+			User user = (User) request.getSession().getAttribute("user");
 			cacheMovement.setUser(user);
-			Cache cache = new Cache();
-			cache.setId(1);
+			int cacheId = user.getCache().getId();
+			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);			
 			cacheMovement.setCache(cache);
-			Branch branch = new Branch();
-			branch.setId(1);
-			cacheMovement.setBranch(branch);
-			cache = (Cache) EntityService.getObject(Cache.class, 1);
+			Inventory inventory = user.getInventory();
+			cacheMovement.setInventory(inventory);
 			if(cacheMovement.getType() == 0)
 				cache.setQty(cache.getQty() - cacheMovement.getAmount());
 			else if(cacheMovement.getType() == 1) cache.setQty(cache.getQty() + cacheMovement.getAmount());

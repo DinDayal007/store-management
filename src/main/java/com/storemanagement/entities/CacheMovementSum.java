@@ -14,6 +14,8 @@ public class CacheMovementSum {
 	@Id
 	@Column(name = "inv_number")
 	private int invNumber;
+	@Column(name = "inventory_id")
+	private int inventoryId;
 	@Column(name = "inventory_name")
 	private String inventoryName;
 	@Temporal(TemporalType.DATE)
@@ -23,6 +25,8 @@ public class CacheMovementSum {
 	private String invType;
 	@Column(name = "tran_desc")
 	private String description;
+	@Column(name = "cache_id")
+	private int cacheId;
 	@Column(name = "cash_name")
 	private String cache;
 	@Column(name = "total_amt")
@@ -32,6 +36,12 @@ public class CacheMovementSum {
 	}
 	public void setInvNumber(int invNumber) {
 		this.invNumber = invNumber;
+	}
+	public int getInventoryId() {
+		return inventoryId;
+	}
+	public void setInventoryId(int inventoryId) {
+		this.inventoryId = inventoryId;
 	}
 	public String getInventoryName() {
 		return inventoryName;
@@ -56,6 +66,12 @@ public class CacheMovementSum {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public int getCacheId() {
+		return cacheId;
+	}
+	public void setCacheId(int cacheId) {
+		this.cacheId = cacheId;
 	}
 	public String getCache() {
 		return cache;
