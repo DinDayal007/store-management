@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
+import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.ReturnPurchaseInvoiceDetails;
@@ -14,6 +16,8 @@ import com.storemanagement.entities.ReturnPurchaseInvoiceHeader;
 import com.storemanagement.entities.ReturnSalesInvoiceDetails;
 import com.storemanagement.entities.ReturnSalesInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
+import com.storemanagement.entities.Supplier;
+import com.storemanagement.entities.Unit;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.utils.InvoicesCounterUtil;
@@ -52,11 +56,32 @@ public class ReturnInvoicesController extends HttpServlet {
 			cache.setQty(cache.getQty() - returnSalesInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(returnSalesInvoiceHeader);
+			//add new cache movement from the return sales invoice
+			CacheMovement cacheMovement = new CacheMovement();
+			cacheMovement.setAmount(returnSalesInvoiceHeader.getTotal());
+			cacheMovement.setCache(cache);
+			int clientId = Integer.parseInt(request.getParameter("clientId"));
+			if(clientId == 0) cacheMovement.setClient(null);
+			else{
+				Client client = new Client();
+				client.setId(clientId);
+				cacheMovement.setClient(client);
+			}
+			cacheMovement.setDate(returnSalesInvoiceHeader.getDate());
+			cacheMovement.setDescription("فاتورة مرتجع بيع");
+			cacheMovement.setInventory(user.getInventory());
+			cacheMovement.setRefNumber(returnSalesInvoiceHeader.getNumber());
+			cacheMovement.setSupplier(null);
+			cacheMovement.setType(3);
+			cacheMovement.setUser(user);
+			EntityService.addObject(cacheMovement);
 			InvoicesCounterUtil.incrementReturnSalesInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").replaceAll("\"", "").split(",");
 			String[] itemQty = request.getParameter("itemQty").replaceAll("\"", "").split(",");
+			String[] itemPrice = request.getParameter("itemPrice").replaceAll("\"", "").split(",");
 			String[] itemTotal = request.getParameter("itemTotal").replaceAll("\"", "").split(",");
+			String[] unitIds = request.getParameter("unitIds").replaceAll("\"", "").split(",");
 			for(int i = 0; i < itemIds.length; i++) {
 				ReturnSalesInvoiceDetails returnSalesInvoiceDetails = new ReturnSalesInvoiceDetails();
 				returnSalesInvoiceDetails.setReturnSalesInvoiceHeader(returnSalesInvoiceHeader);
@@ -64,7 +89,11 @@ public class ReturnInvoicesController extends HttpServlet {
 				item.setId(Integer.parseInt(itemIds[i]));
 				returnSalesInvoiceDetails.setItem(item);
 				returnSalesInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
-				returnSalesInvoiceDetails.setPrice(Double.parseDouble(itemTotal[i]));
+				returnSalesInvoiceDetails.setPrice(Double.parseDouble(itemPrice[i]));
+				returnSalesInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
+				Unit unit = new Unit();
+				unit.setId(Integer.parseInt(unitIds[i]));
+				returnSalesInvoiceDetails.setUnit(unit);
 				EntityService.addObject(returnSalesInvoiceDetails);
 			}
 			response.getWriter().print("saved!");response.getWriter().print("saved!");
@@ -90,11 +119,29 @@ public class ReturnInvoicesController extends HttpServlet {
 			cache.setQty(cache.getQty() + returnPurchaseInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(returnPurchaseInvoiceHeader);
+			//add new cache movement from the return sales invoice
+			CacheMovement cacheMovement = new CacheMovement();
+			cacheMovement.setAmount(returnPurchaseInvoiceHeader.getTotal());
+			cacheMovement.setCache(cache);
+			cacheMovement.setClient(null);
+			cacheMovement.setDate(returnPurchaseInvoiceHeader.getDate());
+			cacheMovement.setDescription("فاتورة مرتجع شراء");
+			cacheMovement.setInventory(user.getInventory());
+			cacheMovement.setRefNumber(returnPurchaseInvoiceHeader.getNumber());
+			int supplierId = Integer.parseInt(request.getParameter("supplierId"));
+			Supplier supplier = new Supplier();
+			supplier.setId(supplierId);
+			cacheMovement.setSupplier(supplier);
+			cacheMovement.setType(5);
+			cacheMovement.setUser(user);
+			EntityService.addObject(cacheMovement);
 			InvoicesCounterUtil.incrementReturnPurechaseInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").replaceAll("\"", "").split(",");
 			String[] itemQty = request.getParameter("itemQty").replaceAll("\"", "").split(",");
+			String[] itemPrice = request.getParameter("itemPrice").replaceAll("\"", "").split(",");
 			String[] itemTotal = request.getParameter("itemTotal").replaceAll("\"", "").split(",");
+			String[] unitIds = request.getParameter("unitIds").replaceAll("\"", "").split(",");
 			for(int i = 0; i < itemIds.length; i++) {
 				ReturnPurchaseInvoiceDetails returnPurchaseInvoiceDetails = new ReturnPurchaseInvoiceDetails();
 				returnPurchaseInvoiceDetails.setReturnPurchaseInvoiceHeader(returnPurchaseInvoiceHeader);
@@ -102,7 +149,11 @@ public class ReturnInvoicesController extends HttpServlet {
 				item.setId(Integer.parseInt(itemIds[i]));
 				returnPurchaseInvoiceDetails.setItem(item);
 				returnPurchaseInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
-				returnPurchaseInvoiceDetails.setPrice(Double.parseDouble(itemTotal[i]));
+				returnPurchaseInvoiceDetails.setPrice(Double.parseDouble(itemPrice[i]));
+				returnPurchaseInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
+				Unit unit = new Unit();
+				unit.setId(Integer.parseInt(unitIds[i]));
+				returnPurchaseInvoiceDetails.setUnit(unit);
 				EntityService.addObject(returnPurchaseInvoiceDetails);
 			}
 			response.getWriter().print("saved!");

@@ -80,6 +80,7 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
 									<tr class="header">
 										<th>كود الصنف</th>
 										<th>اسم الصنف</th>
+										<th>الوحدة</th>
 										<th>السعر</th>
 										<th>الكمية</th>
 										<th>الإجمالى</th>
@@ -91,9 +92,10 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
 										<input type="hidden" class="itemId" name="itemId[]" value = "<%= detail.getItem().getId() %>"/>
 										<td><%= detail.getItem().getCode() %></td>
 										<td><%= detail.getItem().getName() %></td>
-										<td><%= detail.getItem().getPrice() %></td>
-										<td><%= detail.getQty() %></td>
+										<td><%= detail.getUnit().getName() %></td>
 										<td><%= detail.getPrice() %></td>
+										<td id="<%= detail.getUnit().getId() %>" data-qty="<%= detail.getUnit().getQty() %>"><%= detail.getQty() %></td>
+										<td><%= detail.getTotal() %></td>
 									</tr>
 									<% } %>
 								</tbody>
@@ -168,8 +170,9 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
     	//modify price each time a change is happened to quantity
     	$(document).on('change keyup', '.quantity', function(){
     		var qty = $(this).val();
+    		var unitQty = $(this).closest('td').data('qty');
     		var price = $(this).closest('td').prev().text();
-    		$(this).closest('td').next().text(qty * price);
+    		$(this).closest('td').next().text(qty * price * unitQty);
     		sumReturnTotal();
     	});
     	
@@ -192,27 +195,34 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
     	$('#saveReturnInvoice').click(function(){
     		var i = 0;
     		var id = <%= id %>;
+    		var supplierId = <%= purchaseInvoiceHeader.getSupplier().getId() %>;
     		var cache = $('#cache').val();
     		var total = parseFloat($('#TotalReturnValue').text());
     		var itemIds = [];
     		var itemQty = [];
+    		var itemPrice = [];
     		var itemTotal = [];
+    		var unitIds = [];
         	$('input:checked').each(function(){
         		itemIds[i] = $(this).val();
         		itemQty[i] = $(this).closest('td').prev().prev().find('input').val();
+        		itemPrice[i] = $(this).closest('td').prev().prev().prev().text();
         		itemTotal[i] = $(this).closest('td').prev().text();
+        		unitIds[i] = $(this).closest('td').prev().prev().attr('id');
         		i++;
         	});
         	if(i > 0){
         		itemIds = '"' + itemIds + '"';
         		itemQty = '"' + itemQty + '"';
+        		itemPrice = '"' + itemPrice + '"';
         		itemTotal = '"' + itemTotal + '"';
+        		unitIds = '"' + unitIds + '"';
         		$.ajax({
         			url : "/store-management/return-invoices",
         			method : "POST",
         			data : {
-        				purchaseInvoiceId : id, total : total, cache : cache,
-        				itemIds : itemIds, itemQty : itemQty,
+        				purchaseInvoiceId : id, total : total, cache : cache, unitIds : unitIds,
+        				itemIds : itemIds, itemQty : itemQty, supplierId : supplierId, itemPrice : itemPrice,
 						itemTotal : itemTotal, action : "2"
         			},
         			dataType : "text",

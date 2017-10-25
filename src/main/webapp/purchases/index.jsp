@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Unit"%>
 <%@page import="com.storemanagement.utils.InvoicesCounterUtil"%>
 <%@page import="com.storemanagement.utils.DateUtil"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
@@ -18,6 +19,7 @@ List<Supplier> suppliers = (List<Supplier>) request.getAttribute("suppliers");
 List<Inventory> inventories = (List<Inventory>) request.getAttribute("inventories");
 List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 List<MainGroup> mainGroups = (List<MainGroup>) request.getAttribute("mainGroups");
+List<Unit> units = (List<Unit>) request.getAttribute("units");
 long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 %>
 <div class="row">
@@ -78,7 +80,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 			</div>
 			<hr />
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label for="mainGroup">المجموعة الرئيسية</label>
 						<select class="form-control" name="mainGroup" id="mainGroup">
@@ -89,18 +91,28 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 						</select>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label for="subGroup">المجموعة الفرعية</label>
 						<select class="form-control" name="subGroup" id="subGroup">
 						</select>
 					</div>
 				</div>
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="form-group">
 						<label for="item">الصنف</label>
+						<select class="form-control" name="item" id="item">
+						</select>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="unit">الوحدة</label>
 						<div style="overflow: hidden;">
-							<select class="form-control" name="item" id="item" style="float: right; width: 85%">
+							<select class="form-control" name="unit" id="unit" style="float: right; width: 80%">
+							<% for(Unit unit : units){ %>
+							<option data-qty="<%= unit.getQty() %>" value="<%= unit.getId() %>"><%= unit.getName() %></option>
+							<% } %>
 							</select>
 							<button class="btn btn-success" id="add_item" type="button" style="float: left"><i class="fa fa-plus" aria-hidden="true"></i></button>
 						</div>
@@ -116,8 +128,11 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 						<tr>
 							<th>كود الصنف</th>
 							<th>اسم الصنف</th>
-							<th>السعر</th>
+							<th>الكمية فى المخزن</th>
+							<th>الوحدة</th>
+							<th>كمية الوحدة</th>
 							<th>الكمية</th>
+							<th>السعر</th>
 							<th>الإجمالى</th>
 							<th>حذف</th>
 						</tr>
@@ -189,30 +204,36 @@ $(document).ready(function(){
 	var i = 0;
 	$('#add_item').click(function(){
 		var itemId = $('#item').val();
+		var unit = $('#unit').val();
+		var unitQuantity = $('#unit').find(':selected').data('qty');
 		$.ajax({
-			url : "/store-management/sales",
+			url : "/store-management/purchases",
 			method : "POST",
 			data : {itemId : itemId, action : "3"},
 			dataType : "json",
 			success : function(data){
-				addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice);
+				addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMax, unit, unitQuantity);
 			}
 		});
 	});
 	
 	//add new items to the invoice if the request is success
-	function addRows(id, code, name, price){
+	function addRows(id, code, name, price, itemQty, itemMax, unit, unitQuantity){
 		i++;
 		$('#item-rows').append('<tr id="row' + i + '">' + 
-		'<input type="hidden" class="itemId" name="itemId[]" value = "' + id + '"/>' +
-		'<td><input class="form-control" value="' + code + '" type="text" name="item_code[]" autofocus disabled /></td>' +
-		'<td><input class="form-control" value="' + name + '" type="text" name="item_name[]" disabled /></td>' + 
-		'<td><input class="form-control itemPrice" value="' + price + '" type="number" name="itemPrice[]" min="1" disabled /></td>' +
-		'<td><input class="form-control itemQty" value="1" type="number" name="itemQty[]" min="1" /></td>' +
-		'<td><input class="form-control itemTotal" value="' + price +'" type="number" name="itemTotal[]" min="1" disabled /></td>' +
-		'<td><button class="btn btn-danger btn-remove" name="remove" id="' + i + '"><i class="fa fa-close"></i></button></td>' +
-		'</tr>');
-		sumTotal();
+				'<input type="hidden" class="itemId" name="itemId[]" value = "' + id + '"/>' +
+				'<input type="hidden" class="unitId" name="unitId[]" value = "' + unit + '"/>' +
+				'<td><input class="form-control" value="' + code + '" type="text" name="item_code[]" autofocus disabled /></td>' +
+				'<td><input class="form-control" value="' + name + '" type="text" name="item_name[]" disabled /></td>' + 
+				'<td><input class="form-control" value="' + itemQty + '" type="number" disabled /></td>' + 
+				'<td><input class="form-control" value="' + $("#unit option:selected").text() + '" disabled /></td>' + 
+				'<td><input class="form-control" value="' + unitQuantity + '" type="number" disabled /></td>' + 
+				'<td><input class="form-control itemQty" data-inventory="' + itemQty + '" data-max="' + itemMax + '" value="1" type="number" name="itemQty[]" min="1" /></td>' +
+				'<td><input class="form-control itemPrice" value="' + price + '" type="number" name="itemPrice[]" min="1" /></td>' +
+				'<td><input class="form-control itemTotal" value="' + price * unitQuantity +'" type="number" name="itemTotal[]" min="1" disabled /></td>' +
+				'<td><button class="btn btn-danger btn-remove" name="remove" id="' + i + '"><i class="fa fa-close"></i></button></td>' +
+				'</tr>');
+				sumTotal();
 	}
 	
 	//sum total for the totalPrice and finalTotal
@@ -235,9 +256,24 @@ $(document).ready(function(){
 	
 	//modify price each time a change is happened to quantity
 	$(document).on('change keyup', '.itemQty', function(){
+		var max = $(this).data('max');
+		var inventory = $(this).data('inventory');
+		var unitQty = $(this).closest('td').prev().find('input').val();
 		var qty = $(this).val();
-		var price = $(this).closest('td').prev().find('input').val();
-		$(this).closest('td').next().find('input').val(qty * price);
+		var price = $(this).closest('td').next().find('input').val();
+		$(this).closest('td').next().next().find('input').val(qty * price * unitQty);
+		if(inventory + (unitQty * qty) > max){
+			alert("الكمية المختارة ستتخطى الحد الأدنى للصنف فى المخزن");
+		}
+		sumTotal();
+	});
+	
+	//modify total price each time a change is happened to price
+	$(document).on('change keyup', '.itemPrice', function(){
+		var price = $(this).val();
+		var qty = $(this).closest('td').prev().find('input').val();
+		var unitQty = $(this).closest('td').prev().prev().find('input').val();
+		$(this).closest('td').next().find('input').val(qty * price * unitQty);
 		sumTotal();
 	});
 	
@@ -316,6 +352,10 @@ $(document).ready(function(){
 		       return $(this).val(); }).get().join();
 		var itemQty = $('input.itemQty[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
+		var unitId = $('input.unitId[type=hidden]').map(function() {
+		       return $(this).val(); }).get().join();
+		var itemPrice = $('input.itemPrice[type=number]').map(function() {
+		       return $(this).val(); }).get().join();
 		var itemTotal = $('input.itemTotal[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
 		var inv_num = $('#inv_num').val();
@@ -335,8 +375,8 @@ $(document).ready(function(){
 			url : "/store-management/purchases",
 			method : "POST",
 			data : {
-				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal,
-				inv_num : inv_num, inv_type :inv_type, supplier : supplier,
+				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal, unitId : unitId,
+				inv_num : inv_num, inv_type :inv_type, supplier : supplier, itemPrice : itemPrice,
 				//inventory : inventory, cache : cache,
 				totalPrice :totalPrice,
 				action : "save"

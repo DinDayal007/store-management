@@ -25,6 +25,8 @@ public class SalesInvoiceDetails {
 	private int qty;
 	@Column(name = "PRICE")
 	private double price;
+	@Column(name = "TOTAL")
+	private double total;
 	@OneToOne
 	@JoinColumn(name = "UNIT_ID", referencedColumnName = "ID")
 	private Unit unit;
@@ -57,6 +59,12 @@ public class SalesInvoiceDetails {
 	}
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
 	}
 	public Unit getUnit() {
 		return unit;

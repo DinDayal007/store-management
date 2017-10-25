@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Client"%>
 <%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="java.util.List"%>
 <%@page import="com.storemanagement.entities.SalesInvoiceDetails"%>
@@ -9,6 +10,7 @@ int id = Integer.parseInt(request.getParameter("id"));
 SalesInvoiceHeader salesInvoiceHeader = (SalesInvoiceHeader) InvoiceService.getObject(SalesInvoiceHeader.class, id);
 List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvoiceHeader.getSalesInvoiceDetails();
 boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHeader);
+Client client = salesInvoiceHeader.getClient();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +65,7 @@ boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHead
 	                        	<input type="hidden" id="cache" value="<%= salesInvoiceHeader.getCache().getId() %>" />
 	                        	
 	                        	<label class="key">العميل</label>
-                    			<label class="value"><%= salesInvoiceHeader.getClient() == null ? "عميل نقدي" : salesInvoiceHeader.getClient().getName() %></label>
+                    			<label class="value"><%= client == null ? "عميل نقدي" : salesInvoiceHeader.getClient().getName() %></label>
                     			
                     			<label class="key">مستخدم النظام</label>
 	                        	<label class="value"><%= salesInvoiceHeader.getUser().getName() %></label>
@@ -95,6 +97,7 @@ boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHead
 									<tr class="header">
 										<th>كود الصنف</th>
 										<th>اسم الصنف</th>
+										<th>الوحدة</th>
 										<th>السعر</th>
 										<th>الكمية</th>
 										<th>الإجمالى</th>
@@ -106,9 +109,10 @@ boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHead
 										<input type="hidden" class="itemId" name="itemId[]" value = "<%= detail.getItem().getId() %>"/>
 										<td><%= detail.getItem().getCode() %></td>
 										<td><%= detail.getItem().getName() %></td>
-										<td><%= detail.getItem().getPrice() %></td>
-										<td><%= detail.getQty() %></td>
+										<td><%= detail.getUnit().getName() %></td>
 										<td><%= detail.getPrice() %></td>
+										<td id="<%= detail.getUnit().getId() %>" data-qty="<%= detail.getUnit().getQty() %>"><%= detail.getQty() %></td>
+										<td><%= detail.getTotal() %></td>
 									</tr>
 									<% } %>
 								</tbody>
@@ -183,8 +187,9 @@ boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHead
     	//modify price each time a change is happened to quantity
     	$(document).on('change keyup', '.quantity', function(){
     		var qty = $(this).val();
+    		var unitQty = $(this).closest('td').data('qty');
     		var price = $(this).closest('td').prev().text();
-    		$(this).closest('td').next().text(qty * price);
+    		$(this).closest('td').next().text(qty * price * unitQty);
     		sumReturnTotal();
     	});
     	
@@ -207,27 +212,34 @@ boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHead
     	$('#saveReturnInvoice').click(function(){
     		var i = 0;
     		var id = <%= id %>;
+    		var clientId = <%= client == null ? 0 : client.getId() %>;
     		var cache = $('#cache').val();
     		var total = parseFloat($('#finalTotalReturnValue').text());
     		var itemIds = [];
     		var itemQty = [];
     		var itemTotal = [];
+    		var itemPrice = [];
+    		var unitIds = [];
         	$('input:checked').each(function(){
         		itemIds[i] = $(this).val();
         		itemQty[i] = $(this).closest('td').prev().prev().find('input').val();
+        		itemPrice[i] = $(this).closest('td').prev().prev().prev().text();
         		itemTotal[i] = $(this).closest('td').prev().text();
+        		unitIds[i] = $(this).closest('td').prev().prev().attr('id');
         		i++;
         	});
         	if(i > 0){
         		itemIds = '"' + itemIds + '"';
         		itemQty = '"' + itemQty + '"';
+        		itemPrice = '"' + itemPrice + '"';
         		itemTotal = '"' + itemTotal + '"';
+        		unitIds = '"' + unitIds + '"';
         		$.ajax({
         			url : "/store-management/return-invoices",
         			method : "POST",
         			data : {
-        				salesInvoiceId : id, total : total, cache : cache,
-        				itemIds : itemIds, itemQty : itemQty,
+        				salesInvoiceId : id, total : total, cache : cache, unitIds : unitIds,
+        				itemIds : itemIds, itemQty : itemQty, clientId : clientId, itemPrice : itemPrice,
 						itemTotal : itemTotal, action : "1"
         			},
         			dataType : "text",

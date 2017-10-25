@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
@@ -16,6 +17,7 @@ import com.storemanagement.entities.PurchaseInvoiceDetails;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SubGroup;
 import com.storemanagement.entities.Supplier;
+import com.storemanagement.entities.Unit;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
@@ -31,10 +33,12 @@ public class PurchasesController extends HttpServlet {
 		List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
 		List<Cache> caches = EntityService.getAllObjects(Cache.class);
 		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
+		List<Unit> units = EntityService.getAllObjects(Unit.class);
 		request.setAttribute("suppliers", suppliers);
 		request.setAttribute("inventories", inventories);
 		request.setAttribute("caches", caches);
 		request.setAttribute("mainGroups", mainGroups);
+		request.setAttribute("units", units);
 		request.getRequestDispatcher("purchases/index.jsp").forward(request, response);
 	}
 
@@ -95,15 +99,17 @@ public class PurchasesController extends HttpServlet {
 	protected void getItemById(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("itemId").equals("")) {
-			int id = Integer.parseInt(request.getParameter("itemId"));
-			Item item = (Item) ItemService.getObject(Item.class, id);
+			int itemId = Integer.parseInt(request.getParameter("itemId"));
+			Item item = (Item) ItemService.getObject(Item.class, itemId);
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("itemId", id);
+			jsonObject.put("itemId", itemId);
 			jsonObject.put("itemCode", item.getCode());
 			jsonObject.put("itemName", item.getName());
 			jsonObject.put("itemPrice", item.getPrice());
+			jsonObject.put("itemQty", 5);
+			jsonObject.put("itemMax", item.getMaxLimit());
 			response.getWriter().print(jsonObject.toString());
 		}
 	}
@@ -150,19 +156,38 @@ public class PurchasesController extends HttpServlet {
 			cache.setQty(cache.getQty() - purchaseInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(purchaseInvoiceHeader);
+			//add new cache movement from the purchase invoice
+			CacheMovement cacheMovement = new CacheMovement();
+			cacheMovement.setAmount(purchaseInvoiceHeader.getTotal());
+			cacheMovement.setCache(cache);
+			cacheMovement.setClient(null);
+			cacheMovement.setDate(purchaseInvoiceHeader.getDate());
+			cacheMovement.setDescription("فاتورة شراء");
+			cacheMovement.setInventory(inventory);
+			cacheMovement.setRefNumber(purchaseInvoiceHeader.getNumber());
+			cacheMovement.setSupplier(supplier);
+			cacheMovement.setType(2);
+			cacheMovement.setUser(user);
+			EntityService.addObject(cacheMovement);
 			InvoicesCounterUtil.incrementPurchaseInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").split(",");
 			String[] itemQty = request.getParameter("itemQty").split(",");
+			String[] itemPrice = request.getParameter("itemPrice").split(",");
 			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			String[] unitIds = request.getParameter("unitId").split(",");
 			for(int i = 0; i < itemIds.length; i++) {
 				PurchaseInvoiceDetails purchaseInvoiceDetails = new PurchaseInvoiceDetails();
 				purchaseInvoiceDetails.setPurchaseInvoiceHeader(purchaseInvoiceHeader);
 				Item item = new Item();
 				item.setId(Integer.parseInt(itemIds[i]));
+				Unit unit = new Unit();
+				unit.setId(Integer.parseInt(unitIds[i]));
 				purchaseInvoiceDetails.setItem(item);
+				purchaseInvoiceDetails.setUnit(unit);
 				purchaseInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
-				purchaseInvoiceDetails.setPrice(Integer.parseInt(itemTotal[i]));
+				purchaseInvoiceDetails.setPrice(Double.parseDouble(itemPrice[i]));
+				purchaseInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
 				EntityService.addObject(purchaseInvoiceDetails);
 			}
 			response.getWriter().print("saved!");

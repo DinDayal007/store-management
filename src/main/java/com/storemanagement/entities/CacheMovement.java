@@ -17,6 +17,8 @@ public class CacheMovement {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private int id;
+	@Column(name = "REF_NUMBER")
+	private long refNumber;
 	@OneToOne
 	@JoinColumn(name = "USER_ID", referencedColumnName = "ID")
 	private User user;
@@ -32,14 +34,26 @@ public class CacheMovement {
 	@Column(name = "TYPE")
 	private int type;
 	@Column(name = "AMOUNT")
-	private int amount;
+	private double amount;
 	@Column(name = "DESCRIPTION")
 	private String description;
+	@OneToOne
+	@JoinColumn(name = "CLIENT_ID", referencedColumnName = "ID")
+	private Client client;
+	@OneToOne
+	@JoinColumn(name = "SUPPLIER_ID", referencedColumnName = "ID")
+	private Supplier supplier;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public long getRefNumber() {
+		return refNumber;
+	}
+	public void setRefNumber(long refNumber) {
+		this.refNumber = refNumber;
 	}
 	public User getUser() {
 		return user;
@@ -71,10 +85,10 @@ public class CacheMovement {
 	public void setType(int type) {
 		this.type = type;
 	}
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public String getDescription() {
@@ -82,5 +96,17 @@ public class CacheMovement {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public Client getClient() {
+		return client;
+	}
+	public void setClient(Client client) {
+		this.client = client;
+	}
+	public Supplier getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
 	}
 }

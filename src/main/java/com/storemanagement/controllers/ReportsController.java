@@ -16,6 +16,7 @@ import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.services.CachesMovementService;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.utils.ReportsUtil;
+import net.sf.jasperreports.engine.JRException;
 @WebServlet("/reports")
 public class ReportsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,14 +42,27 @@ public class ReportsController extends HttpServlet {
 			else cache.setId(Integer.parseInt(request.getParameter("cache")));
 			try{
 				Date from = null, to = null;
+				Integer type = null;
+				if(!request.getParameter("type").equals(""))
+					type = Integer.parseInt(request.getParameter("type"));
 				if(!request.getParameter("from").equals(""))
 					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
 				if(!request.getParameter("to").equals(""))
 					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
-			reportsUtil.showCachsMovementReport(request, response, CachesMovementService.getCacheMovements(inventory, cache, from, to));
+			reportsUtil.showCachsMovementReport(request, response, CachesMovementService.getCacheMovements(inventory, cache, from, to, type));
 			} catch (ParseException e) {
 			e.printStackTrace();
 			}
+		}else if(request.getParameter("r").equals("si")){
+			//sales invoice report
+			SalesInvoiceHeader header = (SalesInvoiceHeader) EntityService.getObject(SalesInvoiceHeader.class, 5);
+			try {
+				reportsUtil.showSalesInvoiceReport(request, response, header);
+			} catch (JRException e) {
+				e.printStackTrace();
+			}
+		}else if(request.getParameter("r").equals("pi")){
+			//purchase invoice report
 		}
 	}
 

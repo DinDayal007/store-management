@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
-import com.storemanagement.entities.ItemBalance;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SalesInvoiceHeader;
@@ -98,7 +98,7 @@ public class SalesController extends HttpServlet {
 	//get item from id
 	protected void getItemById(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession().getAttribute("user");
+		//User user = (User) request.getSession().getAttribute("user");
 		if(!request.getParameter("itemId").equals("")) {
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
 			Item item = (Item) ItemService.getObject(Item.class, itemId);
@@ -154,22 +154,42 @@ public class SalesController extends HttpServlet {
 				salesInvoiceHeader.setTax(0);
 			else salesInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
 			salesInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
+			//update cache quantity
 			cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
 			EntityService.updateObject(cache);
 			EntityService.addObject(salesInvoiceHeader);
+			//add new cache movement from the sales invoice
+			CacheMovement cacheMovement = new CacheMovement();
+			cacheMovement.setAmount(salesInvoiceHeader.getFinalTotal());
+			cacheMovement.setCache(cache);
+			cacheMovement.setClient(client.getId() == 0 ? null : client);
+			cacheMovement.setDate(salesInvoiceHeader.getDate());
+			cacheMovement.setDescription("فاتورة بيع");
+			cacheMovement.setInventory(inventory);
+			cacheMovement.setRefNumber(salesInvoiceHeader.getNumber());
+			cacheMovement.setSupplier(null);
+			cacheMovement.setType(4);
+			cacheMovement.setUser(user);
+			EntityService.addObject(cacheMovement);
 			InvoicesCounterUtil.incrementSalesInvoiceCounter();
 			
 			String[] itemIds = request.getParameter("itemIds").split(",");
 			String[] itemQty = request.getParameter("itemQty").split(",");
+			String[] itemPrice = request.getParameter("itemPrice").split(",");
 			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			String[] unitIds = request.getParameter("unitId").split(",");
 			for(int i = 0; i < itemIds.length; i++) {
 				SalesInvoiceDetails salesInvoiceDetails = new SalesInvoiceDetails();
 				salesInvoiceDetails.setSalesInvoiceHeader(salesInvoiceHeader);
 				Item item = new Item();
 				item.setId(Integer.parseInt(itemIds[i]));
+				Unit unit = new Unit();
+				unit.setId(Integer.parseInt(unitIds[i]));
 				salesInvoiceDetails.setItem(item);
+				salesInvoiceDetails.setUnit(unit);
 				salesInvoiceDetails.setQty(Integer.parseInt(itemQty[i]));
-				salesInvoiceDetails.setPrice(Integer.parseInt(itemTotal[i]));
+				salesInvoiceDetails.setPrice(Double.parseDouble(itemPrice[i]));
+				salesInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
 				EntityService.addObject(salesInvoiceDetails);
 			}
 			response.getWriter().print("saved!");

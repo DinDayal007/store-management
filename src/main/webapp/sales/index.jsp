@@ -222,7 +222,7 @@ $(document).ready(function(){
 	$('#add_item').click(function(){
 		var itemId = $('#item').val();
 		var unit = $('#unit').val();
-		var unitQuantity = $('#unit').find(':selected').data('qty')
+		var unitQuantity = $('#unit').find(':selected').data('qty');
 		$.ajax({
 			url : "/store-management/sales",
 			method : "POST",
@@ -242,7 +242,7 @@ $(document).ready(function(){
 		'<input type="hidden" class="unitId" name="unitId[]" value = "' + unit + '"/>' +
 		'<td><input class="form-control" value="' + code + '" type="text" name="item_code[]" autofocus disabled /></td>' +
 		'<td><input class="form-control" value="' + name + '" type="text" name="item_name[]" disabled /></td>' + 
-		'<td><input class="form-control" value="' + itemQty + '" type="text" name="item_name[]" disabled /></td>' + 
+		'<td><input class="form-control" value="' + itemQty + '" type="number" disabled /></td>' + 
 		'<td><input class="form-control" value="' + $("#unit option:selected").text() + '" disabled /></td>' + 
 		'<td><input class="form-control" value="' + unitQuantity + '" type="number" disabled /></td>' + 
 		'<td><input class="form-control itemQty" data-inventory="' + itemQty + '" data-min="' + itemMin + '" value="1" type="number" name="itemQty[]" min="1" /></td>' +
@@ -384,6 +384,10 @@ $(document).ready(function(){
 		       return $(this).val(); }).get().join();
 		var itemQty = $('input.itemQty[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
+		var unitId = $('input.unitId[type=hidden]').map(function() {
+		       return $(this).val(); }).get().join();
+		var itemPrice = $('input.itemPrice[type=number]').map(function() {
+		       return $(this).val(); }).get().join();
 		var itemTotal = $('input.itemTotal[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
 		var inv_num = $('#inv_num').val();
@@ -407,8 +411,8 @@ $(document).ready(function(){
 			url : "/store-management/sales",
 			method : "POST",
 			data : {
-				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal,
-				inv_num : inv_num, inv_type :inv_type, paid : paid,
+				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal, unitId : unitId,
+				inv_num : inv_num, inv_type :inv_type, paid : paid, itemPrice : itemPrice,
 				remain : remain, finalTotal : finalTotal, client : client,
 				//inventory : inventory, cache : cache,
 				totalPrice :totalPrice,

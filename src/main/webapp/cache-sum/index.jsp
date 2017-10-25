@@ -54,6 +54,16 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 	                        				<option value="<%= cache.getId() %>"><%= cache.getName() %></option>
 	                        				<% } %>
 	                        			</select>
+	                        			<label for="type">اختر نوع الحركة</label>
+	                        			<select class="form-control" name="type" id="type">
+	                        				<option value="">اختر نوع الحركة</option>
+	                        				<option value="0">سحب</option>
+	                        				<option value="1">إيداع</option>
+	                        				<option value="4">فاتورة بيع</option>
+	                        				<option value="2">فاتورة شراء</option>
+	                        				<option value="3">فاتورة مرتجع بيع</option>
+	                        				<option value="5">فاتورة مرتجع شراء</option>
+	                        			</select>
 	                        		</div>
                         	</div><br />
                             <input type="submit" class="btn btn-lg btn-primary" style="float: left;" value="طباعة التقرير">

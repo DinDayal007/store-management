@@ -12,6 +12,7 @@ import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
+import com.storemanagement.utils.ReportsUtil;
 @WebServlet("/cache-movements")
 public class CacheMovementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +28,7 @@ public class CacheMovementController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("action").equals("add"))
 			add(request, response);
-		response.sendRedirect("cache-movements");
+		//response.sendRedirect("cache-movements");
 	}
 	
 	//add new cache-movement
@@ -39,6 +40,9 @@ public class CacheMovementController extends HttpServlet {
 			cacheMovement.setAmount(Integer.parseInt(request.getParameter("movement_amount")));
 			cacheMovement.setDescription(request.getParameter("movement_description"));
 			cacheMovement.setDate(new Date());
+			cacheMovement.setRefNumber(Long.parseLong(request.getParameter("movement_refNum")));
+			cacheMovement.setClient(null);
+			cacheMovement.setSupplier(null);
 			User user = (User) request.getSession().getAttribute("user");
 			cacheMovement.setUser(user);
 			int cacheId = user.getCache().getId();
@@ -51,6 +55,8 @@ public class CacheMovementController extends HttpServlet {
 			else if(cacheMovement.getType() == 1) cache.setQty(cache.getQty() + cacheMovement.getAmount());
 			EntityService.updateObject(cache);
 			EntityService.addObject(cacheMovement);
+			ReportsUtil reportsUtil = new ReportsUtil();
+			reportsUtil.showSingleCacheMovementReport(request, response, cacheMovement);
 		}
 	}
 }

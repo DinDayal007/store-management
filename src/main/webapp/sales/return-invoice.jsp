@@ -66,6 +66,7 @@ List<ReturnSalesInvoiceDetails> invoiceDetails = (List<ReturnSalesInvoiceDetails
 									<tr class="header">
 										<th>كود الصنف</th>
 										<th>اسم الصنف</th>
+										<th>الوحدة</th>
 										<th>السعر</th>
 										<th>الكمية</th>
 										<th>الإجمالى</th>
@@ -76,9 +77,10 @@ List<ReturnSalesInvoiceDetails> invoiceDetails = (List<ReturnSalesInvoiceDetails
 									<tr class="detail">
 										<td><%= detail.getItem().getCode() %></td>
 										<td><%= detail.getItem().getName() %></td>
-										<td><%= detail.getItem().getPrice() %></td>
-										<td><%= detail.getQty() %></td>
+										<td><%= detail.getUnit().getName() %></td>
 										<td><%= detail.getPrice() %></td>
+										<td><%= detail.getQty() %></td>
+										<td><%= detail.getTotal() %></td>
 									</tr>
 									<% } %>
 								</tbody>

@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Client"%>
 <%@page import="com.storemanagement.entities.CacheMovement"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Branch"%>
@@ -28,29 +29,51 @@
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                        	<th>#</th>
                                             <th>المستخدم</th>
                                             <th>المخزن</th>
                                             <th>الخزنة</th>
+                                            <th>العميل</th>
+                                            <th>المورد</th>
                                             <th>التاريخ</th>
                                             <th>النوع</th>
-                                            <th>المبلغ</th>
                                             <th>الوصف</th>
+                                            <th>المبلغ</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 										<% for(CacheMovement cacheMovement : cacheMovements){
-											i++;	
+											int type = cacheMovement.getType();
+											Client client = cacheMovement.getClient();
+											i++;
 										%>
 										<tr>
-                                            <td><%= i %></td>
+											<td><%= i %></td>
                                             <th><%= cacheMovement.getUser().getName() %></th>
                                             <th><%= cacheMovement.getInventory().getName() %></th>
                                             <th><%= cacheMovement.getCache().getName() %></th>
+                                            <th>
+                                            <%
+                                            if(type == 0 || type == 2 || type == 3){
+                                            	if(type == 0 || type == 2) out.print("");
+                                            	else {
+                                            		if(client == null) out.print("عميل نقدى");
+                                            		else out.print(client.getName());
+                                            	}
+                                            }else{
+                                            	if(type == 1 || type == 5) out.print("");
+                                            	else {
+                                            		if(client == null) out.print("عميل نقدى");
+                                            		else out.print(client.getName());
+                                            	}
+                                            }
+                                            %>
+                                            </th>
+                                            <th><%= cacheMovement.getSupplier() == null ? "" : cacheMovement.getSupplier().getName() %></th>
                                             <th><%= cacheMovement.getDate() %></th>
-                                            <th><%= cacheMovement.getType() == 0 ? "مصروفات" : "ايرادات" %></th>
-                                            <th><%= cacheMovement.getAmount() %> EGP</th>
+                                            <th><%= cacheMovement.getType() == 0 ? "سحب" : "ايداع" %></th>
                                             <th><%= cacheMovement.getDescription() %></th>
+                                            <th><%= cacheMovement.getAmount() %> EGP</th>
                                         </tr>
 										<% } %>
                                     </tbody>
