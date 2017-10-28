@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Supplier;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.InventoryService;
 
@@ -18,8 +20,12 @@ public class CacheSumController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Branch> branchs = EntityService.getAllObjects(Branch.class);
 		List<Cache> caches = EntityService.getAllObjects(Cache.class);
+		List<Client> clients = EntityService.getAllObjects(Client.class);
+		List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
 		request.setAttribute("branchs", branchs);
 		request.setAttribute("caches", caches);
+		request.setAttribute("clients", clients);
+		request.setAttribute("suppliers", suppliers);
 		request.getRequestDispatcher("cache-sum/index.jsp").forward(request, response);
 	}
 

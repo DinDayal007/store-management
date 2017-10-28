@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
-@Table(name = "item_movements")
+@Table(name = "item_movment")
 public class ItemMovement {
 	@Id
 	@Column(name = "inv_number")

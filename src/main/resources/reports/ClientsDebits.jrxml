@@ -48,11 +48,11 @@
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#FAFAFA" uuid="7a4b0e1b-a326-4175-a537-58a267e019c8"/>
 				<staticText>
-					<reportElement x="330" y="27" width="244" height="43" forecolor="#030202" uuid="e056867d-2545-4327-9fb2-834b1cbdde28"/>
+					<reportElement x="300" y="27" width="274" height="43" forecolor="#030202" uuid="e056867d-2545-4327-9fb2-834b1cbdde28"/>
 					<textElement textAlignment="Right">
 						<font fontName="Ariel" size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[كشف حركات الخزنة]]></text>
+					<text><![CDATA[كشف مديونيات العملاء]]></text>
 				</staticText>
 				<textField>
 					<reportElement x="20" y="35" width="230" height="30" uuid="fb2e7133-b69c-4b02-9860-386aada8d5ca"/>

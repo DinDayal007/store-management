@@ -19,8 +19,8 @@ import com.storemanagement.services.EntityService;
 import com.storemanagement.services.ItemService;
 public class Application {
 	public static void main(String[] args) {
-		List<ItemBalance> itemBalances = ItemService.getItemBalance(7, 1);
-		System.out.println(itemBalances.size());
+//		int itemBalance = ItemService.getItemBalance(6, 1);
+//		System.out.println(itemBalance);
 		
 //		CacheMovement cacheMovement = new CacheMovement();
 //		cacheMovement.setAmount(500);

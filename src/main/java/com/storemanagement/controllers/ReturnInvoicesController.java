@@ -42,6 +42,7 @@ public class ReturnInvoicesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("salesInvoiceId").equals("") && !request.getParameter("total").equals("")) {
 			int id = Integer.parseInt(request.getParameter("salesInvoiceId"));
+			int invType = Integer.parseInt(request.getParameter("invType"));
 			ReturnSalesInvoiceHeader returnSalesInvoiceHeader = new ReturnSalesInvoiceHeader();
 			SalesInvoiceHeader salesInvoiceHeader = new SalesInvoiceHeader();
 			salesInvoiceHeader.setId(id);
@@ -53,12 +54,13 @@ public class ReturnInvoicesController extends HttpServlet {
 			returnSalesInvoiceHeader.setUser(user);
 			int cacheId = Integer.parseInt(request.getParameter("cache"));
 			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
-			cache.setQty(cache.getQty() - returnSalesInvoiceHeader.getTotal());
+			if(invType == 0)
+				cache.setQty(cache.getQty() - returnSalesInvoiceHeader.getTotal());
+			else cache.setQty(cache.getQty() + returnSalesInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(returnSalesInvoiceHeader);
 			//add new cache movement from the return sales invoice
 			CacheMovement cacheMovement = new CacheMovement();
-			cacheMovement.setAmount(returnSalesInvoiceHeader.getTotal());
 			cacheMovement.setCache(cache);
 			int clientId = Integer.parseInt(request.getParameter("clientId"));
 			if(clientId == 0) cacheMovement.setClient(null);
@@ -67,8 +69,12 @@ public class ReturnInvoicesController extends HttpServlet {
 				client.setId(clientId);
 				cacheMovement.setClient(client);
 			}
+			String type = invType == 0 ? "فورى" : "آجل";
 			cacheMovement.setDate(returnSalesInvoiceHeader.getDate());
-			cacheMovement.setDescription("فاتورة مرتجع بيع");
+			cacheMovement.setDescription("فاتورة مرتجع بيع - " + type);
+			if(invType == 0)
+				cacheMovement.setAmount(returnSalesInvoiceHeader.getTotal() * -1);
+			else cacheMovement.setAmount(returnSalesInvoiceHeader.getTotal());
 			cacheMovement.setInventory(user.getInventory());
 			cacheMovement.setRefNumber(returnSalesInvoiceHeader.getNumber());
 			cacheMovement.setSupplier(null);

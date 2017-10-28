@@ -1,3 +1,13 @@
+<%@page import="com.storemanagement.services.EntityService"%>
+<%@page import="com.storemanagement.entities.Supplier"%>
+<%@page import="com.storemanagement.entities.Client"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+List<Client> clients = EntityService.getAllObjects(Client.class);
+List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +55,24 @@
                                     <input class="form-control" placeholder="رقم الحركة" name="movement_refNum" type="number" id="movement_refNum" required>
                                 </div>
                                 <div class="form-group">
+                                	<label for="movement_client">العميل</label>
+                                    <select class="form-control" name="movement_client" id="movement_client">
+                                    	<option value="">اختر العميل</option>
+                                    	<% for(Client client : clients){ %>
+                                    	<option value="<%= client.getId() %>"><%= client.getName() %></option>
+                                    	<% } %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                	<label for="movement_supplier">المورد</label>
+                                    <select class="form-control" name="movement_supplier" id="movement_supplier">
+                                    	<option value="">اختر المورد</option>
+                                    	<% for(Supplier supplier : suppliers){ %>
+                                    	<option value="<%= supplier.getId() %>"><%= supplier.getName() %></option>
+                                    	<% } %>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                 	<label for="movement_amount">المبلغ</label>
                                     <input class="form-control" placeholder="المبلغ" name="movement_amount" type="number" id="movement_amount" required>
                                 </div>
@@ -68,7 +96,6 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

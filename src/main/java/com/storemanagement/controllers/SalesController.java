@@ -98,11 +98,11 @@ public class SalesController extends HttpServlet {
 	//get item from id
 	protected void getItemById(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		//User user = (User) request.getSession().getAttribute("user");
+		User user = (User) request.getSession().getAttribute("user");
 		if(!request.getParameter("itemId").equals("")) {
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
 			Item item = (Item) ItemService.getObject(Item.class, itemId);
-//			ItemBalance itemBalance = ItemService.getItemBalance(itemId, user.getInventory().getId());
+			int itemQty = ItemService.getItemBalance(itemId, user.getInventory().getId());
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			JSONObject jsonObject = new JSONObject();
@@ -110,7 +110,7 @@ public class SalesController extends HttpServlet {
 			jsonObject.put("itemCode", item.getCode());
 			jsonObject.put("itemName", item.getName());
 			jsonObject.put("itemPrice", item.getPrice());
-			jsonObject.put("itemQty", 5);
+			jsonObject.put("itemQty", itemQty);
 			jsonObject.put("itemMin", item.getMinLimit());
 			response.getWriter().print(jsonObject.toString());
 		}
@@ -155,16 +155,21 @@ public class SalesController extends HttpServlet {
 			else salesInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
 			salesInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
 			//update cache quantity
-			cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
+			if(salesInvoiceHeader.getType() == 0)
+				cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
+			else cache.setQty(cache.getQty() - salesInvoiceHeader.getPaid());
 			EntityService.updateObject(cache);
 			EntityService.addObject(salesInvoiceHeader);
 			//add new cache movement from the sales invoice
 			CacheMovement cacheMovement = new CacheMovement();
-			cacheMovement.setAmount(salesInvoiceHeader.getFinalTotal());
+			if(salesInvoiceHeader.getType() == 0)
+				cacheMovement.setAmount(salesInvoiceHeader.getFinalTotal());
+			else cacheMovement.setAmount(salesInvoiceHeader.getFinalTotal() * -1);
 			cacheMovement.setCache(cache);
 			cacheMovement.setClient(client.getId() == 0 ? null : client);
 			cacheMovement.setDate(salesInvoiceHeader.getDate());
-			cacheMovement.setDescription("فاتورة بيع");
+			String invType = salesInvoiceHeader.getType() == 0 ? "فورى" : "آجل";
+			cacheMovement.setDescription("فاتورة بيع - " + invType);
 			cacheMovement.setInventory(inventory);
 			cacheMovement.setRefNumber(salesInvoiceHeader.getNumber());
 			cacheMovement.setSupplier(null);

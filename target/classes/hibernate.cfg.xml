@@ -43,8 +43,6 @@
         <mapping class="com.storemanagement.entities.ReturnPurchaseInvoiceDetails"/>
         <mapping class="com.storemanagement.entities.Branch"/>
         <mapping class="com.storemanagement.entities.CacheMovement"/>
-        <mapping class="com.storemanagement.entities.ItemMovement"/>
-        <mapping class="com.storemanagement.entities.CacheMovementSum"/>
-        <mapping class="com.storemanagement.entities.ItemBalance"/>
+        <mapping class="com.storemanagement.entities.Facility"/>
     </session-factory>
 </hibernate-configuration>

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -153,27 +155,31 @@ public class ReportsUtil {
 		}
 	}
 	//caches movement report
-	public void showCachsMovementReport(HttpServletRequest request, HttpServletResponse response, List<CacheMovement> cacheMovements) throws IOException{
+	public void showCachsMovementReport(HttpServletRequest request, HttpServletResponse response, List<CacheMovement> cacheMovements, int clientId, int supplierId) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
 		for(CacheMovement cacheMovement : cacheMovements){
 			Map<String, Object> map = new HashMap<>();
 			int type = cacheMovement.getType();
 			Client client = cacheMovement.getClient();
 			if(type == 0 || type == 2 || type == 3){
-				map.put("total", cacheMovement.getAmount() * -1);
             	if(type == 0 || type == 2) map.put("client", "");
             	else {
             		if(client == null) map.put("client", "عميل نقدى");
             		else map.put("client", client.getName());
             	}
             }else{
-            	map.put("total", cacheMovement.getAmount());
             	if(type == 1 || type == 5) map.put("client", "");
             	else {
             		if(client == null) map.put("client", "عميل نقدى");
             		else map.put("client", client.getName());
             	}
             }
+			map.put("total", cacheMovement.getAmount());
+			String title = "";
+			if(clientId > 0) title = "كشف حساب العميل : " + client.getName();
+			if(supplierId > 0) title = "كشف حساب المورد : " + cacheMovement.getSupplier().getName();
+			if(clientId == 0 && supplierId == 0) title = "سحب - إيداع - مبيعات - مشتريات - مرتجعات";
+			map.put("title", title);
 			map.put("user", cacheMovement.getUser().getName());
 			map.put("inventory", cacheMovement.getInventory().getName());
 			map.put("cache", cacheMovement.getCache().getName());
@@ -201,6 +207,43 @@ public class ReportsUtil {
 			e.printStackTrace();
 		}
 	}
+	//clients debit report
+	public void showClientsDebitReport(HttpServletRequest request, HttpServletResponse response, List<CacheMovement> cacheMovements, int clientId) throws IOException{
+		List<Map<String, ?>> ds = new ArrayList<>();
+		for(CacheMovement cacheMovement : cacheMovements){
+			Map<String, Object> map = new HashMap<>();
+			Client client = cacheMovement.getClient();
+			String title = "";
+			if(clientId > 0) title = "كشف مديونيات العميل : " + client.getName();
+			if(clientId == 0) title = "كشف مديونيات العملاء";
+			map.put("title", title);
+			map.put("user", cacheMovement.getUser().getName());
+			map.put("inventory", cacheMovement.getInventory().getName());
+			map.put("cache", cacheMovement.getCache().getName());
+			map.put("number", cacheMovement.getRefNumber());
+			map.put("client", client == null ? "" : client.getName());
+			map.put("total", cacheMovement.getAmount());
+			map.put("date", cacheMovement.getDate().toString());
+			map.put("type", cacheMovement.getType() == 0 ? "سحب" : "إيداع");
+			map.put("description", cacheMovement.getDescription());
+			ds.add(map);
+		}
+		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("reports/ClientsDebits.jrxml").getFile());
+		InputStream inputStream = new FileInputStream(file);
+		try {
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("contentType", "application/pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
+	}
 	//single cache movement report
 	public void showSingleCacheMovementReport(HttpServletRequest request, HttpServletResponse response, CacheMovement cacheMovement) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
@@ -215,7 +258,7 @@ public class ReportsUtil {
 		map.put("date", cacheMovement.getDate());
 		map.put("type", cacheMovement.getType() == 0 ? "سحب نقدية" : "إيداع نقدية");
 		map.put("description", cacheMovement.getDescription());
-		map.put("total", cacheMovement.getType() == 0 ? (cacheMovement.getAmount() * -1) : cacheMovement.getAmount());
+		map.put("total", cacheMovement.getAmount());
 		ds.add(map);
 		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -234,51 +277,90 @@ public class ReportsUtil {
 		}
 	}
 	//sales invoice report
-	public void showSalesInvoiceReport(HttpServletRequest request, HttpServletResponse response, SalesInvoiceHeader salesInvoiceHeader) throws IOException, JRException{
+	public void showSalesInvoiceReport(HttpServletRequest request, HttpServletResponse response, long invoiceId) throws IOException{
 		
-		List<SalesInvoiceHeader> headers = new ArrayList<>();
-		headers.add(salesInvoiceHeader);
-//		JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(headers);
-//		ClassLoader classLoader = getClass().getClassLoader();
-//		File file = new File(classLoader.getResource("reports/SalesInvoice.jrxml").getFile());
-//		InputStream inputStream = new FileInputStream(file);
-//		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap<>(), beanCollectionDataSource);
-//		response.setCharacterEncoding("UTF-8");
-//		response.addHeader("Content-disposition", "attachment; filename=salesInvoiceReport.pdf");
-//		JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
-//		response.getOutputStream().flush();
-//		response.getOutputStream().close();
-		
-		List<Map<String, ?>> ds = new ArrayList<>();
+//		List<SalesInvoiceHeader> headers = new ArrayList<>();
+//		headers.add(salesInvoiceHeader);
+//		
+//		List<Map<String, ?>> ds = new ArrayList<>();
 		Map<String, Object> map = new HashMap<>();
-		map.put("number", salesInvoiceHeader.getNumber());
-		map.put("date", salesInvoiceHeader.getDate().toString());
-		map.put("type", salesInvoiceHeader.getType() == 0 ? "فورى" : "آجل");
-		map.put("inventory", salesInvoiceHeader.getInventory().getName());
-		map.put("user", salesInvoiceHeader.getUser().getName());
-		Client client = salesInvoiceHeader.getClient();
-		if(null == client) map.put("client", "عميل نقدى");
-		else map.put("client", salesInvoiceHeader.getClient().getName());
-		map.put("total", salesInvoiceHeader.getTotal());
-		map.put("discount", salesInvoiceHeader.getDiscount());
-		map.put("tax", salesInvoiceHeader.getTax() + " %");
-		map.put("finalTotal", salesInvoiceHeader.getFinalTotal());
-		map.put("salesInvoiceDetails", salesInvoiceHeader.getSalesInvoiceDetails());
-		ds.add(map);
-		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+		map.put("id", Integer.parseInt(String.valueOf(invoiceId)));
+//		map.put("number", salesInvoiceHeader.getNumber());
+//		map.put("date", salesInvoiceHeader.getDate().toString());
+//		map.put("type", salesInvoiceHeader.getType() == 0 ? "فورى" : "آجل");
+//		map.put("inventory", salesInvoiceHeader.getInventory().getName());
+//		map.put("user", salesInvoiceHeader.getUser().getName());
+//		Client client = salesInvoiceHeader.getClient();
+//		if(null == client) map.put("client", "عميل نقدى");
+//		else map.put("client", salesInvoiceHeader.getClient().getName());
+//		map.put("total", salesInvoiceHeader.getTotal());
+//		map.put("discount", salesInvoiceHeader.getDiscount());
+//		map.put("tax", salesInvoiceHeader.getTax() + " %");
+//		map.put("finalTotal", salesInvoiceHeader.getFinalTotal());
+		//map.put("salesInvoiceDetails", salesInvoiceHeader.getSalesInvoiceDetails());
+//		ds.add(map);
+//		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("reports/SalesInvoice.jrxml").getFile());
 		InputStream inputStream = new FileInputStream(file);
 		try {
+			Connection connection = null;
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/usarabia_store?verifyServerCertificate=false&useSSL=true", "root", "root");
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, connection);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//purchase invoice report
+	public void showPurchaseInvoiceReport(HttpServletRequest request, HttpServletResponse response, long invoiceId) throws IOException{
+		
+//		List<SalesInvoiceHeader> headers = new ArrayList<>();
+//		headers.add(salesInvoiceHeader);
+//		
+//		List<Map<String, ?>> ds = new ArrayList<>();
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", Integer.parseInt(String.valueOf(invoiceId)));
+//		map.put("number", salesInvoiceHeader.getNumber());
+//		map.put("date", salesInvoiceHeader.getDate().toString());
+//		map.put("type", salesInvoiceHeader.getType() == 0 ? "فورى" : "آجل");
+//		map.put("inventory", salesInvoiceHeader.getInventory().getName());
+//		map.put("user", salesInvoiceHeader.getUser().getName());
+//		Client client = salesInvoiceHeader.getClient();
+//		if(null == client) map.put("client", "عميل نقدى");
+//		else map.put("client", salesInvoiceHeader.getClient().getName());
+//		map.put("total", salesInvoiceHeader.getTotal());
+//		map.put("discount", salesInvoiceHeader.getDiscount());
+//		map.put("tax", salesInvoiceHeader.getTax() + " %");
+//		map.put("finalTotal", salesInvoiceHeader.getFinalTotal());
+		//map.put("salesInvoiceDetails", salesInvoiceHeader.getSalesInvoiceDetails());
+//		ds.add(map);
+//		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("reports/PurchaseInvoice.jrxml").getFile());
+		InputStream inputStream = new FileInputStream(file);
+		try {
+			Connection connection = null;
+			Class.forName("com.mysql.jdbc.Driver");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/usarabia_store?verifyServerCertificate=false&useSSL=true", "root", "root");
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, connection);
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("contentType", "application/pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

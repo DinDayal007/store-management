@@ -212,6 +212,8 @@ $(document).ready(function(){
 			data : {itemId : itemId, action : "3"},
 			dataType : "json",
 			success : function(data){
+				if(data.itemQty + unitQuantity > data.itemMax)
+					alert("الكمية المضافة ستزيد كمية الصنف فى المخزن عن الحد الأقصى");
 				addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMax, unit, unitQuantity);
 			}
 		});
@@ -384,8 +386,8 @@ $(document).ready(function(){
 			dataType : "text",
 			success : function(data){
 				if(data){
-					alert("تم حفظ الفاتورة بنجاح");
-					location.reload();
+					console.log("done");
+					window.location.replace('/store-management/reports?r=pi&id=' + inv_num);
 				}
 			}	
 		});

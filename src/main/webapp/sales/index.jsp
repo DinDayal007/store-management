@@ -69,11 +69,11 @@ long invNumber = InvoicesCounterUtil.getSalesInvoiceCounter();
 				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_type">نوع الفاتورة</label> 
-<!-- 						<select class="form-control" id="inv_type" name="inv_type">
-							<option value="0">فوري</option>
+						<select class="form-control" id="inv_type" name="inv_type">
+ 							<option value="0">فوري</option>
 							<option value="1">آجل</option>
- 							</select> -->
- 						<input type="text" class="form-control" name="inv_type" id="inv_type" value="فوري" readonly />
+  						</select>
+<!--  						<input type="text" class="form-control" name="inv_type" id="inv_type" value="فوري" readonly /> -->
 					</div>
 <!-- 					<div class="form-group form-inline"> -->
 <!-- 						<label for="cache">الخزنة</label>  -->
@@ -133,7 +133,7 @@ long invNumber = InvoicesCounterUtil.getSalesInvoiceCounter();
 						<tr>
 							<th>كود الصنف</th>
 							<th>اسم الصنف</th>
-							<th>الكمية فى المخزن</th>
+							<th>الكمية فى المخزن بالقطعة</th>
 							<th>الوحدة</th>
 							<th>كمية الوحدة</th>
 							<th>الكمية</th>
@@ -229,7 +229,9 @@ $(document).ready(function(){
 			data : {itemId : itemId, action : "3"},
 			dataType : "json",
 			success : function(data){
-				addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMin, unit, unitQuantity);
+				if(unitQuantity <= data.itemQty)
+					addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMin, unit, unitQuantity);
+				else alert("هذه الكمية غير متوفرة فى المخزن لهذا الصنف");
 			}
 		});
 	});
@@ -305,15 +307,15 @@ $(document).ready(function(){
 	});
 	
 	//check if the invType is monetary or installement
-	$('#inv_type').change(function(){
-		if($(this).val() == 1){
-			$('#monetaryClient').addClass('hidden');
-			$('.hideInMonetary').removeClass('hidden');
-		} else {
-			$('#monetaryClient').removeClass('hidden');
-			$('.hideInMonetary').addClass('hidden');
-		}
-	});
+// 	$('#inv_type').change(function(){
+// 		if($(this).val() == 1){
+// 			$('#monetaryClient').addClass('hidden');
+// 			$('.hideInMonetary').removeClass('hidden');
+// 		} else {
+// 			$('#monetaryClient').removeClass('hidden');
+// 			$('.hideInMonetary').addClass('hidden');
+// 		}
+// 	});
 	
 	//check for the discount type if it is % or EGP
 	$('#discountType').change(function(){
@@ -391,13 +393,13 @@ $(document).ready(function(){
 		var itemTotal = $('input.itemTotal[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
 		var inv_num = $('#inv_num').val();
-//		var inv_type = $('#inv_type').val();
+		var inv_type = $('#inv_type').val();
 // 		var paid = $('#paid').val();
 // 		var remain = $('#remain').val();
 		var finalTotal = $('#finalTotal').val();
 		var paid = $('#finalTotal').val();
 		var remain = 0;
-		var inv_type = 0;
+// 		var inv_type = 0;
 		var client = $('#client').val();
 // 		var inventory = $('#inventory').val();
 // 		var cache = $('#cache').val();
@@ -422,8 +424,8 @@ $(document).ready(function(){
 			dataType : "text",
 			success : function(data){
 				if(data){
-					alert("تم حفظ الفاتورة بنجاح");
-					location.reload();
+					console.log("done");
+					window.location.replace('/store-management/reports?r=si&id=' + inv_num);
 				}
 			}	
 		});

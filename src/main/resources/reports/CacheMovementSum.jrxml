@@ -16,6 +16,7 @@
 	<field name="user" class="java.lang.String"/>
 	<field name="client" class="java.lang.String"/>
 	<field name="supplier" class="java.lang.String"/>
+	<field name="title" class="java.lang.String"/>
 	<variable name="sumTotal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
@@ -53,13 +54,13 @@
 					</textElement>
 					<text><![CDATA[كشف حركات الخزنة]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="20" y="40" width="217" height="20" forecolor="#030202" uuid="9dded8b2-6947-41a5-a669-b81760a3ce21"/>
-					<textElement textAlignment="Right">
-						<font fontName="Ariel" size="14" isBold="false"/>
+				<textField>
+					<reportElement x="20" y="35" width="230" height="30" uuid="fb2e7133-b69c-4b02-9860-386aada8d5ca"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="14"/>
 					</textElement>
-					<text><![CDATA[سحب - إيداع - مبيعات - مشتريات - مرتجعات]]></text>
-				</staticText>
+					<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
+				</textField>
 			</frame>
 		</band>
 	</title>
@@ -162,7 +163,7 @@
 				<reportElement style="details" x="489" y="-2" width="66" height="30" uuid="d14233bb-fc66-4817-9f62-f57ec9a4cea3">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{cache}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{user}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -1,5 +1,6 @@
 package com.storemanagement.utils;
 import java.util.HashMap;
+import java.util.List;
 import com.storemanagement.services.InvoiceService;
 public class InvoicesCounterUtil {
 	/**
@@ -10,10 +11,11 @@ public class InvoicesCounterUtil {
 	 */
 	private static HashMap<Integer, Long> invoicesCounter  = new HashMap<>();
 	public static void initializeValues() {
-		invoicesCounter.put(1, InvoiceService.getInvoicesNumbers().get(0));
-		invoicesCounter.put(2, InvoiceService.getInvoicesNumbers().get(1));
-		invoicesCounter.put(3, InvoiceService.getInvoicesNumbers().get(2));
-		invoicesCounter.put(4, InvoiceService.getInvoicesNumbers().get(3));
+		List<Long> invoiceNumbers = InvoiceService.getInvoicesNumbers();
+		invoicesCounter.put(1, invoiceNumbers.get(0));
+		invoicesCounter.put(2, invoiceNumbers.get(1));
+		invoicesCounter.put(3, invoiceNumbers.get(2));
+		invoicesCounter.put(4, invoiceNumbers.get(3));
 	}
 	public static HashMap<Integer, Long> getInvoicesCounter(){
 		return invoicesCounter;

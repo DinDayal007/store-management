@@ -4,7 +4,7 @@ import org.hibernate.cfg.Configuration;
 class HibernateUtil {
 	private static SessionFactory sessionFactory = buildSessionFactory();
 
-	private static SessionFactory buildSessionFactory() {
+	public static SessionFactory buildSessionFactory() {
 		try {
 			return new Configuration().configure().buildSessionFactory();
 		} catch (Exception e) {

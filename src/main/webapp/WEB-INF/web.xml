@@ -148,6 +148,18 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.CacheSumController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>FacilityController</servlet-name>
+  	<display-name>FacilityController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.FacilityController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ClientsDebitsController</servlet-name>
+  	<display-name>ClientsDebitsController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.ClientsDebitsController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>

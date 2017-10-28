@@ -213,6 +213,7 @@ Client client = salesInvoiceHeader.getClient();
     		var i = 0;
     		var id = <%= id %>;
     		var clientId = <%= client == null ? 0 : client.getId() %>;
+    		var invType = <%= salesInvoiceHeader.getType() %>;
     		var cache = $('#cache').val();
     		var total = parseFloat($('#finalTotalReturnValue').text());
     		var itemIds = [];
@@ -240,7 +241,7 @@ Client client = salesInvoiceHeader.getClient();
         			data : {
         				salesInvoiceId : id, total : total, cache : cache, unitIds : unitIds,
         				itemIds : itemIds, itemQty : itemQty, clientId : clientId, itemPrice : itemPrice,
-						itemTotal : itemTotal, action : "1"
+        				invType : invType, itemTotal : itemTotal, action : "1"
         			},
         			dataType : "text",
         			success : function(data){

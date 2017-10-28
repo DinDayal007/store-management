@@ -35,7 +35,7 @@
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 		<parameter name="invoiceId" class="java.lang.Integer"/>
 		<queryString language="SQL">
-			<![CDATA[SELECT  A.SALES_INVOICE_HEADER_ID,
+			<![CDATA[SELECT  A.PURCHASE_INVOICE_HEADER_ID,
 		A.ITEM_ID , 
 		B.NAME ITEM_NAME , 
 		B.CODE ITEM_CODE,
@@ -43,14 +43,14 @@
 		A.PRICE , 
 		A.QTY ,
 		A.TOTAL 
-from 	SALES_INVOICE_DETAILS A , 
+from 	PURCHASE_INVOICE_DETAILS A , 
 		ITEMS B , 
         UNITS C
 WHERE 	A.ITEM_ID = B.ID 
 AND 	A.UNIT_ID  =  C.ID 
-AND SALES_INVOICE_HEADER_ID = $P{invoiceId}]]>
+AND PURCHASE_INVOICE_HEADER_ID = $P{invoiceId}]]>
 		</queryString>
-		<field name="SALES_INVOICE_HEADER_ID" class="java.lang.Integer"/>
+		<field name="PURCHASE_INVOICE_HEADER_ID" class="java.lang.Integer"/>
 		<field name="ITEM_ID" class="java.lang.Integer"/>
 		<field name="ITEM_NAME" class="java.lang.String"/>
 		<field name="ITEM_CODE" class="java.lang.String"/>
@@ -64,22 +64,16 @@ AND SALES_INVOICE_HEADER_ID = $P{invoiceId}]]>
 		<![CDATA[SELECT  A.ID                         INV_ID         ,
         A.NUMBER    			     INV_NUMBER     , 
 		A.DATE  					 TRAN_DATE		,
-        A.TYPE      				 PAYMENT_METHOD , 
         B.NAME 						 CASH_NAME 		, 
-        ( SELECT NAME 
-          FROM   CLIENTS 
-          WHERE  ID = A.CLIENT_ID
-		) 							 CLIENT_NAME    , 
+		S.NAME						SUPPLIER_NAME  ,
         C.NAME                       INVENTORY_NAME , 
         U.NAME						 USER_NAME	    ,
-        A.DISCOUNT                  				,
-        A.TAX                       				, 
-        A.TOTAL                    					, 
-        A.FINAL_TOTAL               				, 
+        A.TOTAL               				, 
         A.USER_ID 
-FROM 	SALES_INVOICE_HEADER A , 
+FROM 	PURCHASE_INVOICE_HEADER A , 
 		CACHES 				 B , 
         INVENTORIES 		 C ,
+        SUPPLIERS 			S,
         USERS 				 U
 WHERE 	A.CACHE_ID     =     B.ID
 AND	    A.INVENTORY_ID =     C.ID
@@ -87,17 +81,13 @@ AND 	A.USER_ID      =     U.ID
 and A.ID= $P{id}]]>
 	</queryString>
 	<field name="INV_ID" class="java.lang.Integer"/>
-	<field name="INV_NUMBER" class="java.lang.Long"/>
+	<field name="INV_NUMBER" class="java.lang.String"/>
 	<field name="TRAN_DATE" class="java.sql.Date"/>
-	<field name="PAYMENT_METHOD" class="java.lang.Integer"/>
 	<field name="CASH_NAME" class="java.lang.String"/>
-	<field name="CLIENT_NAME" class="java.lang.String"/>
+	<field name="SUPPLIER_NAME" class="java.lang.String"/>
 	<field name="INVENTORY_NAME" class="java.lang.String"/>
 	<field name="USER_NAME" class="java.lang.String"/>
-	<field name="DISCOUNT" class="java.lang.String"/>
-	<field name="TAX" class="java.lang.Integer"/>
 	<field name="TOTAL" class="java.lang.Double"/>
-	<field name="FINAL_TOTAL" class="java.lang.Double"/>
 	<field name="USER_ID" class="java.lang.Integer"/>
 	<group name="Group1">
 		<groupFooter>
@@ -131,7 +121,7 @@ and A.ID= $P{id}]]>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Ariel" size="34" isBold="true"/>
 					</textElement>
-					<text><![CDATA[فاتورة بيع]]></text>
+					<text><![CDATA[فاتورة شراء]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="395" y="12" width="180" height="20" forecolor="#0F0F0F" uuid="66a1fe5c-5eaa-4afe-88ea-6f7dd23642fe"/>
@@ -209,13 +199,6 @@ and A.ID= $P{id}]]>
 				<text><![CDATA[التاريخ : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="116" y="10" width="70" height="20" uuid="23149787-d4fd-458a-b446-2375c6c8a578"/>
-				<textElement textAlignment="Right">
-					<font fontName="Ariel" size="15"/>
-				</textElement>
-				<text><![CDATA[طريقة الدفع : ]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="500" y="40" width="55" height="20" uuid="1f4cf245-7bbd-4f3c-b92c-73537bd67bbc"/>
 				<textElement textAlignment="Right">
 					<font fontName="Ariel" size="15"/>
@@ -230,11 +213,11 @@ and A.ID= $P{id}]]>
 				<text><![CDATA[المستخدم : ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="136" y="40" width="50" height="20" uuid="12118ee7-3c56-4c6b-a88a-3a0daea2c500"/>
+				<reportElement x="136" y="10" width="50" height="20" uuid="12118ee7-3c56-4c6b-a88a-3a0daea2c500"/>
 				<textElement textAlignment="Right">
 					<font fontName="Ariel" size="15"/>
 				</textElement>
-				<text><![CDATA[العميل : ]]></text>
+				<text><![CDATA[المورد : ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="408" y="10" width="70" height="20" uuid="e453b45f-fb76-4d2d-a9ba-6505d8e717fd"/>
@@ -251,13 +234,6 @@ and A.ID= $P{id}]]>
 				<textFieldExpression><![CDATA[$F{TRAN_DATE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="10" y="10" width="101" height="20" uuid="397704e6-1cc2-490a-9311-bfe6f1718f24"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Ariel" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{PAYMENT_METHOD}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="394" y="40" width="100" height="20" uuid="a6f4af6f-0de2-45be-b973-3b530dd07683"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
@@ -272,11 +248,11 @@ and A.ID= $P{id}]]>
 				<textFieldExpression><![CDATA[$F{USER_NAME}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="10" y="40" width="124" height="20" uuid="0ce3741a-44ee-44b4-bf84-416c9ad3bea9"/>
+				<reportElement x="10" y="10" width="124" height="20" uuid="0ce3741a-44ee-44b4-bf84-416c9ad3bea9"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CLIENT_NAME}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SUPPLIER_NAME}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
@@ -428,67 +404,21 @@ and A.ID= $P{id}]]>
 		</band>
 		<band height="49">
 			<staticText>
-				<reportElement x="130" y="3" width="56" height="20" uuid="96998787-1b09-44c6-849d-84ed372a0461"/>
-				<textElement textAlignment="Right">
-					<font fontName="Ariel" size="15"/>
-				</textElement>
-				<text><![CDATA[الضريبة : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="470" y="3" width="85" height="20" uuid="6fbb9ddc-fe44-4396-9444-9dd02dd227be"/>
-				<textElement textAlignment="Right">
-					<font fontName="Ariel" size="15"/>
-				</textElement>
-				<text><![CDATA[إجمالى الفاتورة : ]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="460" y="28" width="95" height="20" uuid="ef545122-e4fe-4044-a9e9-f02b4eb4a85d"/>
+				<reportElement x="460" y="8" width="95" height="20" uuid="ef545122-e4fe-4044-a9e9-f02b4eb4a85d"/>
 				<textElement textAlignment="Right">
 					<font fontName="Ariel" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[الإجمالى النهائى : ]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="326" y="3" width="50" height="20" uuid="d31ba24d-d209-4e8d-9136-d1749d4635e3">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Ariel" size="15"/>
-				</textElement>
-				<text><![CDATA[الخصم : ]]></text>
-			</staticText>
 			<textField pattern="# EGP">
-				<reportElement x="391" y="3" width="74" height="20" uuid="8d27d699-ef71-4a6f-94cd-e13c7e166a82">
-					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Ariel" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="222" y="3" width="100" height="20" uuid="fc8d3230-5afe-4f1f-9e50-1ab822595fee"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Ariel" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{DISCOUNT}]]></textFieldExpression>
-			</textField>
-			<textField pattern="# %">
-				<reportElement x="25" y="3" width="100" height="20" uuid="d4639cad-979f-4bf3-8876-1861fc65e007"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Ariel" size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TAX}]]></textFieldExpression>
-			</textField>
-			<textField pattern="# EGP">
-				<reportElement x="358" y="28" width="100" height="20" uuid="9a7b913f-c4f7-43c1-967c-042761992343">
+				<reportElement x="358" y="8" width="100" height="20" uuid="9a7b913f-c4f7-43c1-967c-042761992343">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FINAL_TOTAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

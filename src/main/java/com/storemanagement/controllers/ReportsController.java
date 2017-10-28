@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
+import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.ItemMovement;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
+import com.storemanagement.entities.Supplier;
 import com.storemanagement.services.CachesMovementService;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.utils.ReportsUtil;
-import net.sf.jasperreports.engine.JRException;
 @WebServlet("/reports")
 public class ReportsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,6 +42,14 @@ public class ReportsController extends HttpServlet {
 			if(request.getParameter("cache").equals(""))
 				cache = null;
 			else cache.setId(Integer.parseInt(request.getParameter("cache")));
+			Client client = new Client();
+			if(request.getParameter("client").equals(""))
+				client = null;
+			else client.setId(Integer.parseInt(request.getParameter("client")));
+			Supplier supplier = new Supplier();
+			if(request.getParameter("supplier").equals(""))
+				supplier = null;
+			else supplier.setId(Integer.parseInt(request.getParameter("supplier")));
 			try{
 				Date from = null, to = null;
 				Integer type = null;
@@ -49,20 +59,36 @@ public class ReportsController extends HttpServlet {
 					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
 				if(!request.getParameter("to").equals(""))
 					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
-			reportsUtil.showCachsMovementReport(request, response, CachesMovementService.getCacheMovements(inventory, cache, from, to, type));
+			reportsUtil.showCachsMovementReport(request, response, CachesMovementService.getCacheMovements(inventory, cache, client, supplier, from, to, type), client == null ? 0 : client.getId(), supplier == null ? 0 : supplier.getId());
 			} catch (ParseException e) {
 			e.printStackTrace();
 			}
 		}else if(request.getParameter("r").equals("si")){
 			//sales invoice report
-			SalesInvoiceHeader header = (SalesInvoiceHeader) EntityService.getObject(SalesInvoiceHeader.class, 5);
-			try {
-				reportsUtil.showSalesInvoiceReport(request, response, header);
-			} catch (JRException e) {
-				e.printStackTrace();
-			}
+			int invId = Integer.parseInt(request.getParameter("id"));
+			reportsUtil.showSalesInvoiceReport(request, response, invId);
 		}else if(request.getParameter("r").equals("pi")){
 			//purchase invoice report
+			int invId = Integer.parseInt(request.getParameter("id"));
+			reportsUtil.showPurchaseInvoiceReport(request, response, invId);
+		}else if(request.getParameter("r").equals("cd")){
+			Client client = new Client();
+			if(request.getParameter("client").equals(""))
+				client = null;
+			else client.setId(Integer.parseInt(request.getParameter("client")));
+			try{
+				Date from = null, to = null;
+				if(!request.getParameter("from").equals(""))
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
+				if(!request.getParameter("to").equals(""))
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				reportsUtil.showClientsDebitReport(request, response, CachesMovementService.getClientsDebits(client, from, to), client == null ? 0 : client.getId());
+			}catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}else if(request.getParameter("r").equals("cache")){
+			int cacheMovementId = Integer.parseInt(request.getParameter("id"));
+			reportsUtil.showSingleCacheMovementReport(request, response, (CacheMovement)EntityService.getObject(CacheMovement.class, cacheMovementId));
 		}
 	}
 

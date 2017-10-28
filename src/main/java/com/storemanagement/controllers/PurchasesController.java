@@ -98,9 +98,11 @@ public class PurchasesController extends HttpServlet {
 	//get item from id
 	protected void getItemById(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
 		if(!request.getParameter("itemId").equals("")) {
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
 			Item item = (Item) ItemService.getObject(Item.class, itemId);
+			int itemQty = ItemService.getItemBalance(itemId, user.getInventory().getId());
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			JSONObject jsonObject = new JSONObject();
@@ -108,7 +110,7 @@ public class PurchasesController extends HttpServlet {
 			jsonObject.put("itemCode", item.getCode());
 			jsonObject.put("itemName", item.getName());
 			jsonObject.put("itemPrice", item.getPrice());
-			jsonObject.put("itemQty", 5);
+			jsonObject.put("itemQty", itemQty);
 			jsonObject.put("itemMax", item.getMaxLimit());
 			response.getWriter().print(jsonObject.toString());
 		}
@@ -158,7 +160,7 @@ public class PurchasesController extends HttpServlet {
 			EntityService.addObject(purchaseInvoiceHeader);
 			//add new cache movement from the purchase invoice
 			CacheMovement cacheMovement = new CacheMovement();
-			cacheMovement.setAmount(purchaseInvoiceHeader.getTotal());
+			cacheMovement.setAmount(purchaseInvoiceHeader.getTotal() * -1);
 			cacheMovement.setCache(cache);
 			cacheMovement.setClient(null);
 			cacheMovement.setDate(purchaseInvoiceHeader.getDate());

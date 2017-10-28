@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
+import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Supplier;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
-import com.storemanagement.utils.ReportsUtil;
 @WebServlet("/cache-movements")
 public class CacheMovementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,13 +37,27 @@ public class CacheMovementController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("movement_type").equals("") && !request.getParameter("movement_amount").equals("")) {
 			CacheMovement cacheMovement = new CacheMovement();
-			cacheMovement.setType(Integer.parseInt(request.getParameter("movement_type")));
-			cacheMovement.setAmount(Integer.parseInt(request.getParameter("movement_amount")));
+			int type = Integer.parseInt(request.getParameter("movement_type"));
+			cacheMovement.setType(type);
+			double amount = Double.parseDouble(request.getParameter("movement_amount"));
+			cacheMovement.setAmount(type == 0 ? amount * -1 : amount);
 			cacheMovement.setDescription(request.getParameter("movement_description"));
 			cacheMovement.setDate(new Date());
 			cacheMovement.setRefNumber(Long.parseLong(request.getParameter("movement_refNum")));
-			cacheMovement.setClient(null);
-			cacheMovement.setSupplier(null);
+			Client client = new Client();
+			if(request.getParameter("movement_client").equals(""))
+				cacheMovement.setClient(null);
+			else{
+				client.setId(Integer.parseInt(request.getParameter("movement_client")));
+				cacheMovement.setClient(client);
+			}
+			Supplier supplier = new Supplier();
+			if(request.getParameter("movement_supplier").equals(""))
+				cacheMovement.setSupplier(null);
+			else{
+				supplier.setId(Integer.parseInt(request.getParameter("movement_supplier")));
+				cacheMovement.setSupplier(supplier);
+			}
 			User user = (User) request.getSession().getAttribute("user");
 			cacheMovement.setUser(user);
 			int cacheId = user.getCache().getId();
@@ -50,13 +65,10 @@ public class CacheMovementController extends HttpServlet {
 			cacheMovement.setCache(cache);
 			Inventory inventory = user.getInventory();
 			cacheMovement.setInventory(inventory);
-			if(cacheMovement.getType() == 0)
-				cache.setQty(cache.getQty() - cacheMovement.getAmount());
-			else if(cacheMovement.getType() == 1) cache.setQty(cache.getQty() + cacheMovement.getAmount());
+			cache.setQty(cache.getQty() + cacheMovement.getAmount());
 			EntityService.updateObject(cache);
-			EntityService.addObject(cacheMovement);
-			ReportsUtil reportsUtil = new ReportsUtil();
-			reportsUtil.showSingleCacheMovementReport(request, response, cacheMovement);
+			int cacheMovementId = EntityService.addObject(cacheMovement);
+			response.sendRedirect("/store-management/reports?r=cache&id=" + cacheMovementId);
 		}
 	}
 }

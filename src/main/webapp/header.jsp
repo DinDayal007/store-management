@@ -64,11 +64,10 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="settings"><i class="fa fa-gear fa-fw"></i> لوحة التحكم</a>
-                        </li>
+<!--                         <li><a href="/store-management/settings"><i class="fa fa-gear fa-fw"></i> لوحة التحكم</a></li> -->
+                        <li><a href="/store-management/facility"><i class="fa fa-home fa-fw"></i> معلومات المنشأة</a></li>
                         <li class="divider"></li>
-                        <li><a href="/store-management/logout"><i class="fa fa-sign-out fa-fw"></i> تسجيل الخروج</a>
-                        </li>
+                        <li><a href="/store-management/logout"><i class="fa fa-sign-out fa-fw"></i> تسجيل الخروج</a></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -139,6 +138,9 @@
                         		</li>
                         		<li>
                             		<a href="http://localhost:8080/store-management/cache-sum">كشف حساب حركة الخزنة</a>
+                       			 </li>
+                       			 <li>
+                            		<a href="http://localhost:8080/store-management/debits">كشف مديونيات العملاء</a>
                        			 </li>
                         	</ul>
                         </li>
