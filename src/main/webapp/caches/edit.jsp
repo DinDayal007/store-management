@@ -33,10 +33,10 @@ Cache cache = (Cache) EntityService.getObject(Cache.class, id);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل الخزنة</h3>
-                    	<a href="/store-management/caches" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/caches" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/caches">
+                        <form method="post" action="/store-management-system/caches">
                             <fieldset>
                                 <div class="form-group">
                                 	<label for="cache_name">اسم الخزنة</label>

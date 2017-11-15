@@ -37,10 +37,10 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">إضافة حركة خزنة</h3>
-                    	<a href="/store-management/cache-movements" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/cache-movements" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/cache-movements">
+                        <form method="post" id="saveMovement">
                             <fieldset>
                                 <div class="form-group">
                                 	<label for="movement_type">نوع الحركة</label>
@@ -82,7 +82,7 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="hidden" name="action" value="add" />
-                                <input type="submit" class="btn btn-lg btn-primary btn-block" value="حفظ" />
+                                <input type="submit" id="submitData" class="btn btn-lg btn-primary btn-block" value="حفظ" />
                             </fieldset>
                         </form>
                     </div>
@@ -96,6 +96,28 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
+    <script>
+    	$(document).ready(function(){
+    		$('#saveMovement').submit(function(e){
+    			e.preventDefault();
+    			$.ajax({
+    				url : "/store-management-system/cache-movements",
+    				method : "POST",
+    				data : $(this).serialize(),
+    				beforeSend : function(){
+    					$('#submitData').addClass("hidden");
+    				},
+    				success : function(data){
+    					if(data){
+	    					console.log("saved");
+	    					$('#saveMovement').trigger('reset');
+	    					window.location.replace('/store-management-system/reports?r=cache&id=' + data);
+    					}
+    				}
+    			});
+    		});
+    	});
+    </script>
 </body>
 
 </html>

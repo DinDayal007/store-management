@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CacheMovementSum2" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f03a15c9-32b4-42fa-9cbe-a8e241e5fa70">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesInvoices" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f03a15c9-32b4-42fa-9cbe-a8e241e5fa70">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-	<style name="details" mode="Opaque" forecolor="#162387" backcolor="#1AB1D6" hTextAlign="Center" vTextAlign="Middle" fontName="Ariel"/>
+	<style name="details" mode="Opaque" forecolor="#162387" backcolor="#FFFFFF" hTextAlign="Center" vTextAlign="Middle" fontName="Ariel"/>
+	<parameter name="facilityName" class="java.lang.String"/>
+	<parameter name="facilityLocation" class="java.lang.String"/>
+	<parameter name="facilityAddress" class="java.lang.String"/>
+	<parameter name="facilityPhone" class="java.lang.String"/>
+	<parameter name="facilityMobiles" class="java.lang.String"/>
+	<parameter name="facilityInfo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -44,14 +50,63 @@
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="7a4b0e1b-a326-4175-a537-58a267e019c8"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#FFFFFF" uuid="7be534fb-e907-4864-91d5-6dd298fbb7c2"/>
 				<staticText>
-					<reportElement x="360" y="27" width="214" height="43" forecolor="#FFFFFF" uuid="e056867d-2545-4327-9fb2-834b1cbdde28"/>
-					<textElement textAlignment="Right">
+					<reportElement x="200" y="43" width="192" height="43" forecolor="#0F0F0F" uuid="63ea939c-d953-4779-a9ff-fd35d9610613"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Ariel" size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[فواتير المبيعات]]></text>
 				</staticText>
+				<textField>
+					<reportElement x="395" y="13" width="180" height="19" uuid="ec207408-e944-4443-922f-67556491e0c3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="395" y="35" width="180" height="19" uuid="9a640d83-24d5-4fe8-a107-3a62a51218d3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityLocation}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="395" y="57" width="180" height="29" uuid="cce4a843-4c20-4ea7-8e5f-4789768a59cd">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityAddress}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="13" width="180" height="19" uuid="7321b729-cf7f-48ca-9dfe-5b7939105d7f"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityPhone}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="35" width="180" height="19" uuid="77a2357b-b25f-4b34-be18-8c49ddcfc776"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityMobiles}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="57" width="180" height="29" uuid="0d911a5a-b9aa-4ea4-b29d-743017931a24"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityInfo}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="89" width="595" height="1" uuid="4be22b73-4d85-4da4-8a2c-f2297fc56911">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+				</line>
 			</frame>
 		</band>
 	</title>
@@ -127,7 +182,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30">
+		<band height="31">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField pattern="# EGP">
 				<reportElement style="details" x="0" y="0" width="67" height="30" uuid="04679936-d99a-455a-af79-b63dc33a65f7"/>
@@ -165,26 +220,38 @@
 				<reportElement style="details" x="494" y="0" width="61" height="30" uuid="67d4c72f-39dc-438a-ab27-d972d97aee2f"/>
 				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="30" width="555" height="1" uuid="d557ba37-49d1-4ac1-80ce-ce578c1e030d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
 		<band/>
 	</columnFooter>
 	<pageFooter>
-		<band height="17">
+		<band height="19">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="a3cb623e-6b17-4a61-bb24-ec90f1f5a273"/>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="04d3acec-a2aa-4b5b-8ac2-f08cd20c2fc7"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="f1d1ffc5-0983-45cd-872c-e528ac38b707"/>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="b1b278c4-1275-478b-8137-021e24f7f2d9"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="bb2d7dbb-9306-4327-ad45-339aea4ef755"/>
+				<reportElement x="4" y="4" width="100" height="13" uuid="bfa8b008-dde9-4e15-a08c-a2e0275b5bc0"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="160" y="4" width="231" height="15" uuid="9889d27f-1a0f-40b4-8011-05286bf511f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Unlimited Solutions Arabia - 01014713133]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>
@@ -210,4 +277,15 @@
 			</textField>
 		</band>
 	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="82" y="10" width="398" height="30" forecolor="#0E2B6B" uuid="923af8ad-11c3-456b-b57d-de8311ea68ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[لم يتم بيع أى من الأصناف حتى الان]]></text>
+			</staticText>
+		</band>
+	</noData>
 </jasperReport>

@@ -54,32 +54,26 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 						<label for="inv_date">التاريخ</label> 
 						<input style="width: 40%" class="form-control" type="text" id="inv_date" name="inv_date" value="<%= new SimpleDateFormat("dd-MM-yyyy").format(new Date()) %>" readonly />
 					</div>
-<!-- 					<div class="form-group form-inline"> -->
-<!-- 						<label for="inventory">المخزن</label>  -->
-<!-- 						<select class="form-control" id="inventory" name="inventory"> -->
-							
-<!-- 						</select> -->
-<!-- 					</div> -->
-				</div>
-				<div class="col-md-4">
 					<div class="form-group form-inline">
 						<label for="inv_type">نوع الفاتورة</label> 
-<!-- 						<select class="form-control" id="inv_type" name="inv_type">
+ 						<select class="form-control" id="inv_type" name="inv_type">
 							<option value="0">فوري</option>
 							<option value="1">آجل</option>
-						</select> -->
-						<input type="text" class="form-control" name="inv_type" id="inv_type" value="فوري" readonly />
+						</select>
 					</div>
-<!-- 					<div class="form-group form-inline"> -->
-<!-- 						<label for="cache">الخزنة</label>  -->
-<!-- 						<select class="form-control" id="cache" name="cache"> -->
-							
-<!-- 						</select> -->
-<!-- 					</div> -->
+				</div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="addItemType">طريقة إضافة الصنف</label> 
+						<select class="form-control" id="addItemType" name="addItemType">
+							<option value="0">إضافة صنف من المجموعات</option>
+ 							<option value="1">إضافة صنف عن طريق الباركود</option>
+  						</select>
+					</div>
 				</div>
 			</div>
 			<hr />
-			<div class="row">
+			<div class="row" id="addFromGroups">
 				<div class="col-md-3">
 					<div class="form-group">
 						<label for="mainGroup">المجموعة الرئيسية</label>
@@ -95,6 +89,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 					<div class="form-group">
 						<label for="subGroup">المجموعة الفرعية</label>
 						<select class="form-control" name="subGroup" id="subGroup">
+							<option value="">اختر المجموعة الفرعية</option>
 						</select>
 					</div>
 				</div>
@@ -102,6 +97,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 					<div class="form-group">
 						<label for="item">الصنف</label>
 						<select class="form-control" name="item" id="item">
+						<option value="">اختر الصنف</option>
 						</select>
 					</div>
 				</div>
@@ -119,6 +115,23 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 					</div>
 				</div>
 			</div>
+			
+			<div class="row hidden" id="addFromBarCode">
+				<div class="col-md-3">
+					<div class="form-group">
+						<label for="unitBarCode">الوحدة</label>
+						<div style="overflow: hidden;">
+							<select class="form-control" name="unitBarCode" id="unitBarCode" style="float: right; width: 80%">
+							<% for(Unit unit : units){ %>
+							<option data-qty="<%= unit.getQty() %>" value="<%= unit.getId() %>"><%= unit.getName() %></option>
+							<% } %>
+							</select>
+							<button class="btn btn-success" id="addItemFromCode" type="button" style="float: left"><i class="fa fa-plus" aria-hidden="true"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">
@@ -128,7 +141,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 						<tr>
 							<th>كود الصنف</th>
 							<th>اسم الصنف</th>
-							<th>الكمية فى المخزن</th>
+							<th>عدد القطع بالمخزن</th>
 							<th>الوحدة</th>
 							<th>كمية الوحدة</th>
 							<th>الكمية</th>
@@ -206,17 +219,27 @@ $(document).ready(function(){
 		var itemId = $('#item').val();
 		var unit = $('#unit').val();
 		var unitQuantity = $('#unit').find(':selected').data('qty');
-		$.ajax({
-			url : "/store-management/purchases",
-			method : "POST",
-			data : {itemId : itemId, action : "3"},
-			dataType : "json",
-			success : function(data){
-				if(data.itemQty + unitQuantity > data.itemMax)
-					alert("الكمية المضافة ستزيد كمية الصنف فى المخزن عن الحد الأقصى");
-				addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMax, unit, unitQuantity);
-			}
-		});
+		if(itemId != '' && unit != ''){
+			$.ajax({
+				url : "/store-management-system/purchases",
+				method : "POST",
+				data : {itemId : itemId, action : "3"},
+				dataType : "json",
+				success : function(data){
+					if(data.itemQty + unitQuantity > data.itemMax)
+						alert("الكمية المضافة ستزيد كمية الصنف فى المخزن عن الحد الأقصى");
+					addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMax, unit, unitQuantity);
+				}
+			});
+		}else{
+			alert('يرجى اختيار الصنف');
+		}
+	});
+	
+	$('#addItemFromCode').click(function(){
+		var unit = $('#unitBarCode').val();
+		var unitQuantity = $('#unitBarCode').find(':selected').data('qty');
+		addRowsBarCode(unit, unitQuantity);
 	});
 	
 	//add new items to the invoice if the request is success
@@ -236,6 +259,25 @@ $(document).ready(function(){
 				'<td><button class="btn btn-danger btn-remove" name="remove" id="' + i + '"><i class="fa fa-close"></i></button></td>' +
 				'</tr>');
 				sumTotal();
+	}
+	
+	//add new item from barcode
+	function addRowsBarCode(unit, unitQuantity){
+		i++;
+		$('#item-rows').append('<tr id="row' + i + '">' + 
+		'<input type="hidden" class="itemId" name="itemId[]" />' +
+		'<input type="hidden" class="unitId" name="unitId[]" value = "' + unit + '"/>' +
+		'<td><input class="form-control itemBarCode" type="number" name="item_code[]" autofocus /></td>' +
+		'<td><input class="form-control" type="text" name="item_name[]" readonly /></td>' + 
+		'<td><input class="form-control" type="number" disabled /></td>' + 
+		'<td><input class="form-control" value="' + $("#unitBarCode option:selected").text() + '" disabled /></td>' + 
+		'<td><input class="form-control" value="' + unitQuantity + '" type="number" disabled /></td>' + 
+		'<td><input class="form-control itemQty" data-inventory="0" data-max="0" value="1" type="number" name="itemQty[]" min="1" /></td>' +
+		'<td><input class="form-control itemPrice" type="number" name="itemPrice[]" min="1" /></td>' +
+		'<td><input class="form-control itemTotal" value="" type="number" name="itemTotal[]" min="1" disabled /></td>' +
+		'<td><button class="btn btn-danger btn-remove" name="remove" id="' + i + '"><i class="fa fa-close"></i></button></td>' +
+		'</tr>');
+		sumTotal();
 	}
 	
 	//sum total for the totalPrice and finalTotal
@@ -265,7 +307,7 @@ $(document).ready(function(){
 		var price = $(this).closest('td').next().find('input').val();
 		$(this).closest('td').next().next().find('input').val(qty * price * unitQty);
 		if(inventory + (unitQty * qty) > max){
-			alert("الكمية المختارة ستتخطى الحد الأدنى للصنف فى المخزن");
+			alert("الكمية المختارة ستتخطى الحد الأقصى للصنف فى المخزن");
 		}
 		sumTotal();
 	});
@@ -319,11 +361,23 @@ $(document).ready(function(){
 		$('#remain').val(parseFloat(total) - parseFloat(paid));
 	});
 	
+	//show div to add from barcode
+	$('#addItemType').change(function(){
+		var val = $(this).val();
+		if(val == 1) {
+			$('#addFromGroups').addClass('hidden');
+			$('#addFromBarCode').removeClass('hidden');
+		}else {
+			$('#addFromBarCode').addClass('hidden');
+			$('#addFromGroups').removeClass('hidden');
+		}
+	});
+	
 	//send ajax request to get subGroups from mainGroupId
 	$('#mainGroup').change(function(){
 		var mainGroup_id = $(this).val();
 		$.ajax({
-			url : "/store-management/sales",
+			url : "/store-management-system/sales",
 			method : "POST",
 			data : {mainGroup_id : mainGroup_id, action : "1"},
 			dataType : "text",
@@ -337,7 +391,7 @@ $(document).ready(function(){
 	$('#subGroup').change(function(){
 		var subGroup_id = $(this).val();
 		$.ajax({
-			url : "/store-management/sales",
+			url : "/store-management-system/sales",
 			method : "POST",
 			data : {subGroup_id : subGroup_id, action : "2"},
 			dataType : "text",
@@ -345,6 +399,45 @@ $(document).ready(function(){
 				$('#item').html(data);
 			}
 		});
+	});
+	
+	//send ajax request on clicking enter of barcode
+	$(document).on('keypress', '.itemBarCode', function(e){
+		//$(this).keypress(function (e) {
+			var key = e.which;
+			if(key == 13) {// the enter key code
+				var itemCode = $(this).val();
+				var item = $(this);
+			    $.ajax({
+			    	url : "/store-management-system/purchases",
+					method : "POST",
+					data : {itemCode : itemCode, action : "4"},
+					dataType : "json",
+					success : function(data){
+						if(data){
+							$(item).parents('tr').find('input.itemId[type=hidden]').val(data.itemId);
+							$(item).closest('td').next().find('input').val(data.itemName);
+							$(item).closest('td').next().next().find('input').val(data.itemQty);
+							var price = $(item).closest('td').next().next().next().next().next().next().find('input');
+							$(price).val(data.itemPrice);
+							var qty = $(price).closest('td').prev().find('input.itemQty');
+							$(qty).attr("data-inventory", data.itemQty);
+							$(qty).attr("data-max", data.itemMax);
+							var unitQty = $(price).closest('td').prev().prev().find('input').val();
+							$(price).closest('td').next().find('input').val(data.itemPrice * unitQty);
+							sumTotal();
+						} else alert('هذا الكود لا ينتمى لأي صنف');
+					}
+			    });
+			    return false;  
+			}
+		//});
+	});
+	
+	//change unitQty based on unitName
+	$('#unitName').change(function(){
+		var qty = $(this).find(':selected').data('qty');
+		$('#unitQty').val(qty);
 	});
 
 	//submit the form
@@ -361,12 +454,12 @@ $(document).ready(function(){
 		var itemTotal = $('input.itemTotal[type=number]').map(function() {
 		       return $(this).val(); }).get().join();
 		var inv_num = $('#inv_num').val();
-		var inv_type = 0;
+// 		var inv_type = 0;
 		var supplier = $('#supplier').val();
 // 		var inventory = $('#inventory').val();
 // 		var cache = $('#cache').val();
 		var totalPrice = $('#totalPrice').val();
-// 		var inv_type = $('#inv_type').val();
+		var inv_type = $('#inv_type').val();
 // 		var paid = $('#paid').val();
 // 		var remain = $('#remain').val();
 //		var finalTotal = $('#finalTotal').val();
@@ -374,20 +467,19 @@ $(document).ready(function(){
 // 		var discount = $('#discount').val();
 // 		var tax = $('#tax').val();
 		$.ajax({
-			url : "/store-management/purchases",
+			url : "/store-management-system/purchases",
 			method : "POST",
 			data : {
 				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal, unitId : unitId,
-				inv_num : inv_num, inv_type :inv_type, supplier : supplier, itemPrice : itemPrice,
+				inv_num : inv_num, inv_type : inv_type, supplier : supplier, itemPrice : itemPrice,
 				//inventory : inventory, cache : cache,
-				totalPrice :totalPrice,
-				action : "save"
+				totalPrice : totalPrice, action : "save"
 			},
 			dataType : "text",
 			success : function(data){
 				if(data){
 					console.log("done");
-					window.location.replace('/store-management/reports?r=pi&id=' + inv_num);
+					window.location.replace('/store-management-system/reports?r=pi&id=' + inv_num);
 				}
 			}	
 		});

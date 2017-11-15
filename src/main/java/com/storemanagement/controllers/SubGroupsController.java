@@ -21,6 +21,7 @@ public class SubGroupsController extends HttpServlet {
 		request.setAttribute("subGroups", subGroups);
 		List<MainGroup> mainGroups = GroupService.getAllObjects(MainGroup.class);
 		request.setAttribute("mainGroups", mainGroups);
+		request.setAttribute("title", "مجموعات الأصناف الفرعية");
 		request.getRequestDispatcher("subgroups/index.jsp").forward(request, response);
 	}
 

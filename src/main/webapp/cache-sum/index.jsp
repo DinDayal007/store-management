@@ -29,7 +29,7 @@ List<Supplier> suppliers = (List<Supplier>) request.getAttribute("suppliers");
  
                         <div class="panel-body">
                         	<div class="row">
-                        		<form action="/store-management/reports" method="get" role="form" target="_blank">
+                        		<form action="/store-management-system/reports" method="get" role="form" target="_blank">
 	                        		<input type="hidden" name="r" value="cm" />
 	                        		<div class="col-md-6">
 	                        			<label for="branch">إختر الفرع</label>
@@ -100,7 +100,7 @@ $(document).ready(function(){
 		var branch = $(this).val();
 		if(branch != ''){
 			$.ajax({
-				url : "/store-management/cache-sum",
+				url : "/store-management-system/cache-sum",
 				method : "POST",
 				data : {branch : branch, action : "1"},
 				dataType : "text",

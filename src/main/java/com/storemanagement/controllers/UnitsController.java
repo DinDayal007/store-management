@@ -18,6 +18,7 @@ public class UnitsController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Unit> units = EntityService.getAllObjects(Unit.class);
 		request.setAttribute("units", units);
+		request.setAttribute("title", "وحدات الأصناف");
 		request.getRequestDispatcher("units/index.jsp").forward(request, response);
 	}
 

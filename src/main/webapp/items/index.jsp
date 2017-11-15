@@ -93,7 +93,7 @@
 			var mainGroup_id = $(this).val();
 			if(mainGroup_id != ''){
 				$.ajax({
-					url : "/store-management/items",
+					url : "/store-management-system/items",
 					method : "POST",
 					data : {mainGroup_id : mainGroup_id, action : "1"},
 					dataType : "text",
@@ -108,7 +108,7 @@
 			var subGroupId = $(this).val();
 			if(subGroupId != ''){
 				$.ajax({
-					url : "/store-management/items",
+					url : "/store-management-system/items",
 					method : "POST",
 					data : {subGroupId : subGroupId, action : "2"},
 					dataType : "text",

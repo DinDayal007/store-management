@@ -31,7 +31,7 @@
 	                        <div class="form-group">
 	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذه الخزنة حيث انها تحتوى على تعاملات مالية سابقة</p>
 	                        </div>
-	                        <a href="/store-management/caches"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                        <a href="/store-management-system/caches"><button type="button" class="btn btn-primary">رجوع</button></a>
 	                    </fieldset>
                     </div>
                 </div>

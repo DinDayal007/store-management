@@ -1,53 +1,18 @@
 package com.storemanagement.entities;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-@Entity
+
 public class ItemBalance {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private int id;
-	@Column(name = "r")
-	private int rowNum;
-	@Column(name = "INVENTORY_ID")
 	private int inventoryId;
-	@Column(name = "INVENTORY_NAME")
 	private String inventoryName;
-	@Column(name = "ITEM_ID")
 	private int itemId;
-	@Column(name = "MAINGROUP")
 	private String mainGroup;
-	@Column(name = "sub_name")
 	private String subGroup;
-	@Column(name = "item_name")
 	private String itemName;
-	@Column(name = "HOME")
 	private String itemHome;
-	@Column(name = "CODE")
 	private String itemCode;
-	@Column(name = "PRICE")
 	private double itemPrice;
-	@Column(name = "MIN_LIMIT")
-	private int minLimit;
-	@Column(name = "MAX_LIMIT")
-	private int maxLimit;
-	@Column(name = "TOTAL_QTY")
 	private int itemQty;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getRowNum() {
-		return rowNum;
-	}
-	public void setRowNum(int rowNum) {
-		this.rowNum = rowNum;
-	}
+	private int itemMin;
+	private int itemMax;
 	public int getInventoryId() {
 		return inventoryId;
 	}
@@ -102,22 +67,22 @@ public class ItemBalance {
 	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
 	}
-	public int getMinLimit() {
-		return minLimit;
-	}
-	public void setMinLimit(int minLimit) {
-		this.minLimit = minLimit;
-	}
-	public int getMaxLimit() {
-		return maxLimit;
-	}
-	public void setMaxLimit(int maxLimit) {
-		this.maxLimit = maxLimit;
-	}
 	public int getItemQty() {
 		return itemQty;
 	}
 	public void setItemQty(int itemQty) {
 		this.itemQty = itemQty;
+	}
+	public int getItemMin() {
+		return itemMin;
+	}
+	public void setItemMin(int itemMin) {
+		this.itemMin = itemMin;
+	}
+	public int getItemMax() {
+		return itemMax;
+	}
+	public void setItemMax(int itemMax) {
+		this.itemMax = itemMax;
 	}
 }

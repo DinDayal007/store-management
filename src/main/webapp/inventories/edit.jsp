@@ -36,10 +36,10 @@ List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل المخزن</h3>
-                        <a href="/store-management/inventories" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/inventories" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/inventories">
+                        <form method="post" action="/store-management-system/inventories">
                             <fieldset>
                             	<div class="form-group">
                             		<label for="inventory_branch">الفرع التابع له المخزن</label>

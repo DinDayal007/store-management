@@ -37,7 +37,7 @@ Supplier supplier = (Supplier) EntityService.getObject(Supplier.class, id);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">معلومات المورد</h3>
-                        <a href="/store-management/suppliers" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/suppliers" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body" style="overflow: hidden; text-align: center;">
                         <table class="table table-">

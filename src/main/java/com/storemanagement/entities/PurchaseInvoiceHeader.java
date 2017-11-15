@@ -51,8 +51,8 @@ public class PurchaseInvoiceHeader {
 //	private double paid;
 //	@Column(name = "REMAIN")
 //	private double remain;
-//	@Column(name = "FINAL_TOTAL")
-//	private double finalTotal;
+	@Column(name = "FINAL_TOTAL")
+	private double finalTotal;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseInvoiceHeader", fetch = FetchType.EAGER)
 	private Collection<PurchaseInvoiceDetails> purchaseInvoiceDetails = new ArrayList<PurchaseInvoiceDetails>();
 	public int getId() {
@@ -145,5 +145,11 @@ public class PurchaseInvoiceHeader {
 	public void setPurchaseInvoiceDetails(
 			Collection<PurchaseInvoiceDetails> purchaseInvoiceDetails) {
 		this.purchaseInvoiceDetails = purchaseInvoiceDetails;
+	}
+	public double getFinalTotal() {
+		return finalTotal;
+	}
+	public void setFinalTotal(double finalTotal) {
+		this.finalTotal = finalTotal;
 	}
 }

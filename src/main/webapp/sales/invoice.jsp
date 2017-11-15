@@ -43,7 +43,7 @@ Client client = salesInvoiceHeader.getClient();
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">فاتورة البيع</h3>
-                        <a href="/store-management/sales/invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/sales/invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body" style="overflow: hidden; text-align: center;">
                     	<div class="row">
@@ -236,7 +236,7 @@ Client client = salesInvoiceHeader.getClient();
         		itemTotal = '"' + itemTotal + '"';
         		unitIds = '"' + unitIds + '"';
         		$.ajax({
-        			url : "/store-management/return-invoices",
+        			url : "/store-management-system/return-invoices",
         			method : "POST",
         			data : {
         				salesInvoiceId : id, total : total, cache : cache, unitIds : unitIds,

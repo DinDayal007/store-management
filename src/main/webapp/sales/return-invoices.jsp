@@ -6,6 +6,7 @@
 	pageEncoding="UTF-8"%>
 <%
 List<ReturnSalesInvoiceHeader> returnSalesInvoiceHeaders = EntityService.getAllObjects(ReturnSalesInvoiceHeader.class);
+request.setAttribute("title", "متابعة فواتير مرتجع البيع");
 %>
 <jsp:include page="../header.jsp" />
 
@@ -40,8 +41,8 @@ List<ReturnSalesInvoiceHeader> returnSalesInvoiceHeaders = EntityService.getAllO
 							<td><%= returnSalesInvoiceHeader.getDate() %></td>
 							<td><%= returnSalesInvoiceHeader.getUser().getName() %></td>
 							<td><%= returnSalesInvoiceHeader.getTotal() %> EGP</td>
-							<td><a href="/store-management/sales/invoice.jsp?id=<%= returnSalesInvoiceHeader.getSalesInvoiceHeader().getId() %>"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a></td>
-							<td><a href="/store-management/sales/return-invoice.jsp?id=<%= returnSalesInvoiceHeader.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
+							<td><a href="/store-management-system/sales/invoice.jsp?id=<%= returnSalesInvoiceHeader.getSalesInvoiceHeader().getId() %>"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a></td>
+							<td><a href="/store-management-system/sales/return-invoice.jsp?id=<%= returnSalesInvoiceHeader.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
 						</tr>
 						<% } %>
 					</tbody>

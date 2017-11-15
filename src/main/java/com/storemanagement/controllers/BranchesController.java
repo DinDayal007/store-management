@@ -17,6 +17,7 @@ public class BranchesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Branch> branches = EntityService.getAllObjects(Branch.class);
 		request.setAttribute("branches", branches);
+		request.setAttribute("title", "الفروع");
 		request.getRequestDispatcher("branches/index.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request,

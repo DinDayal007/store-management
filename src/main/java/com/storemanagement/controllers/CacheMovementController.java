@@ -17,11 +17,11 @@ import com.storemanagement.services.EntityService;
 @WebServlet("/cache-movements")
 public class CacheMovementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		List<CacheMovement> cacheMovements = EntityService.getAllObjects(CacheMovement.class);
 		request.setAttribute("cacheMovements", cacheMovements);
+		request.setAttribute("title", "حركات الخزنة");
 		request.getRequestDispatcher("cache-movements/index.jsp").forward(request, response);
 	}
 
@@ -68,7 +68,7 @@ public class CacheMovementController extends HttpServlet {
 			cache.setQty(cache.getQty() + cacheMovement.getAmount());
 			EntityService.updateObject(cache);
 			int cacheMovementId = EntityService.addObject(cacheMovement);
-			response.sendRedirect("/store-management/reports?r=cache&id=" + cacheMovementId);
+			response.getWriter().print(cacheMovementId);
 		}
 	}
 }

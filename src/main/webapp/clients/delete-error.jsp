@@ -31,7 +31,7 @@
 	                        <div class="form-group">
 	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذا العميل لأنه تم التعامل معه فى فواتير البيع سابقا</p>
 	                        </div>
-	                        <a href="/store-management/clients"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                        <a href="/store-management-system/clients"><button type="button" class="btn btn-primary">رجوع</button></a>
 	                    </fieldset>
                     </div>
                 </div>

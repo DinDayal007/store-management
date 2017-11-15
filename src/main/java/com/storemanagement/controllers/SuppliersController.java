@@ -18,6 +18,7 @@ public class SuppliersController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Supplier> suppliers  = EntityService.getAllObjects(Supplier.class);
 		request.setAttribute("suppliers", suppliers);
+		request.setAttribute("title", "الموردين");
 		request.getRequestDispatcher("suppliers/index.jsp").forward(request, response);
 	}
 

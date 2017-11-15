@@ -16,6 +16,7 @@ public class ClientsDebitsController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		List<Client> clients = EntityService.getAllObjects(Client.class);
 		request.setAttribute("clients", clients);
+		request.setAttribute("title", "مديونيات العملاء");
 		request.getRequestDispatcher("debits/index.jsp").forward(request, response);
 	}
 

@@ -26,6 +26,7 @@ public class ItemsController extends HttpServlet {
 		List<Item> items = EntityService.getAllObjects(Item.class);
 		request.setAttribute("mainGroups", mainGroups);
 		request.setAttribute("items", items);
+		request.setAttribute("title", "الأصناف");
 		request.getRequestDispatcher("items/index.jsp").forward(request, response);
 	}
 

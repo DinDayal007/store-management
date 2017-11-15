@@ -9,7 +9,7 @@ int id = Integer.parseInt(request.getParameter("id"));
 MainGroup mainGroup = new MainGroup();
 mainGroup.setId(id);
 List<SubGroup> subGroups = GroupService.getSubGroupsFromMainGroup(mainGroup);
-if(subGroups.size() > 0) response.sendRedirect("/store-management/groups/delete-error.jsp");
+if(subGroups.size() > 0) response.sendRedirect("/store-management-system/groups/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@ if(subGroups.size() > 0) response.sendRedirect("/store-management/groups/delete-
                         <h3 class="panel-title">حذف مجموعة رئيسية</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/groups">
+                        <form method="post" action="/store-management-system/groups">
                             <fieldset>
                                 <div class="form-group">
                                 	<p class="lead">هل انت متأكد من حذف هذه المجموعة ؟</p>
@@ -47,7 +47,7 @@ if(subGroups.size() > 0) response.sendRedirect("/store-management/groups/delete-
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/groups"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management-system/groups"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

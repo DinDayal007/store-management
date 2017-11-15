@@ -36,10 +36,10 @@ List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainG
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل المجموعة الفرعية</h3>
-                    	<a href="/store-management/subgroups" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/subgroups" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/subgroups">
+                        <form method="post" action="/store-management-system/subgroups">
                             <fieldset>
                             	<div class="form-group">
                             		<label for="mainGroups">اختر المجموعة الرئيسية</label>

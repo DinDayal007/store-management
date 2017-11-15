@@ -35,10 +35,10 @@ boolean hasInvoices = InvoiceService.hasDetailsFromUnit(unit);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل الوحدة</h3>
-                    	<a href="/store-management/units" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/units" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/units">
+                        <form method="post" action="/store-management-system/units">
                             <fieldset>
                                 <div class="form-group">
                                 	<label for="unit_name">اسم الوحدة</label>

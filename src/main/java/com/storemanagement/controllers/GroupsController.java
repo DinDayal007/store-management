@@ -18,6 +18,7 @@ public class GroupsController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
 		request.setAttribute("mainGroups", mainGroups);
+		request.setAttribute("title", "مجموعات الأصناف الرئيسية");
 		request.getRequestDispatcher("groups/index.jsp").forward(request, response);
 	}
 

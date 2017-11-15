@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.storemanagement.entities.Facility;
 import com.storemanagement.entities.User;
+import com.storemanagement.services.EntityService;
 import com.storemanagement.services.UserService;
 @WebServlet("/home")
 public class HomeController extends HttpServlet {
@@ -16,7 +18,9 @@ public class HomeController extends HttpServlet {
 		HttpSession httpSession = request.getSession();
 		if(null == httpSession.getAttribute("user"))
 			request.getRequestDispatcher("login.jsp").forward(request, response);
-		else response.sendRedirect("sales");
+		else{
+			response.sendRedirect("sales");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,
@@ -34,6 +38,8 @@ public class HomeController extends HttpServlet {
 			if(user != null) {
 				HttpSession httpSession = request.getSession();
 				httpSession.setAttribute("user", user);
+				Facility facility = (Facility) EntityService.getObject(Facility.class, 1);
+				httpSession.setAttribute("facility", facility);
 				response.sendRedirect("sales");
 			}else {
 				request.setAttribute("error", "الاسم أو الرقم السرى غير صحيح");

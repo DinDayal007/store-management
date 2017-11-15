@@ -12,7 +12,6 @@ import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
-import com.storemanagement.entities.ItemMovement;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.Supplier;
@@ -29,8 +28,6 @@ public class ReportsController extends HttpServlet {
 			reportsUtil.showSalesInvoicesReport(request, response, EntityService.getAllObjects(SalesInvoiceHeader.class));
 		else if(request.getParameter("r").equals("p"))
 			reportsUtil.showPurchaseInvoicesReport(request, response, EntityService.getAllObjects(PurchaseInvoiceHeader.class));
-		else if(request.getParameter("r").equals("it"))
-			reportsUtil.showItemMovementsReport(request, response, EntityService.getAllObjects(ItemMovement.class));
 		else if(request.getParameter("r").equals("c"))
 			reportsUtil.showCachsQtyReport(request, response, EntityService.getAllObjects(Cache.class));
 		else if(request.getParameter("r").equals("cm")){
@@ -89,6 +86,27 @@ public class ReportsController extends HttpServlet {
 		}else if(request.getParameter("r").equals("cache")){
 			int cacheMovementId = Integer.parseInt(request.getParameter("id"));
 			reportsUtil.showSingleCacheMovementReport(request, response, (CacheMovement)EntityService.getObject(CacheMovement.class, cacheMovementId));
+		}else if(request.getParameter("r").equals("ib")){
+			if(null == request.getParameter("data"))
+				reportsUtil.showItemQuantitiesReport(request, response, null);
+			else if(request.getParameter("data").equals("min"))
+				reportsUtil.showItemQuantitiesReport(request, response, "min");
+			else if(request.getParameter("data").equals("max"))
+				reportsUtil.showItemQuantitiesReport(request, response, "max");
+		}else if(request.getParameter("r").equals("im")){
+			int itemId = Integer.parseInt(request.getParameter("item"));
+			reportsUtil.showItemMovementReport(request, response, itemId);
+		}else if(request.getParameter("r").equals("profit")){
+			try{
+				Date from = null, to = null;
+				if(!request.getParameter("from").equals(""))
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
+				if(!request.getParameter("to").equals(""))
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				reportsUtil.showProfitReport(request, response, from, to);
+			}catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

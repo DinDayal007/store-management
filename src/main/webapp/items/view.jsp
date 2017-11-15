@@ -37,7 +37,7 @@ Item item = (Item) EntityService.getObject(Item.class, id);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">معلومات الصنف</h3>
-                        <a href="/store-management/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body" style="overflow: hidden; text-align: center;">
                         <table class="table table-">

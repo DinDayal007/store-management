@@ -7,8 +7,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-User user = (User) session.getAttribute("user");
-if(user.getRole().getId() != 1) response.sendRedirect("/store-management/users");
+// User user = (User) session.getAttribute("user");
+// if(user.getRole().getId() != 1) response.sendRedirect("/store-management-system/users");
 List<Role> roles = (List<Role>) EntityService.getAllObjects(Role.class);
 List<Cache> caches = (List<Cache>) EntityService.getAllObjects(Cache.class);
 List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);
@@ -40,10 +40,10 @@ List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">إضافة مستخدم جديد</h3>
-                    	<a href="/store-management/users" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/users" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/users">
+                        <form method="post" action="/store-management-system/users">
                             <fieldset>
                             	<div class="form-group">
                                 	<label for="user_role">دور المستخدم</label>
@@ -108,7 +108,7 @@ List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);
 			$('#user_branch').change(function(){
 				var branchId = $(this).val();
 				$.ajax({
-					url : "/store-management/users",
+					url : "/store-management-system/users",
 					method : "POST",
 					data : {branchId : branchId, action : "1"},
 					dataType : "text",

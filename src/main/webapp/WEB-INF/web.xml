@@ -4,6 +4,10 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/error.jsp</location>
+  </error-page>
   <filter>
   	<filter-name>MetaFilter</filter-name>
   	<display-name>MetaFilter</display-name>
@@ -160,6 +164,24 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.ClientsDebitsController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ItemBalanceController</servlet-name>
+  	<display-name>ItemBalanceController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.ItemBalanceController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ProfitController</servlet-name>
+  	<display-name>ProfitController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.ProfitController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ErrorController</servlet-name>
+  	<display-name>ErrorController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.ErrorController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>
@@ -167,5 +189,13 @@
   <servlet-mapping>
   	<servlet-name>CacheSumController</servlet-name>
   	<url-pattern>/cache-sum</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ItemBalanceController</servlet-name>
+  	<url-pattern>/item-balance</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProfitController</servlet-name>
+  	<url-pattern>/profit</url-pattern>
   </servlet-mapping>
 </web-app>

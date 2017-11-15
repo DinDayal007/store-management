@@ -1,5 +1,6 @@
 package com.storemanagement.services;
 import java.util.List;
+import org.hibernate.criterion.Order;
 import com.storemanagement.utils.HibernateDriver;
 public class EntityService extends HibernateDriver {
 	public EntityService() {}
@@ -74,7 +75,7 @@ public class EntityService extends HibernateDriver {
 		}
 	}
 	/**
-	 * Generic method to return list of entities
+	 * Generic method to return list of entities order by id desc
 	 * 
 	 * @param cls
 	 * @return
@@ -83,7 +84,28 @@ public class EntityService extends HibernateDriver {
 		List<T> objects = null;
 		try {
 			openSession();
-			objects = getSession().createQuery("from " + cls.getName()).list();
+			objects = getSession().createCriteria(cls.getName()).addOrder(Order.desc("id")).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return objects;
+	}
+	/**
+	 * Generic method to return list of entities order by column with order as an argument
+	 * 
+	 * @param cls
+	 * @return
+	 */
+	public static <T extends Object> List<T> getObjectsWithOrder(Class<T> cls, String column, String order) {
+		List<T> objects = null;
+		try {
+			openSession();
+			if(order.equals("desc"))
+				objects = getSession().createCriteria(cls.getName()).addOrder(Order.desc(column)).list();
+			else if(order.equals("asc"))
+				objects = getSession().createCriteria(cls.getName()).addOrder(Order.asc(column)).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

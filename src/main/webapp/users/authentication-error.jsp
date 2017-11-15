@@ -31,7 +31,7 @@
                             <div class="form-group">
                             	<p class="lead text-danger">عفوا لا تمتلك الصلاحية لمشاهدة هذه الصفحة</p>
                             </div>
-                            <a href="/store-management/sales"><button type="button" class="btn btn-primary">رجوع</button></a>
+                            <a href="/store-management-system/sales"><button type="button" class="btn btn-primary">رجوع</button></a>
                         </fieldset>
                     </div>
                 </div>

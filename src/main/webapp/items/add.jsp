@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.utils.DateUtil"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
 <%@page import="com.storemanagement.entities.Unit"%>
 <%@page import="com.storemanagement.services.EntityService"%>
@@ -8,6 +9,7 @@
 <% 
 List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainGroup.class);
 List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
+String code = DateUtil.getDate();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,10 +40,10 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">إضافة صنف جديد</h3>
-                    	<a href="/store-management/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/items">
+                        <form method="post" action="/store-management-system/items">
                             <fieldset>
                             	<div class="form-group">
                             		<label for="mainGroups">اختر المجموعة الرئيسية</label>
@@ -63,7 +65,7 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
                                 </div>
                                 <div class="form-group">
                                 	<label for="item_code">كود الصنف</label>
-                                    <input class="form-control" placeholder="كود الصنف" name="item_code" type="text" id="item_code" required>
+                                    <input class="form-control" placeholder="كود الصنف" name="item_code" type="text" id="item_code" value="<%= code %>" required>
                                 </div>
                                 <div class="form-group">
                                 	<label for="item_price">سعر الصنف</label>
@@ -116,7 +118,7 @@ List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
 			var mainGroup_id = $(this).val();
 			if(mainGroup_id != ''){
 				$.ajax({
-					url : "/store-management/items",
+					url : "/store-management-system/items",
 					method : "POST",
 					data : {mainGroup_id : mainGroup_id, action : "1"},
 					dataType : "text",

@@ -2,6 +2,12 @@
 <!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CacheMovement" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcf19e57-eeee-4645-baba-521d6c8db617">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="facilityName" class="java.lang.String"/>
+	<parameter name="facilityLocation" class="java.lang.String"/>
+	<parameter name="facilityAddress" class="java.lang.String"/>
+	<parameter name="facilityPhone" class="java.lang.String"/>
+	<parameter name="facilityMobiles" class="java.lang.String"/>
+	<parameter name="facilityInfo" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -42,20 +48,55 @@
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="80" backcolor="#FCFEFF" uuid="134acd23-6b83-465d-b02f-956b99175983"/>
-				<staticText>
-					<reportElement x="500" y="20" width="75" height="43" forecolor="#1F1E1E" uuid="881f4c1c-b96d-42ae-aa8d-d97644519995"/>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Ariel" size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[إيصال ]]></text>
-				</staticText>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#FFFFFF" uuid="73bcf7b8-3790-4658-8fe6-5b6c0bb8fe26"/>
 				<textField>
-					<reportElement x="320" y="20" width="180" height="43" uuid="4bcf5c13-eec7-4e19-97fd-8b6a0ab5a2a9">
+					<reportElement x="395" y="13" width="180" height="19" uuid="b2debfd6-92d3-46f4-9ea2-7d3ab996dda0"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="395" y="35" width="180" height="19" uuid="fc6e2bd2-9fcc-4a88-8ef0-b03f0140fce6"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityLocation}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="395" y="57" width="180" height="29" uuid="20b108e1-a98c-4925-9f8a-ac3050a9dc7a">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
-					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Ariel" size="34" isBold="true"/>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityAddress}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="13" width="180" height="19" uuid="176a3a4e-f006-4d83-a010-c89d7b219f91"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityPhone}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="35" width="180" height="19" uuid="af956879-5fd1-4c6d-b572-a91cd07fcd1a"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityMobiles}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="57" width="180" height="29" uuid="75278256-018d-4f33-b68f-89700d770119"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityInfo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="208" y="40" width="180" height="30" uuid="a2f9709f-9af0-405a-ab10-f725f2a206f8"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Ariel" size="22"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{type}]]></textFieldExpression>
 				</textField>
@@ -63,7 +104,7 @@
 		</band>
 	</title>
 	<columnHeader>
-		<band height="194">
+		<band height="308">
 			<staticText>
 				<reportElement x="480" y="0" width="75" height="30" uuid="2dded5dc-a35d-4652-ac34-7d537a5845c5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
@@ -72,21 +113,21 @@
 				<text><![CDATA[رقم الحركة]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="320" y="0" width="160" height="30" uuid="15f75ad4-f1b4-461b-8272-11b6daab478a"/>
+				<reportElement x="280" y="0" width="200" height="30" uuid="15f75ad4-f1b4-461b-8272-11b6daab478a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="190" y="0" width="71" height="30" uuid="37b1ad25-a90e-408d-894e-98282a9b2a03"/>
+				<reportElement x="483" y="119" width="71" height="30" uuid="37b1ad25-a90e-408d-894e-98282a9b2a03"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[المخزن]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="0" width="160" height="30" uuid="57732772-99d4-47f9-82b4-6c8d79353147"/>
+				<reportElement x="280" y="119" width="203" height="30" uuid="57732772-99d4-47f9-82b4-6c8d79353147"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
@@ -99,92 +140,92 @@
 				</textElement>
 				<text><![CDATA[التاريخ]]></text>
 			</staticText>
-			<textField pattern="">
-				<reportElement x="320" y="40" width="160" height="30" uuid="479f943f-2061-4633-8a88-a2d66fdeceb3"/>
+			<textField pattern="MMMM d, yyyy">
+				<reportElement x="280" y="40" width="200" height="30" uuid="479f943f-2061-4633-8a88-a2d66fdeceb3"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="190" y="40" width="71" height="30" uuid="f55bb2d5-ae76-49f9-bd4d-ac8caf943ff5"/>
+				<reportElement x="483" y="80" width="71" height="30" uuid="f55bb2d5-ae76-49f9-bd4d-ac8caf943ff5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[رقم إشارى]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="40" width="160" height="30" uuid="1a385a04-5c24-4abc-a61e-587a10cc8b45"/>
+				<reportElement x="280" y="80" width="203" height="30" uuid="1a385a04-5c24-4abc-a61e-587a10cc8b45"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{number}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="480" y="80" width="75" height="30" uuid="6f24fab1-dedd-4853-aadf-12e73eee1bf2"/>
+				<reportElement x="480" y="158" width="75" height="30" uuid="6f24fab1-dedd-4853-aadf-12e73eee1bf2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[العميل]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="320" y="80" width="160" height="30" uuid="826d530c-6c0a-4b9e-9d86-3751ed7ccd6a"/>
+				<reportElement x="280" y="158" width="200" height="30" uuid="826d530c-6c0a-4b9e-9d86-3751ed7ccd6a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{client}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="190" y="80" width="71" height="30" uuid="913dd653-b90e-47d1-9e7a-c6728bc4b592"/>
+				<reportElement x="483" y="198" width="71" height="30" uuid="913dd653-b90e-47d1-9e7a-c6728bc4b592"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[المورد]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="80" width="160" height="30" uuid="b6111414-dbc8-4c23-8698-f32fdeaa94ab"/>
+				<reportElement x="280" y="198" width="203" height="30" uuid="b6111414-dbc8-4c23-8698-f32fdeaa94ab"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{supplier}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="480" y="120" width="75" height="30" uuid="604d9316-b8d9-4997-b587-83181f149816"/>
+				<reportElement x="480" y="238" width="75" height="30" uuid="604d9316-b8d9-4997-b587-83181f149816"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[الوصف]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="120" width="450" height="30" uuid="0ce48c29-9d91-4f4a-9d07-0ecb4bd54d8d"/>
+				<reportElement x="30" y="238" width="450" height="30" uuid="0ce48c29-9d91-4f4a-9d07-0ecb4bd54d8d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="480" y="160" width="75" height="30" uuid="f86ff580-a30f-4289-931d-03213ed29ae2"/>
+				<reportElement x="480" y="278" width="75" height="30" uuid="f86ff580-a30f-4289-931d-03213ed29ae2"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[المبلغ]]></text>
 			</staticText>
 			<textField pattern="# EGP">
-				<reportElement x="320" y="160" width="160" height="30" uuid="c884ce2d-c344-4eaf-8a7b-70a680c9f34f"/>
+				<reportElement x="320" y="278" width="160" height="30" uuid="c884ce2d-c344-4eaf-8a7b-70a680c9f34f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="190" y="160" width="71" height="30" uuid="f2f648ff-c455-4502-9589-bcdc850e4e67"/>
+				<reportElement x="190" y="278" width="71" height="30" uuid="f2f648ff-c455-4502-9589-bcdc850e4e67"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16"/>
 				</textElement>
 				<text><![CDATA[المستخدم]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="30" y="160" width="160" height="30" uuid="c3712cd3-21e3-4f6d-a614-bba974a0d7d0"/>
+				<reportElement x="30" y="278" width="160" height="30" uuid="c3712cd3-21e3-4f6d-a614-bba974a0d7d0"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="16" isBold="true"/>
 				</textElement>
@@ -196,20 +237,27 @@
 		<band/>
 	</columnFooter>
 	<pageFooter>
-		<band height="17">
+		<band height="19">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="0a50b5d0-3d45-4fb8-8538-6e6ed7862950"/>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="8f4da6d3-0485-4f8f-bbda-a4802f76e7dc"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="7e903987-98dc-4505-9d7b-5f1b48c4c418"/>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="02cef8d3-d213-490b-a508-498ebf9facbc"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="119c4cfd-83e0-4ed8-b49f-96ee3eb18d59"/>
+				<reportElement x="4" y="4" width="100" height="13" uuid="0767b652-1cc5-4766-9d02-7a5ccaf6a7b8"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="160" y="4" width="231" height="15" uuid="7d20f6b5-4c97-4016-882f-a7f755f2ebec"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Unlimited Solutions Arabia - 01014713133]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<summary>

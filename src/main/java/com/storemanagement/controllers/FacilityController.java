@@ -13,15 +13,12 @@ public class FacilityController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		Facility facility = (Facility) EntityService.getObject(Facility.class, 1);
-		request.setAttribute("facility", facility);
-		request.getRequestDispatcher("facility/index.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		save(request, response);
-		response.sendRedirect("facility");
+		response.sendRedirect("settings");
 	}
 	
 	//save facility data
@@ -39,6 +36,7 @@ public class FacilityController extends HttpServlet {
 			facility.setMobile2(request.getParameter("facilityMobile2"));
 			facility.setMoreInfo(request.getParameter("facilityMoreInfo"));
 			EntityService.updateObject(facility);
+			request.getSession().setAttribute("facility", facility);
 		}
 	}
 }

@@ -31,7 +31,7 @@
 	                        <div class="form-group">
 	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذا المورد لأنه تم التعامل معه فى فواتير الشراء سابقا</p>
 	                        </div>
-	                        <a href="/store-management/suppliers"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                        <a href="/store-management-system/suppliers"><button type="button" class="btn btn-primary">رجوع</button></a>
 	                    </fieldset>
                     </div>
                 </div>

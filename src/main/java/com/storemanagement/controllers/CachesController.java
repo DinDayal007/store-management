@@ -18,6 +18,7 @@ public class CachesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Cache> caches = EntityService.getAllObjects(Cache.class);
 		request.setAttribute("caches", caches);
+		request.setAttribute("title", "أرصدة الخزائن");
 		request.getRequestDispatcher("caches/index.jsp").forward(request, response);
 	}
 

@@ -26,6 +26,7 @@ public class CacheSumController extends HttpServlet {
 		request.setAttribute("caches", caches);
 		request.setAttribute("clients", clients);
 		request.setAttribute("suppliers", suppliers);
+		request.setAttribute("title", "تقارير الخزنة");
 		request.getRequestDispatcher("cache-sum/index.jsp").forward(request, response);
 	}
 

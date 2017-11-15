@@ -10,25 +10,25 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>برنامج إدارة المبيعات</title>
+    <title>برنامج إدارة المبيعات | <%= request.getAttribute("title") %></title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="http://localhost:8080/store-management/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management-system/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="http://localhost:8080/store-management/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management-system/css/plugins/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Timeline CSS -->
-    <link href="http://localhost:8080/store-management/css/plugins/timeline.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management-system/css/plugins/timeline.css" rel="stylesheet">
 
     <!-- DataTables CSS -->
-    <link href="http://localhost:8080/store-management/css/plugins/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management-system/css/plugins/dataTables.bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="http://localhost:8080/store-management/css/sb-admin-2.css" rel="stylesheet">
+    <link href="http://localhost:8080/store-management-system/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="http://localhost:8080/store-management/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://localhost:8080/store-management-system/css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -52,7 +52,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/store-management">برنامج إدارة المبيعات</a>
+                <a class="navbar-brand" href="/store-management-system/sales">برنامج إدارة المبيعات</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -64,10 +64,9 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-<!--                         <li><a href="/store-management/settings"><i class="fa fa-gear fa-fw"></i> لوحة التحكم</a></li> -->
-                        <li><a href="/store-management/facility"><i class="fa fa-home fa-fw"></i> معلومات المنشأة</a></li>
+	                    <li><a href="/store-management-system/settings"><i class="fa fa-gear fa-fw"></i> لوحة التحكم</a></li>
                         <li class="divider"></li>
-                        <li><a href="/store-management/logout"><i class="fa fa-sign-out fa-fw"></i> تسجيل الخروج</a></li>
+                        <li><a href="/store-management-system/logout"><i class="fa fa-sign-out fa-fw"></i> تسجيل الخروج</a></li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -83,13 +82,13 @@
                             <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> المبيعات<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="http://localhost:8080/store-management/sales">فاتورة بيع جديدة</a>
+                                    <a href="http://localhost:8080/store-management-system/sales">فاتورة بيع جديدة</a>
                                 </li>
                                 <li>
-                                    <a href="http://localhost:8080/store-management/sales/invoices.jsp">متابعة فواتبر البيع</a>
+                                    <a href="http://localhost:8080/store-management-system/sales/invoices.jsp">متابعة فواتبر البيع</a>
                                 </li>
                                 <li>
-                                    <a href="http://localhost:8080/store-management/sales/return-invoices.jsp">متابعة فواتبر المرتجع</a>
+                                    <a href="http://localhost:8080/store-management-system/sales/return-invoices.jsp">متابعة فواتبر المرتجع</a>
                                 </li>
                             </ul>
                         </li>
@@ -97,61 +96,75 @@
                             <a href="#"><i class="fa fa-credit-card fa-fw"></i> المشتريات<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="http://localhost:8080/store-management/purchases">فاتورة شراء جديدة</a>
+                                    <a href="http://localhost:8080/store-management-system/purchases">فاتورة شراء جديدة</a>
                                 </li>
                                 <li>
-                                    <a href="http://localhost:8080/store-management/purchases/invoices.jsp">متابعة فواتبر الشراء</a>
+                                    <a href="http://localhost:8080/store-management-system/purchases/invoices.jsp">متابعة فواتبر الشراء</a>
                                 </li>
                                 <li>
-                                    <a href="http://localhost:8080/store-management/purchases/return-invoices.jsp">متابعة فواتبر المرتجع</a>
+                                    <a href="http://localhost:8080/store-management-system/purchases/return-invoices.jsp">متابعة فواتبر المرتجع</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/items"><i class="fa fa-list fa-fw"></i> الأصناف</a>
+                            <a href="#"><i class="fa fa-list fa-fw"></i> الأصناف<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                            	<li>
+                            		<a href="http://localhost:8080/store-management-system/items">الأصناف المسجلة بقواعد البيانات</a>
+                            	</li>
+                            	<li>
+                            		<a href="http://localhost:8080/store-management-system/item-balance">جرد الأصناف</a>
+                            	</li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/groups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الرئيسية</a>
-                        </li>
-						
-						<li>
-                            <a href="http://localhost:8080/store-management/subgroups"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف الفرعية</a>
-                        </li>
-						
+                            <a href="#"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+		                        <li>
+		                            <a href="http://localhost:8080/store-management-system/groups">المجموعات الرئيسية</a>
+		                        </li>
+								<li>
+		                            <a href="http://localhost:8080/store-management-system/subgroups">المجموعات الفرعية</a>
+		                        </li>
+							</ul>
+						</li>
                         <li>
-                            <a href="http://localhost:8080/store-management/units"><i class="fa fa-cubes fa-fw"></i> وحدات الأصناف</a>
+                            <a href="http://localhost:8080/store-management-system/units"><i class="fa fa-cubes fa-fw"></i> وحدات الأصناف</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/suppliers"><i class="fa fa-truck fa-fw"></i> الموردين</a>
+                            <a href="http://localhost:8080/store-management-system/suppliers"><i class="fa fa-truck fa-fw"></i> الموردين</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
+                            <a href="http://localhost:8080/store-management-system/clients"><i class="fa fa-male fa-fw"></i> العملاء</a>
                         </li>
                         <li>
                         	<a href="#"><i class="fa fa-money fa-fw"></i> الخزائن<span class="fa arrow"></span></a>
                         	<ul class="nav nav-second-level">
                         		<li>
-                                    <a href="http://localhost:8080/store-management/caches">أرصدة الخزنة</a>
+                                    <a href="http://localhost:8080/store-management-system/caches">أرصدة الخزنة</a>
                                 </li>
                                 <li>
-                            		<a href="http://localhost:8080/store-management/cache-movements">حركة الخزنة</a>
+                            		<a href="http://localhost:8080/store-management-system/cache-movements">حركة الخزنة</a>
                         		</li>
                         		<li>
-                            		<a href="http://localhost:8080/store-management/cache-sum">كشف حساب حركة الخزنة</a>
+                            		<a href="http://localhost:8080/store-management-system/cache-sum">كشف حساب حركة الخزنة</a>
                        			 </li>
                        			 <li>
-                            		<a href="http://localhost:8080/store-management/debits">كشف مديونيات العملاء</a>
+                            		<a href="http://localhost:8080/store-management-system/debits">كشف مديونيات العملاء</a>
+                       			 </li>
+                       			 <li>
+                            		<a href="http://localhost:8080/store-management-system/profit">هامش الربح</a>
                        			 </li>
                         	</ul>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/branches"><i class="fa fa-th-large fa-fw"></i> الفروع</a>
+                            <a href="http://localhost:8080/store-management-system/branches"><i class="fa fa-th-large fa-fw"></i> الفروع</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
+                            <a href="http://localhost:8080/store-management-system/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
                         </li>
                         <li>
-                            <a href="http://localhost:8080/store-management/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
+                            <a href="http://localhost:8080/store-management-system/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
                         </li>
 
                     </ul>

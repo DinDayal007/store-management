@@ -40,7 +40,7 @@ List<ReturnPurchaseInvoiceDetails> invoiceDetails = (List<ReturnPurchaseInvoiceD
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">فاتورة مرتجع الشراء</h3>
-                        <a href="/store-management/purchases/return-invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/purchases/return-invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body" style="overflow: hidden; text-align: center;">
                     	<div class="row">

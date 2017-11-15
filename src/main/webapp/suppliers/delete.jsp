@@ -9,7 +9,7 @@ int id = Integer.parseInt(request.getParameter("id"));
 Supplier supplier = new Supplier();
 supplier.setId(id);
 List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = InvoiceService.getPurchaseInvoicesFromSupplier(supplier);
-if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/suppliers/delete-error.jsp");
+if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management-system/suppliers/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@ if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/s
                         <h3 class="panel-title">حذف المورد</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/suppliers">
+                        <form method="post" action="/store-management-system/suppliers">
                             <fieldset>
                                 <div class="form-group">
                                 	<p class="lead">هل انت متأكد من حذف هذا المورد ؟</p>
@@ -47,7 +47,7 @@ if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/s
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/suppliers"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management-system/suppliers"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

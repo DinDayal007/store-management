@@ -9,7 +9,7 @@ int id = Integer.parseInt(request.getParameter("id"));
 Client client = new Client();
 client.setId(id);
 List<SalesInvoiceHeader> salesInvoiceHeaders = InvoiceService.getSalesInvoicesFromClient(client);
-if(salesInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/clients/delete-error.jsp");
+if(salesInvoiceHeaders.size() > 0) response.sendRedirect("/store-management-system/clients/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +38,7 @@ if(salesInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/clie
                         <h3 class="panel-title">حذف العميل</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/clients">
+                        <form method="post" action="/store-management-system/clients">
                             <fieldset>
                                 <div class="form-group">
                                 	<p class="lead">هل انت متأكد من حذف هذا العميل ؟</p>
@@ -47,7 +47,7 @@ if(salesInvoiceHeaders.size() > 0) response.sendRedirect("/store-management/clie
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/clients"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management-system/clients"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

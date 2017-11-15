@@ -18,6 +18,7 @@ public class ClientsController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Client> clients = EntityService.getAllObjects(Client.class);
 		request.setAttribute("clients", clients);
+		request.setAttribute("title", "العملاء");
 		request.getRequestDispatcher("clients/index.jsp").forward(request, response);
 	}
 

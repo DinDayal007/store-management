@@ -37,10 +37,10 @@ List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainG
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل صنف</h3>
-                    	<a href="/store-management/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/items" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/items">
+                        <form method="post" action="/store-management-system/items">
                             <fieldset>
                             	<div class="form-group">
                             		<label for="mainGroups">اختر المجموعة الرئيسية</label>
@@ -116,7 +116,7 @@ List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainG
 		$('#mainGroups').change(function(){
 			var mainGroup_id = $(this).val();
 			$.ajax({
-				url : "/store-management/items",
+				url : "/store-management-system/items",
 				method : "POST",
 				data : {mainGroup_id : mainGroup_id, action : "1"},
 				dataType : "text",

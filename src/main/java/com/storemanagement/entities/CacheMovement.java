@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 @Entity
-@Table(name = "CACHE_MOVEMENT")
+@Table(name = "CACHE_MOVEMENTS")
 public class CacheMovement {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

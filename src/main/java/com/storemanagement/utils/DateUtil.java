@@ -8,8 +8,8 @@ public class DateUtil {
 		int second = calendar.get(Calendar.SECOND);
 		int day = calendar.get(Calendar.DATE);
 		int month = calendar.get(Calendar.MONTH) + 1;
-		int year = calendar.get(Calendar.YEAR);
-		return (day + "" + month + "" + year + "" + hour + "" + minute + ""
+//		int year = calendar.get(Calendar.YEAR);
+		return (day + "" + month + "" + hour + "" + minute + ""
 				+ second);
 	}
 }

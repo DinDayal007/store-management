@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
 <%
 List<ReturnPurchaseInvoiceHeader> returnPurchaseInvoiceHeaders = EntityService.getAllObjects(ReturnPurchaseInvoiceHeader.class);
+request.setAttribute("title", "متابعة فواتير مرتجع الشراء");
 %>
 <jsp:include page="../header.jsp" />
 
@@ -39,8 +40,8 @@ List<ReturnPurchaseInvoiceHeader> returnPurchaseInvoiceHeaders = EntityService.g
 							<td><%= returnPurchaseInvoiceHeader.getDate() %></td>
 							<td><%= returnPurchaseInvoiceHeader.getUser().getName() %></td>
 							<td><%= returnPurchaseInvoiceHeader.getTotal() %> EGP</td>
-							<td><a href="/store-management/purchases/invoice.jsp?id=<%= returnPurchaseInvoiceHeader.getPurchaseInvoiceHeader().getId() %>"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a></td>
-							<td><a href="/store-management/purchases/return-invoice.jsp?id=<%= returnPurchaseInvoiceHeader.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
+							<td><a href="/store-management-system/purchases/invoice.jsp?id=<%= returnPurchaseInvoiceHeader.getPurchaseInvoiceHeader().getId() %>"><button class="btn btn-success"><i class="fa fa-eye"></i></button></a></td>
+							<td><a href="/store-management-system/purchases/return-invoice.jsp?id=<%= returnPurchaseInvoiceHeader.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
 						</tr>
 						<% } %>
 					</tbody>

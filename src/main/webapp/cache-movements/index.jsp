@@ -44,6 +44,7 @@
                                     <tbody>
 										<% for(CacheMovement cacheMovement : cacheMovements){
 											int type = cacheMovement.getType();
+											String typeValue = "";
 											Client client = cacheMovement.getClient();
 											i++;
 										%>
@@ -55,12 +56,14 @@
                                             <th>
                                             <%
                                             if(type == 0 || type == 2 || type == 3){
+                                            	typeValue = "سحب";
                                             	if(type == 0 || type == 2) out.print("");
                                             	else {
                                             		if(client == null) out.print("عميل نقدى");
                                             		else out.print(client.getName());
                                             	}
                                             }else{
+                                            	typeValue = "ايداع";
                                             	if(type == 1 || type == 5) out.print("");
                                             	else {
                                             		if(client == null) out.print("عميل نقدى");
@@ -71,7 +74,7 @@
                                             </th>
                                             <th><%= cacheMovement.getSupplier() == null ? "" : cacheMovement.getSupplier().getName() %></th>
                                             <th><%= cacheMovement.getDate() %></th>
-                                            <th><%= cacheMovement.getType() == 0 ? "سحب" : "ايداع" %></th>
+                                            <th><%= typeValue %></th>
                                             <th><%= cacheMovement.getDescription() %></th>
                                             <th><%= cacheMovement.getAmount() %> EGP</th>
                                         </tr>

@@ -8,7 +8,7 @@ int id = Integer.parseInt(request.getParameter("id"));
 Unit unit = new Unit();
 unit.setId(id);
 boolean hasInvoices = InvoiceService.hasDetailsFromUnit(unit);
-if(hasInvoices) response.sendRedirect("/store-management/units/delete-error.jsp");
+if(hasInvoices) response.sendRedirect("/store-management-system/units/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +37,7 @@ if(hasInvoices) response.sendRedirect("/store-management/units/delete-error.jsp"
                         <h3 class="panel-title">حذف وحدة</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/units">
+                        <form method="post" action="/store-management-system/units">
                             <fieldset>
                                 <div class="form-group">
                                 	<p class="lead">هل انت متأكد من حذف هذه الوحدة ؟</p>
@@ -46,7 +46,7 @@ if(hasInvoices) response.sendRedirect("/store-management/units/delete-error.jsp"
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/units"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management-system/units"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

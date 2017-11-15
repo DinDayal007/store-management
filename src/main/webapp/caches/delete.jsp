@@ -7,7 +7,7 @@ int id = Integer.parseInt(request.getParameter("id"));
 Cache cache = new Cache();
 cache.setId(id);
 int invoicesCount = CacheService.getInvoicesFromCache(cache);
-if(invoicesCount > 0) response.sendRedirect("/store-management/caches/delete-error.jsp");
+if(invoicesCount > 0) response.sendRedirect("/store-management-system/caches/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +36,7 @@ if(invoicesCount > 0) response.sendRedirect("/store-management/caches/delete-err
                         <h3 class="panel-title">حذف خزنة</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/caches">
+                        <form method="post" action="/store-management-system/caches">
                             <fieldset>
                                 <div class="form-group">
                                 	<p class="lead">هل انت متأكد من حذف هذه الخزنة ؟</p>
@@ -45,7 +45,7 @@ if(invoicesCount > 0) response.sendRedirect("/store-management/caches/delete-err
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/caches"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management-system/caches"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>

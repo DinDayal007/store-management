@@ -23,7 +23,7 @@ List<Client> clients = (List<Client>) request.getAttribute("clients");
  
                         <div class="panel-body">
                         	<div class="row">
-                        		<form action="/store-management/reports" method="get" role="form" target="_blank">
+                        		<form action="/store-management-system/reports" method="get" role="form" target="_blank">
 	                        		<input type="hidden" name="r" value="cd" />
 	                        		<div class="col-md-6">
 	                        			<label for="client">إختر العميل</label>

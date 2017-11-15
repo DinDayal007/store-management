@@ -35,10 +35,10 @@ Client client = (Client) EntityService.getObject(Client.class, id);
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل العميل</h3>
-                        <a href="/store-management/clients" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/clients" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/clients">
+                        <form method="post" action="/store-management-system/clients">
                             <fieldset>
                                 <div class="form-group">
                                 	<label for="client_name">اسم العميل</label>

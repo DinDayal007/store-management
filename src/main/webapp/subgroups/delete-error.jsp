@@ -31,7 +31,7 @@
                                <div class="form-group">
                                	<p class="lead text-danger">عفوا لا يمكن حذف هذه المجموعة الفرعية لأنها تحتوى علي أصناف</p>
                                </div>
-                               <a href="/store-management/subgroups"><button type="button" class="btn btn-primary">رجوع</button></a>
+                               <a href="/store-management-system/subgroups"><button type="button" class="btn btn-primary">رجوع</button></a>
                            </fieldset>
                     </div>
                 </div>

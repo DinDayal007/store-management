@@ -5,6 +5,7 @@
 	pageEncoding="UTF-8"%>
 <%
 List<SalesInvoiceHeader> salesInvoiceHeaders = EntityService.getAllObjects(SalesInvoiceHeader.class);
+request.setAttribute("title", "متابعة فواتير البيع");
 %>
 <jsp:include page="../header.jsp" />
 
@@ -18,7 +19,7 @@ List<SalesInvoiceHeader> salesInvoiceHeaders = EntityService.getAllObjects(Sales
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<a href="/store-management/reports?r=s" target="_blank"><button class="btn btn-lg btn-primary">طباعة فواتير البيع</button></a>
+			<a href="/store-management-system/reports?r=s" target="_blank"><button class="btn btn-lg btn-primary">طباعة فواتير البيع</button></a>
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">
@@ -46,7 +47,7 @@ List<SalesInvoiceHeader> salesInvoiceHeaders = EntityService.getAllObjects(Sales
 							<td><%= salesInvoiceHeader.getType() == 0 ? "فورى" : "اجل" %></td>
 							<td><%= salesInvoiceHeader.getInventory().getName() %></td>
 							<td><%= salesInvoiceHeader.getCache().getName() %></td>
-							<td><a href="/store-management/sales/invoice.jsp?id=<%= salesInvoiceHeader.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
+							<td><a href="/store-management-system/sales/invoice.jsp?id=<%= salesInvoiceHeader.getId() %>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a></td>
 						</tr>
 						<% } %>
 					</tbody>

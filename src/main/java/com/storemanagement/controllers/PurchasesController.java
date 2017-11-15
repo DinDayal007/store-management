@@ -2,12 +2,15 @@ package com.storemanagement.controllers;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.json.JSONObject;
+
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
@@ -33,12 +36,13 @@ public class PurchasesController extends HttpServlet {
 		List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
 		List<Cache> caches = EntityService.getAllObjects(Cache.class);
 		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
-		List<Unit> units = EntityService.getAllObjects(Unit.class);
+		List<Unit> units = EntityService.getObjectsWithOrder(Unit.class, "id", "asc");
 		request.setAttribute("suppliers", suppliers);
 		request.setAttribute("inventories", inventories);
 		request.setAttribute("caches", caches);
 		request.setAttribute("mainGroups", mainGroups);
 		request.setAttribute("units", units);
+		request.setAttribute("title", "فاتورة شراء جديدة");
 		request.getRequestDispatcher("purchases/index.jsp").forward(request, response);
 	}
 
@@ -50,6 +54,8 @@ public class PurchasesController extends HttpServlet {
 			getItems(request, response);
 		else if(request.getParameter("action").equals("3"))
 			getItemById(request, response);
+		else if(request.getParameter("action").equals("4"))
+			getItemFromCode(request, response);
 		else if(request.getParameter("action").equals("save"))
 			saveInvoice(request, response);
 	}
@@ -102,7 +108,8 @@ public class PurchasesController extends HttpServlet {
 		if(!request.getParameter("itemId").equals("")) {
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
 			Item item = (Item) ItemService.getObject(Item.class, itemId);
-			int itemQty = ItemService.getItemBalance(itemId, user.getInventory().getId());
+			int itemQty = ItemService.getItemQty(itemId, user.getInventory().getId());
+//			ItemBalance itemBalance = ItemService.getItemBalance(itemId, user.getInventory().getId());
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			JSONObject jsonObject = new JSONObject();
@@ -113,6 +120,29 @@ public class PurchasesController extends HttpServlet {
 			jsonObject.put("itemQty", itemQty);
 			jsonObject.put("itemMax", item.getMaxLimit());
 			response.getWriter().print(jsonObject.toString());
+		}
+	}
+	
+	//get item from code
+	protected void getItemFromCode(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+		if(!request.getParameter("itemCode").equals("")){
+			Item item = ItemService.getItemFromBarcode(request.getParameter("itemCode"));
+			//ItemBalance itemBalance = ItemService.getItemFromCode(request.getParameter("itemCode"));
+			if(item != null){
+				int itemQty = ItemService.getItemQty(item.getId(), user.getInventory().getId());
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("itemId", item.getId());
+				jsonObject.put("itemCode", request.getParameter("itemCode"));
+				jsonObject.put("itemName", item.getName());
+				jsonObject.put("itemPrice", item.getPrice());
+				jsonObject.put("itemQty", itemQty);
+				jsonObject.put("itemMax", item.getMaxLimit());
+				response.getWriter().print(jsonObject.toString());
+			}
 		}
 	}
 	
@@ -131,23 +161,18 @@ public class PurchasesController extends HttpServlet {
 //				purchaseInvoiceHeader.setPaid(Double.parseDouble(request.getParameter("finalTotal")));
 //				purchaseInvoiceHeader.setRemain(0);
 //			}
-//			User user = new User();
-//			user.setId(1);
 			User user = (User) request.getSession().getAttribute("user");
 			purchaseInvoiceHeader.setUser(user);
 			Supplier supplier = new Supplier();
 			supplier.setId(Integer.parseInt(request.getParameter("supplier")));
 			purchaseInvoiceHeader.setSupplier(supplier);
-//			Inventory inventory = new Inventory();
-//			inventory.setId(Integer.parseInt(request.getParameter("inventory")));
 			Inventory inventory = user.getInventory();
 			purchaseInvoiceHeader.setInventory(inventory);
-//			int cacheId = Integer.parseInt(request.getParameter("cache"));
-//			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
 			int cacheId = user.getCache().getId();
 			Cache cache = (Cache) EntityService.getObject(Cache.class, cacheId);
 			purchaseInvoiceHeader.setCache(cache);
 			purchaseInvoiceHeader.setTotal(Double.parseDouble(request.getParameter("totalPrice")));
+			purchaseInvoiceHeader.setFinalTotal(purchaseInvoiceHeader.getTotal());
 //			if(Integer.parseInt(request.getParameter("discountType")) == 0)
 //				purchaseInvoiceHeader.setDiscount(request.getParameter("discount") + " %");
 //			else purchaseInvoiceHeader.setDiscount(request.getParameter("discount") + " EGP");
@@ -155,16 +180,21 @@ public class PurchasesController extends HttpServlet {
 //				purchaseInvoiceHeader.setTax(0);
 //			else purchaseInvoiceHeader.setTax(Integer.parseInt(request.getParameter("tax")));
 //			purchaseInvoiceHeader.setFinalTotal(Double.parseDouble(request.getParameter("finalTotal")));
-			cache.setQty(cache.getQty() - purchaseInvoiceHeader.getTotal());
+			if(purchaseInvoiceHeader.getType() == 0)
+				cache.setQty(cache.getQty() - purchaseInvoiceHeader.getTotal());
+			else cache.setQty(cache.getQty() + purchaseInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
 			EntityService.addObject(purchaseInvoiceHeader);
 			//add new cache movement from the purchase invoice
 			CacheMovement cacheMovement = new CacheMovement();
-			cacheMovement.setAmount(purchaseInvoiceHeader.getTotal() * -1);
+			if(purchaseInvoiceHeader.getType() == 0)
+				cacheMovement.setAmount(purchaseInvoiceHeader.getTotal() * -1);
+			else cacheMovement.setAmount(purchaseInvoiceHeader.getTotal());
 			cacheMovement.setCache(cache);
 			cacheMovement.setClient(null);
 			cacheMovement.setDate(purchaseInvoiceHeader.getDate());
-			cacheMovement.setDescription("فاتورة شراء");
+			String invType = purchaseInvoiceHeader.getType() == 0 ? "فورى" : "آجل";
+			cacheMovement.setDescription("فاتورة شراء - " + invType);
 			cacheMovement.setInventory(inventory);
 			cacheMovement.setRefNumber(purchaseInvoiceHeader.getNumber());
 			cacheMovement.setSupplier(supplier);

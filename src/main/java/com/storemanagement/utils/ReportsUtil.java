@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
-import com.storemanagement.entities.ItemMovement;
+import com.storemanagement.entities.Facility;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import net.sf.jasperreports.engine.JRDataSource;
@@ -31,6 +30,16 @@ public class ReportsUtil {
 	//sales invoices report
 	public void showSalesInvoicesReport(HttpServletRequest request, HttpServletResponse response, List<SalesInvoiceHeader> salesInvoiceHeaders) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put sales invoices data
 		for(SalesInvoiceHeader header : salesInvoiceHeaders){
 			Map<String, Object> map = new HashMap<>();
 			map.put("number", header.getNumber());
@@ -52,9 +61,11 @@ public class ReportsUtil {
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Sales invoices report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Sales invoices report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -65,6 +76,16 @@ public class ReportsUtil {
 	//purchase invoices report
 	public void showPurchaseInvoicesReport(HttpServletRequest request, HttpServletResponse response, List<PurchaseInvoiceHeader> purchaseInvoiceHeaders) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put purchase invoices data
 		for(PurchaseInvoiceHeader header : purchaseInvoiceHeaders){
 			Map<String, Object> map = new HashMap<>();
 			map.put("number", header.getNumber());
@@ -82,9 +103,11 @@ public class ReportsUtil {
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Purchase invoices report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Purchase invoices report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -92,36 +115,29 @@ public class ReportsUtil {
 			e.printStackTrace();
 		}
 	}
-	//item movements report
-	public void showItemMovementsReport(HttpServletRequest request, HttpServletResponse response, List<ItemMovement> itemMovements) throws IOException{
-		List<Map<String, ?>> ds = new ArrayList<>();
-		for(ItemMovement itemMovement : itemMovements){
-			Map<String, Object> map = new HashMap<>();
-			map.put("invNumber", itemMovement.getInvNumber());
-			map.put("date", itemMovement.getDate());
-			map.put("inventoryName", itemMovement.getInventoryName());
-			map.put("clientName", itemMovement.getClientName());
-			map.put("cacheName", itemMovement.getCacheName());
-			map.put("itemName", itemMovement.getItemName());
-			map.put("subGroup", itemMovement.getSubGroupName());
-			map.put("mainGroup", itemMovement.getMainGroupName());
-			map.put("itemQty", itemMovement.getItemQty());
-			map.put("itemMinLimit", itemMovement.getItemMinLimit());
-			map.put("itemMaxLimit", itemMovement.getItemMaxLimit());
-			map.put("itemHome", itemMovement.getItemHome());
-			map.put("finalTotal", itemMovement.getInvFinalTotal());
-			map.put("invType", itemMovement.getInvType());
-			ds.add(map);
-		}
-		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+	//item movement report
+	public void showItemMovementReport(HttpServletRequest request, HttpServletResponse response, int itemId) throws IOException{
+		Map<String, Object> parameters = new HashMap<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put the item id
+		parameters.put("itemId", itemId);
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("reports/ItemMovements.jrxml").getFile());
+		File file = new File(classLoader.getResource("reports/ItemMovement.jrxml").getFile());
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Item movements report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Item movements report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -132,6 +148,16 @@ public class ReportsUtil {
 	//caches quantity report
 	public void showCachsQtyReport(HttpServletRequest request, HttpServletResponse response, List<Cache> caches) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put caches data
 		for(Cache cache : caches){
 			Map<String, Object> map = new HashMap<>();
 			map.put("name", cache.getName());
@@ -144,9 +170,11 @@ public class ReportsUtil {
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Cache balance report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Cache balance report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -157,17 +185,29 @@ public class ReportsUtil {
 	//caches movement report
 	public void showCachsMovementReport(HttpServletRequest request, HttpServletResponse response, List<CacheMovement> cacheMovements, int clientId, int supplierId) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put cache movements to the report
 		for(CacheMovement cacheMovement : cacheMovements){
 			Map<String, Object> map = new HashMap<>();
 			int type = cacheMovement.getType();
 			Client client = cacheMovement.getClient();
 			if(type == 0 || type == 2 || type == 3){
+				map.put("type", "سحب");
             	if(type == 0 || type == 2) map.put("client", "");
             	else {
             		if(client == null) map.put("client", "عميل نقدى");
             		else map.put("client", client.getName());
             	}
             }else{
+            	map.put("type", "إيداع");
             	if(type == 1 || type == 5) map.put("client", "");
             	else {
             		if(client == null) map.put("client", "عميل نقدى");
@@ -178,16 +218,14 @@ public class ReportsUtil {
 			String title = "";
 			if(clientId > 0) title = "كشف حساب العميل : " + client.getName();
 			if(supplierId > 0) title = "كشف حساب المورد : " + cacheMovement.getSupplier().getName();
-			if(clientId == 0 && supplierId == 0) title = "سحب - إيداع - مبيعات - مشتريات - مرتجعات";
+			if(clientId == 0 && supplierId == 0) title = "كشف حركات الخزنة";
 			map.put("title", title);
 			map.put("user", cacheMovement.getUser().getName());
 			map.put("inventory", cacheMovement.getInventory().getName());
 			map.put("cache", cacheMovement.getCache().getName());
 			map.put("number", cacheMovement.getRefNumber());
-			//map.put("client", client == null ? "" : client.getName());
 			map.put("supplier", cacheMovement.getSupplier() == null ? "" : cacheMovement.getSupplier().getName());
 			map.put("date", cacheMovement.getDate().toString());
-			map.put("type", cacheMovement.getType() == 0 ? "سحب" : "إيداع");
 			map.put("description", cacheMovement.getDescription());
 			ds.add(map);
 		}
@@ -197,9 +235,11 @@ public class ReportsUtil {
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Cache movements report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Cache movements report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -210,6 +250,16 @@ public class ReportsUtil {
 	//clients debit report
 	public void showClientsDebitReport(HttpServletRequest request, HttpServletResponse response, List<CacheMovement> cacheMovements, int clientId) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put client debits to the report
 		for(CacheMovement cacheMovement : cacheMovements){
 			Map<String, Object> map = new HashMap<>();
 			Client client = cacheMovement.getClient();
@@ -234,9 +284,11 @@ public class ReportsUtil {
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Client debits report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Client debits report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -247,16 +299,28 @@ public class ReportsUtil {
 	//single cache movement report
 	public void showSingleCacheMovementReport(HttpServletRequest request, HttpServletResponse response, CacheMovement cacheMovement) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put cache movement data of report
 		Map<String, Object> map = new HashMap<>();
+		Client client = cacheMovement.getClient();
+		if(client == null) map.put("client", "");
+		else map.put("client", client.getName());
 		map.put("id", cacheMovement.getId());
 		map.put("user", cacheMovement.getUser().getName());
 		map.put("inventory", cacheMovement.getInventory().getName());
 		map.put("cache", cacheMovement.getCache().getName());
 		map.put("number", cacheMovement.getRefNumber());
-		map.put("client", cacheMovement.getClient() == null ? "" : cacheMovement.getClient().getName());
 		map.put("supplier", cacheMovement.getSupplier() == null ? "" : cacheMovement.getSupplier().getName());
 		map.put("date", cacheMovement.getDate());
-		map.put("type", cacheMovement.getType() == 0 ? "سحب نقدية" : "إيداع نقدية");
+		map.put("type", cacheMovement.getType() == 0 ? "إيصال سحب نقدية" : "إيصال إيداع نقدية");
 		map.put("description", cacheMovement.getDescription());
 		map.put("total", cacheMovement.getAmount());
 		ds.add(map);
@@ -266,9 +330,11 @@ public class ReportsUtil {
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Cache movement report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Cache movement report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -278,39 +344,27 @@ public class ReportsUtil {
 	}
 	//sales invoice report
 	public void showSalesInvoiceReport(HttpServletRequest request, HttpServletResponse response, long invoiceId) throws IOException{
-		
-//		List<SalesInvoiceHeader> headers = new ArrayList<>();
-//		headers.add(salesInvoiceHeader);
-//		
-//		List<Map<String, ?>> ds = new ArrayList<>();
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", Integer.parseInt(String.valueOf(invoiceId)));
-//		map.put("number", salesInvoiceHeader.getNumber());
-//		map.put("date", salesInvoiceHeader.getDate().toString());
-//		map.put("type", salesInvoiceHeader.getType() == 0 ? "فورى" : "آجل");
-//		map.put("inventory", salesInvoiceHeader.getInventory().getName());
-//		map.put("user", salesInvoiceHeader.getUser().getName());
-//		Client client = salesInvoiceHeader.getClient();
-//		if(null == client) map.put("client", "عميل نقدى");
-//		else map.put("client", salesInvoiceHeader.getClient().getName());
-//		map.put("total", salesInvoiceHeader.getTotal());
-//		map.put("discount", salesInvoiceHeader.getDiscount());
-//		map.put("tax", salesInvoiceHeader.getTax() + " %");
-//		map.put("finalTotal", salesInvoiceHeader.getFinalTotal());
-		//map.put("salesInvoiceDetails", salesInvoiceHeader.getSalesInvoiceDetails());
-//		ds.add(map);
-//		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put the invoice id
+		parameters.put("id", Integer.parseInt(String.valueOf(invoiceId)));
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("reports/SalesInvoice.jrxml").getFile());
 		InputStream inputStream = new FileInputStream(file);
 		try {
-			Connection connection = null;
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/usarabia_store?verifyServerCertificate=false&useSSL=true", "root", "root");
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, connection);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Sales invoice report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Sales invoice report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
@@ -322,44 +376,95 @@ public class ReportsUtil {
 	}
 	//purchase invoice report
 	public void showPurchaseInvoiceReport(HttpServletRequest request, HttpServletResponse response, long invoiceId) throws IOException{
-		
-//		List<SalesInvoiceHeader> headers = new ArrayList<>();
-//		headers.add(salesInvoiceHeader);
-//		
-//		List<Map<String, ?>> ds = new ArrayList<>();
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", Integer.parseInt(String.valueOf(invoiceId)));
-//		map.put("number", salesInvoiceHeader.getNumber());
-//		map.put("date", salesInvoiceHeader.getDate().toString());
-//		map.put("type", salesInvoiceHeader.getType() == 0 ? "فورى" : "آجل");
-//		map.put("inventory", salesInvoiceHeader.getInventory().getName());
-//		map.put("user", salesInvoiceHeader.getUser().getName());
-//		Client client = salesInvoiceHeader.getClient();
-//		if(null == client) map.put("client", "عميل نقدى");
-//		else map.put("client", salesInvoiceHeader.getClient().getName());
-//		map.put("total", salesInvoiceHeader.getTotal());
-//		map.put("discount", salesInvoiceHeader.getDiscount());
-//		map.put("tax", salesInvoiceHeader.getTax() + " %");
-//		map.put("finalTotal", salesInvoiceHeader.getFinalTotal());
-		//map.put("salesInvoiceDetails", salesInvoiceHeader.getSalesInvoiceDetails());
-//		ds.add(map);
-//		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put the invoice id
+		parameters.put("id", Integer.parseInt(String.valueOf(invoiceId)));
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource("reports/PurchaseInvoice.jrxml").getFile());
 		InputStream inputStream = new FileInputStream(file);
 		try {
-			Connection connection = null;
-			Class.forName("com.mysql.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/usarabia_store?verifyServerCertificate=false&useSSL=true", "root", "root");
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map, connection);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Purchase invoice report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Purchase invoice report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();
 		} catch (JRException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//show item quantities report
+	public void showItemQuantitiesReport(HttpServletRequest request, HttpServletResponse response, String data) throws IOException{
+		String fileName = "";
+		if(null == data) fileName = "reports/ItemQuantities.jrxml";
+		else if(data.equals("min")) fileName = "reports/ItemMin.jrxml";
+		else if(data.equals("max")) fileName = "reports/ItemMax.jrxml";
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource(fileName).getFile());
+		InputStream inputStream = new FileInputStream(file);
+		try {
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Item balance report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Item balance report.pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//show profit margin report
+	public void showProfitReport(HttpServletRequest request, HttpServletResponse response, Date from, Date to) throws IOException{
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put the date from and date to
+		parameters.put("from", from);
+		parameters.put("to", to);
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("reports/Profit.jrxml").getFile());
+		InputStream inputStream = new FileInputStream(file);
+		try {
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Profit margin report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Item balance report.pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

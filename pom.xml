@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.usarabia.storemanagement</groupId>
-	<artifactId>store-management</artifactId>
+	<groupId>com.storemanagement</groupId>
+	<artifactId>store-management-system</artifactId>
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>store-management Maven Webapp</name>
+	<version>0.1.0-SNAPSHOT</version>
+	<name>store-management-system Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
@@ -74,6 +74,6 @@
 
 	</dependencies>
 	<build>
-		<finalName>store-management</finalName>
+		<finalName>store-management-system</finalName>
 	</build>
 </project>

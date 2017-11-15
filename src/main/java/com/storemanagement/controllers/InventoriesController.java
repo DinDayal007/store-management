@@ -19,6 +19,7 @@ public class InventoriesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
 		request.setAttribute("inventories", inventories);
+		request.setAttribute("title", "المخازن");
 		request.getRequestDispatcher("inventories/index.jsp").forward(request, response);
 	}
 

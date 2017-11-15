@@ -13,6 +13,7 @@ import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
+import com.storemanagement.entities.ItemBalance;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SalesInvoiceHeader;
@@ -33,12 +34,13 @@ public class SalesController extends HttpServlet {
 		List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
 		List<Cache> caches = EntityService.getAllObjects(Cache.class);
 		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
-		List<Unit> units = EntityService.getAllObjects(Unit.class);
+		List<Unit> units = EntityService.getObjectsWithOrder(Unit.class, "id", "asc");
 		request.setAttribute("clients", clients);
 		request.setAttribute("inventories", inventories);
 		request.setAttribute("caches", caches);
 		request.setAttribute("mainGroups", mainGroups);
 		request.setAttribute("units", units);
+		request.setAttribute("title", "فاتورة بيع جديدة");
 		request.getRequestDispatcher("sales/index.jsp").forward(request, response);
 	}
 
@@ -50,6 +52,8 @@ public class SalesController extends HttpServlet {
 			getItems(request, response);
 		else if(request.getParameter("action").equals("3"))
 			getItemById(request, response);
+		else if(request.getParameter("action").equals("4"))
+			getItemFromCode(request, response);
 		else if(request.getParameter("action").equals("save"))
 			saveInvoice(request, response);
 	}
@@ -101,18 +105,41 @@ public class SalesController extends HttpServlet {
 		User user = (User) request.getSession().getAttribute("user");
 		if(!request.getParameter("itemId").equals("")) {
 			int itemId = Integer.parseInt(request.getParameter("itemId"));
-			Item item = (Item) ItemService.getObject(Item.class, itemId);
-			int itemQty = ItemService.getItemBalance(itemId, user.getInventory().getId());
-			response.setContentType("application/json");
-			response.setCharacterEncoding("UTF-8");
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("itemId", itemId);
-			jsonObject.put("itemCode", item.getCode());
-			jsonObject.put("itemName", item.getName());
-			jsonObject.put("itemPrice", item.getPrice());
-			jsonObject.put("itemQty", itemQty);
-			jsonObject.put("itemMin", item.getMinLimit());
-			response.getWriter().print(jsonObject.toString());
+			//Item item = (Item) ItemService.getObject(Item.class, itemId);
+			//int itemQty = ItemService.getItemQty(itemId, user.getInventory().getId());
+			ItemBalance itemBalance = ItemService.getItemBalance(itemId, user.getInventory().getId());
+			if(itemBalance != null){
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("itemId", itemId);
+				jsonObject.put("itemCode", itemBalance.getItemCode());
+				jsonObject.put("itemName", itemBalance.getItemName());
+				jsonObject.put("itemPrice", itemBalance.getItemPrice());
+				jsonObject.put("itemQty", itemBalance.getItemQty());
+				jsonObject.put("itemMin", itemBalance.getItemMin());
+				response.getWriter().print(jsonObject.toString());
+			}
+		}
+	}
+	
+	//get item from code
+	protected void getItemFromCode(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("itemCode").equals("")){
+			ItemBalance itemBalance = ItemService.getItemFromCode(request.getParameter("itemCode"));
+			if(itemBalance != null){
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.put("itemId", itemBalance.getItemId());
+				jsonObject.put("itemCode", request.getParameter("itemCode"));
+				jsonObject.put("itemName", itemBalance.getItemName());
+				jsonObject.put("itemPrice", itemBalance.getItemPrice());
+				jsonObject.put("itemQty", itemBalance.getItemQty());
+				jsonObject.put("itemMin", itemBalance.getItemMin());
+				response.getWriter().print(jsonObject.toString());
+			}
 		}
 	}
 	

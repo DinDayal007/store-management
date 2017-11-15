@@ -73,7 +73,7 @@ $(document).ready(function(){
 	$('#mainGroups').change(function(){
 		var mainGroup_id = $(this).val();
 		$.ajax({
-			url : "/store-management/subgroups",
+			url : "/store-management-system/subgroups",
 			method : "POST",
 			data : {mainGroup_id : mainGroup_id, action : "1"},
 			dataType : "text",

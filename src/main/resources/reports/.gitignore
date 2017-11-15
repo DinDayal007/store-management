@@ -4,3 +4,13 @@
 /Blank_A4.jasper
 /PurchaseInvoice.jasper
 /CacheMovement.jasper
+/ItemQuantities.jasper
+/ItemMax.jasper
+/ItemMin.jasper
+/ItemMovement.jasper
+/CacheMovementSum.jasper
+/CachesQty.jasper
+/ClientsDebits.jasper
+/PurchaseInvoices.jasper
+/SalesInvoices.jasper
+/Profit.jasper

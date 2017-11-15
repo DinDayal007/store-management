@@ -38,7 +38,7 @@
                         <h3 class="panel-title">من فضلك سجل الدخول</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="/store-management/home" method="post">
+                        <form role="form" action="/store-management-system/home" method="post">
                         	<% if(null != request.getAttribute("error")){ %>
 						        <div class="alert alert-danger">
 								  	<strong><%= request.getAttribute("error") %></strong>
@@ -60,7 +60,12 @@
             </div>
         </div>
     </div>
-
+	<div class="container" style="margin-top: 280px">
+        <div class="footer text-center">
+        	<hr />
+        	<label>copyright &copy; <span><a href="http://usarabia-eg.com" target="_blank">Unlimited Solutions Arabia</a></span> - 01014713133</label>
+        </div>
+    </div>
 </body>
 
 </html>

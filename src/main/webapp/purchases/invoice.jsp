@@ -41,7 +41,7 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">فاتورة الشراء</h3>
-                        <a href="/store-management/purchases/invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                        <a href="/store-management-system/purchases/invoices.jsp" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body" style="overflow: hidden; text-align: center;">
                     	<div class="row">
@@ -218,7 +218,7 @@ boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoi
         		itemTotal = '"' + itemTotal + '"';
         		unitIds = '"' + unitIds + '"';
         		$.ajax({
-        			url : "/store-management/return-invoices",
+        			url : "/store-management-system/return-invoices",
         			method : "POST",
         			data : {
         				purchaseInvoiceId : id, total : total, cache : cache, unitIds : unitIds,
