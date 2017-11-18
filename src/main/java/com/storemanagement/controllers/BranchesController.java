@@ -42,6 +42,7 @@ public class BranchesController extends HttpServlet {
 			branch.setCreatedDate(new Date());
 			branch.setLastUpdatedDate(new Date());
 			branch.setCreatedBy(createdBy);
+			branch.setLastUpdatedBy(createdBy);
 			EntityService.addObject(branch);
 		}
 	}
@@ -49,6 +50,7 @@ public class BranchesController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("branch_name").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			Branch branch = new Branch();
 			branch.setId(id);
@@ -56,6 +58,7 @@ public class BranchesController extends HttpServlet {
 			branch.setAddress(request.getParameter("branch_address"));
 			branch.setDescription(request.getParameter("branch_description"));
 			branch.setLastUpdatedDate(new Date());
+			branch.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(branch);
 		}
 	}

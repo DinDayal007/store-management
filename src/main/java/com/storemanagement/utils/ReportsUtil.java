@@ -43,7 +43,7 @@ public class ReportsUtil {
 		for(SalesInvoiceHeader header : salesInvoiceHeaders){
 			Map<String, Object> map = new HashMap<>();
 			map.put("number", header.getNumber());
-			map.put("date", header.getDate().toString());
+			map.put("date", header.getDate());
 			map.put("discount", header.getDiscount());
 			map.put("tax", header.getTax() + " %");
 			map.put("total", header.getFinalTotal());
@@ -89,7 +89,7 @@ public class ReportsUtil {
 		for(PurchaseInvoiceHeader header : purchaseInvoiceHeaders){
 			Map<String, Object> map = new HashMap<>();
 			map.put("number", header.getNumber());
-			map.put("date", header.getDate().toString());
+			map.put("date", header.getDate());
 			map.put("total", header.getTotal());
 			map.put("supplier", header.getSupplier().getName());
 			map.put("inventory", header.getInventory().getName());
@@ -225,7 +225,7 @@ public class ReportsUtil {
 			map.put("cache", cacheMovement.getCache().getName());
 			map.put("number", cacheMovement.getRefNumber());
 			map.put("supplier", cacheMovement.getSupplier() == null ? "" : cacheMovement.getSupplier().getName());
-			map.put("date", cacheMovement.getDate().toString());
+			map.put("date", cacheMovement.getDate());
 			map.put("description", cacheMovement.getDescription());
 			ds.add(map);
 		}
@@ -273,7 +273,7 @@ public class ReportsUtil {
 			map.put("number", cacheMovement.getRefNumber());
 			map.put("client", client == null ? "" : client.getName());
 			map.put("total", cacheMovement.getAmount());
-			map.put("date", cacheMovement.getDate().toString());
+			map.put("date", cacheMovement.getDate());
 			map.put("type", cacheMovement.getType() == 0 ? "سحب" : "إيداع");
 			map.put("description", cacheMovement.getDescription());
 			ds.add(map);

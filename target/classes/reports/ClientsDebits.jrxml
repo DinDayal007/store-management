@@ -15,7 +15,7 @@
 	<field name="total" class="java.lang.Double"/>
 	<field name="description" class="java.lang.String"/>
 	<field name="number" class="java.lang.Long"/>
-	<field name="date" class="java.lang.String"/>
+	<field name="date" class="java.util.Date"/>
 	<field name="type" class="java.lang.String"/>
 	<field name="inventory" class="java.lang.String"/>
 	<field name="cache" class="java.lang.String"/>

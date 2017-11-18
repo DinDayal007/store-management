@@ -1,2 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/main/resources/reports/CacheMovement.jrxml=UTF-8
+encoding//src/main/resources/reports/CacheMovementSum.jrxml=UTF-8
+encoding//src/main/resources/reports/ClientsDebits.jrxml=UTF-8
+encoding//src/main/resources/reports/ItemMovement.jrxml=UTF-8
+encoding//src/main/resources/reports/PurchaseInvoice.jrxml=UTF-8
+encoding//src/main/resources/reports/PurchaseInvoices.jrxml=UTF-8
+encoding//src/main/resources/reports/SalesInvoice.jrxml=UTF-8
+encoding//src/main/resources/reports/SalesInvoices.jrxml=UTF-8
 encoding//src/main/webapp/header.jsp=UTF-8

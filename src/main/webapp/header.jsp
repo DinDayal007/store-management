@@ -115,9 +115,18 @@
                             	<li>
                             		<a href="http://localhost:8080/store-management-system/item-balance">جرد الأصناف</a>
                             	</li>
+                            	<li>
+		                            <a href="http://localhost:8080/store-management-system/groups">مجموعات الأصناف الرئيسية</a>
+		                        </li>
+								<li>
+		                            <a href="http://localhost:8080/store-management-system/subgroups">مجموعات الأصناف الفرعية</a>
+		                        </li>
+		                        <li>
+		                            <a href="http://localhost:8080/store-management-system/units">وحدات الأصناف</a>
+		                        </li>
                             </ul>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#"><i class="fa fa-asterisk fa-fw"></i> مجموعات الأصناف<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 		                        <li>
@@ -130,7 +139,7 @@
 						</li>
                         <li>
                             <a href="http://localhost:8080/store-management-system/units"><i class="fa fa-cubes fa-fw"></i> وحدات الأصناف</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="http://localhost:8080/store-management-system/suppliers"><i class="fa fa-truck fa-fw"></i> الموردين</a>
                         </li>

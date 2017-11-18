@@ -28,7 +28,7 @@ public class CacheMovement {
 	@OneToOne
 	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
 	private Inventory inventory;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
 	private Date date;
 	@Column(name = "TYPE")

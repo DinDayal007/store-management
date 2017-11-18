@@ -46,6 +46,7 @@ public class UnitsController extends HttpServlet {
 			unit.setCreatedDate(new Date());
 			unit.setLastUpdatedDate(new Date());
 			unit.setCreatedBy(createdBy);
+			unit.setLastUpdatedBy(createdBy);
 			EntityService.addObject(unit);
 		}
 	}
@@ -53,6 +54,7 @@ public class UnitsController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("unit_name").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			String name = request.getParameter("unit_name");
 			String description = request.getParameter("unit_description");
@@ -62,6 +64,7 @@ public class UnitsController extends HttpServlet {
 			unit.setDescription(description);
 			unit.setQty(Integer.parseInt(request.getParameter("unit_qty")));
 			unit.setLastUpdatedDate(new Date());
+			unit.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(unit);
 		}
 	}

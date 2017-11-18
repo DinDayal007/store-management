@@ -83,11 +83,11 @@ List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainG
                                 </div>
                                 <div class="form-group">
                                 	<label for="item_productionDate">تاريخ الانتاج</label>
-                                    <input class="form-control" placeholder="تاريخ الانتاج" value="<%= item.getProductionDate() %>" name="item_productionDate" type="date" min="1" id="item_productionDate" required>
+                                    <input class="form-control" placeholder="تاريخ الانتاج" value="<%= item.getProductionDate() %>" name="item_productionDate" type="date" min="1" id="item_productionDate">
                                 </div>
                                 <div class="form-group">
                                 	<label for="item_expirationDate">تاريخ انتهاء الصلاحية</label>
-                                    <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" value="<%= item.getExpirationDate() %>" name="item_expirationDate" type="date" min="1" id="item_expirationDate" required>
+                                    <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" value="<%= item.getExpirationDate() %>" name="item_expirationDate" type="date" min="1" id="item_expirationDate">
                                 	<input type="hidden" name="action" value="edit" />
                                 </div>
                                 <div class="form-group">

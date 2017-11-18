@@ -62,8 +62,12 @@ public class ItemsController extends HttpServlet {
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
 			item.setDescription(request.getParameter("description"));
 			try {
-				item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
-				item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
+				if(!request.getParameter("item_productionDate").equals(""))
+					item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
+				else item.setProductionDate(null);
+				if(!request.getParameter("item_expirationDate").equals(""))
+					item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
+				else item.setExpirationDate(null);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -71,6 +75,7 @@ public class ItemsController extends HttpServlet {
 			item.setCreatedDate(new Date());
 			item.setLastUpdatedDate(new Date());
 			item.setCreatedBy(createdBy);
+			item.setLastUpdatedBy(createdBy);
 			EntityService.addObject(item);
 		}
 	}
@@ -78,6 +83,7 @@ public class ItemsController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("item_name").equals("") && !request.getParameter("item_code").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			SubGroup subGroup = new SubGroup();
 			subGroup.setId(Integer.parseInt(request.getParameter("subGroups")));
@@ -92,12 +98,17 @@ public class ItemsController extends HttpServlet {
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
 			item.setDescription(request.getParameter("description"));
 			try {
-				item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
-				item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
+				if(!request.getParameter("item_productionDate").equals(""))
+					item.setProductionDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_productionDate")));
+				else item.setProductionDate(null);
+				if(!request.getParameter("item_expirationDate").equals(""))
+					item.setExpirationDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("item_expirationDate")));
+				else item.setExpirationDate(null);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
 			item.setLastUpdatedDate(new Date());
+			item.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(item);
 		}
 	}

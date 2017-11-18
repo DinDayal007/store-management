@@ -83,6 +83,7 @@ public class UsersController extends HttpServlet {
 			user.setCreatedDate(new Date());
 			user.setLastUpdatedDate(new Date());
 			user.setCreatedBy(createdBy);
+			user.setLastUpdatedBy(createdBy);
 			EntityService.addObject(user);
 		}
 	}
@@ -90,6 +91,7 @@ public class UsersController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("id").equals("") && !request.getParameter("user_role").equals("") && !request.getParameter("user_name").equals("") && !request.getParameter("user_password").equals("")){
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			Role role = new Role();
 			role.setId(Integer.parseInt(request.getParameter("user_role")));
@@ -106,6 +108,7 @@ public class UsersController extends HttpServlet {
 			user.setCache(cache);
 			user.setInventory(inventory);
 			user.setLastUpdatedDate(new Date());
+			user.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(user);
 		}
 	}

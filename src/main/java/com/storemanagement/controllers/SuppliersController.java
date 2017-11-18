@@ -48,6 +48,7 @@ public class SuppliersController extends HttpServlet {
 			supplier.setCreatedDate(new Date());
 			supplier.setLastUpdatedDate(new Date());
 			supplier.setCreatedBy(createdBy);
+			supplier.setLastUpdatedBy(createdBy);
 			EntityService.addObject(supplier);
 		}
 	}
@@ -55,6 +56,7 @@ public class SuppliersController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("supplier_name").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			Supplier supplier = new Supplier();
 			supplier.setId(id);
@@ -66,6 +68,7 @@ public class SuppliersController extends HttpServlet {
 			supplier.setMobile1(request.getParameter("supplier_mobile1"));
 			supplier.setMobile2(request.getParameter("supplier_mobile2"));
 			supplier.setLastUpdatedDate(new Date());
+			supplier.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(supplier);
 		}
 	}

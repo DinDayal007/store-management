@@ -76,11 +76,11 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>تاريخ الانتاج</label></td>
-	                        		<td class="value"><label><%= item.getProductionDate() %></label></td>
+	                        		<td class="value"><label><%= item.getProductionDate() != null ? item.getProductionDate() : "" %></label></td>
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>تاريخ إنتهاء الصلاحية</label></td>
-	                        		<td class="value"><label><%= item.getExpirationDate() %></label></td>
+	                        		<td class="value"><label><%= item.getExpirationDate() != null ? item.getExpirationDate() : "" %></label></td>
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>وصف الصنف</label></td>

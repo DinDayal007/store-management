@@ -43,6 +43,7 @@ public class GroupsController extends HttpServlet {
 			mainGroup.setCreatedDate(new Date());
 			mainGroup.setLastUpdatedDate(new Date());
 			mainGroup.setCreatedBy(createdBy);
+			mainGroup.setLastUpdatedBy(createdBy);
 			EntityService.addObject(mainGroup);
 		}
 	}
@@ -50,12 +51,14 @@ public class GroupsController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("group_name").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			String name = request.getParameter("group_name");
 			MainGroup mainGroup = new MainGroup();
 			mainGroup.setId(id);
 			mainGroup.setName(name);
 			mainGroup.setLastUpdatedDate(new Date());
+			mainGroup.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(mainGroup);
 		}
 	}

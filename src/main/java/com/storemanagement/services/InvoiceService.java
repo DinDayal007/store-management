@@ -1,7 +1,11 @@
 package com.storemanagement.services;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
@@ -159,5 +163,63 @@ public class InvoiceService extends EntityService {
 			closeSession();
 		}
 		return false;
+	}
+	
+	//search invoices
+	public static List<SalesInvoiceHeader> searchInvoices(Integer userId, Integer paymentType, Integer cacheId, Integer inventoryId, Integer clientId, Date from, Date to){
+		List<SalesInvoiceHeader> salesInvoiceHeaders = null;
+		try {
+			openSession();
+			Criteria criteria = getSession().createCriteria(SalesInvoiceHeader.class).addOrder(Order.desc("id"));
+			if(userId != null)
+				criteria.add(Restrictions.eq("user.id", userId));
+			if(paymentType != null)
+				criteria.add(Restrictions.eq("type", paymentType));
+			if(cacheId != null)
+				criteria.add(Restrictions.eq("cache.id", cacheId));
+			if(inventoryId != null)
+				criteria.add(Restrictions.eq("inventory.id", inventoryId));
+			if(clientId != null)
+				criteria.add(Restrictions.eq("client.id", clientId));
+			if(from != null)
+				criteria.add(Restrictions.ge("date", from));
+			if(to != null)
+				criteria.add(Restrictions.le("date", to));
+			salesInvoiceHeaders = criteria.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return salesInvoiceHeaders;
+	}
+	
+	//search invoices
+	public static List<PurchaseInvoiceHeader> searchPurchaseInvoices(Integer userId, Integer paymentType, Integer cacheId, Integer inventoryId, Integer supplierId, Date from, Date to){
+		List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = null;
+		try {
+			openSession();
+			Criteria criteria = getSession().createCriteria(PurchaseInvoiceHeader.class).addOrder(Order.desc("id"));
+			if(userId != null)
+				criteria.add(Restrictions.eq("user.id", userId));
+			if(paymentType != null)
+				criteria.add(Restrictions.eq("type", paymentType));
+			if(cacheId != null)
+				criteria.add(Restrictions.eq("cache.id", cacheId));
+			if(inventoryId != null)
+				criteria.add(Restrictions.eq("inventory.id", inventoryId));
+			if(supplierId != null)
+				criteria.add(Restrictions.eq("supplier.id", supplierId));
+			if(from != null)
+				criteria.add(Restrictions.ge("date", from));
+			if(to != null)
+				criteria.add(Restrictions.le("date", to));
+			purchaseInvoiceHeaders = criteria.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return purchaseInvoiceHeaders;
 	}
 }

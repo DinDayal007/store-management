@@ -54,6 +54,7 @@ public class SubGroupsController extends HttpServlet {
 			subGroup.setCreatedDate(new Date());
 			subGroup.setLastUpdatedDate(new Date());
 			subGroup.setCreatedBy(createdBy);
+			subGroup.setLastUpdatedBy(createdBy);
 			GroupService.addObject(subGroup);
 		}
 	}
@@ -61,6 +62,7 @@ public class SubGroupsController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("subGroup_name").equals("") && !request.getParameter("mainGroups").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			String name = request.getParameter("subGroup_name");
 			int mainGroupId = Integer.parseInt(request.getParameter("mainGroups"));
@@ -71,6 +73,7 @@ public class SubGroupsController extends HttpServlet {
 			subGroup.setName(name);
 			subGroup.setMainGroup(mainGroup);
 			subGroup.setLastUpdatedDate(new Date());
+			subGroup.setLastUpdatedBy(lastUpdatedBy);
 			GroupService.updateObject(subGroup);
 		}
 	}

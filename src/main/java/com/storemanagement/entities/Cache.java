@@ -30,6 +30,9 @@ public class Cache {
 	@OneToOne
 	@JoinColumn(name = "CREATED_BY", referencedColumnName = "ID", updatable = false)
 	private User createdBy;
+	@OneToOne
+	@JoinColumn(name = "LAST_UPDATED_BY", referencedColumnName = "ID")
+	private User lastUpdatedBy;
 	public int getId() {
 		return id;
 	}
@@ -65,5 +68,11 @@ public class Cache {
 	}
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+	public User getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
+	public void setLastUpdatedBy(User lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
 	}
 }

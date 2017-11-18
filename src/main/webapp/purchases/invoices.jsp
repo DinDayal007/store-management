@@ -1,3 +1,8 @@
+<%@page import="com.storemanagement.entities.Supplier"%>
+<%@page import="com.storemanagement.entities.Inventory"%>
+<%@page import="com.storemanagement.entities.Cache"%>
+<%@page import="com.storemanagement.services.UserService"%>
+<%@page import="com.storemanagement.entities.User"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.PurchaseInvoiceHeader"%>
 <%@page import="java.util.List"%>
@@ -5,6 +10,10 @@
 	pageEncoding="UTF-8"%>
 <%
 List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = EntityService.getAllObjects(PurchaseInvoiceHeader.class);
+List<User> users = UserService.getUsers();
+List<Cache> caches = EntityService.getAllObjects(Cache.class);
+List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
+List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
 request.setAttribute("title", "متابعة فواتير الشراء");
 %>
 <jsp:include page="../header.jsp" />
@@ -19,11 +28,79 @@ request.setAttribute("title", "متابعة فواتير الشراء");
 <div class="row">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<a href="/store-management-system/reports?r=p" target="_blank"><button class="btn btn-lg btn-primary">طباعة فواتير المشتريات</button></a>
+			<div class="row">
+				<form action="/store-management-system/reports" method="get" target="_blank">
+					<div class="col-md-4">
+						<div class="form-group">
+							<input type="hidden" name="r" value="p" />
+							<label for="user">اختر المستخدم</label>
+							<select name="user" id="user" class="form-control">
+								<option value="">اختر المستخدم</option>
+								<% for(User user : users){ %>
+								<option value="<%= user.getId() %>"><%= user.getName() %></option>
+								<% } %>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="type">طريقة الدفع</label>
+		                    <select name="type" id="type" class="form-control">
+								<option value="">اختر طريقة الدفع</option>
+								<option value="0">فورى</option>
+								<option value="1">آجل</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="client">المورد</label>
+		                    <select name="supplier" id="supplier" class="form-control">
+								<option value="">اختر المورد</option>
+								<% for(Supplier supplier : suppliers){ %>
+								<option value="<%= supplier.getId() %>"><%= supplier.getName() %></option>
+								<% } %>
+							</select>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="from">من تاريخ</label>
+		                    <input type="date" class="form-control" name="from" id="from" />
+						</div>
+						<div class="form-group">
+							<label for="cache">الخزنة</label>
+		                    <select name="cache" id="cache" class="form-control">
+								<option value="">اختر الخزنة</option>
+								<% for(Cache cache : caches){ %>
+								<option value="<%= cache.getId() %>"><%= cache.getName() %></option>
+								<% } %>
+							</select>
+						</div>
+					</div>
+					
+					<div class="col-md-4">
+						<div class="form-group">
+							<label for="to">إلى تاريخ</label>
+	                        <input type="date" class="form-control" name="to" id="to" />
+						</div>
+						<div class="form-group">
+							<label for="inventory">المخزن</label>
+		                    <select name="inventory" id="inventory" class="form-control">
+								<option value="">اختر المخزن</option>
+								<% for(Inventory inventory : inventories){ %>
+								<option value="<%= inventory.getId() %>"><%= inventory.getName() %></option>
+								<% } %>
+							</select>
+						</div>
+						<div class="form-group text-left" style="margin-top: 40px">
+							<button type="button" class="btn btn-default" id="searchInvoicesBtn">بحث</button>
+							<input type="submit" class="btn btn-primary" value="طباعة فواتير المشتريات" />
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
 		<!-- /.panel-heading -->
 		<div class="panel-body">
-			<div class="table-responsive">
+			<div class="table-responsive" id="invoicesData">
 				<table class="table table-striped table-bordered table-hover" id="dataTables-example">
 					<thead>
 						<tr>
@@ -63,3 +140,32 @@ request.setAttribute("title", "متابعة فواتير الشراء");
 <!-- /#page-wrapper -->
 
 <jsp:include page="../footer.html" />
+
+
+<script>
+	$(document).ready(function(){
+		$('#searchInvoicesBtn').click(function(){
+			var userId = $('#user').val();
+			var from = $('#from').val();
+			var to = $('#to').val();
+			var paymentType = $('#type').val();
+			var cacheId = $('#cache').val();
+			var inventoryId = $('#inventory').val();
+			var supplierId = $('#supplier').val();
+			$.ajax({
+				url : "/store-management-system/purchases",
+				method : "POST",
+				data : {
+					userId : userId, from : from, to : to, paymentType : paymentType, 
+					cacheId : cacheId, inventoryId : inventoryId, supplierId : supplierId,
+					action : "5"
+				},
+				success : function(data){
+					if(data){
+						$('#invoicesData').html(data);
+					} else alert('من فضلك اختر مدخلات البحث');
+				}
+			});
+		});
+	})
+</script>

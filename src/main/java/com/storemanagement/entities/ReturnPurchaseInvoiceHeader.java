@@ -28,7 +28,7 @@ public class ReturnPurchaseInvoiceHeader {
 	private int id;
 	@Column(name = "NUMBER")
 	private long number;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "DATE")
 	private Date date;
 	@OneToOne

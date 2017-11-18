@@ -89,7 +89,7 @@ and A.ID= $P{id}]]>
 	</queryString>
 	<field name="INV_ID" class="java.lang.Integer"/>
 	<field name="INV_NUMBER" class="java.lang.String"/>
-	<field name="TRAN_DATE" class="java.sql.Date"/>
+	<field name="TRAN_DATE" class="java.sql.Timestamp"/>
 	<field name="PAYMENT_METHOD" class="java.lang.Integer"/>
 	<field name="CASH_NAME" class="java.lang.String"/>
 	<field name="SUPPLIER_NAME" class="java.lang.String"/>
@@ -232,8 +232,8 @@ and A.ID= $P{id}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{INV_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField pattern="M/d/yy">
-				<reportElement x="220" y="10" width="99" height="20" uuid="2cfabe68-87af-4635-be6e-44d7b5aa08cf"/>
+			<textField pattern="">
+				<reportElement x="200" y="10" width="119" height="20" uuid="2cfabe68-87af-4635-be6e-44d7b5aa08cf"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
 				</textElement>

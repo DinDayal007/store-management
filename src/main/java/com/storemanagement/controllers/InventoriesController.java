@@ -49,6 +49,7 @@ public class InventoriesController extends HttpServlet {
 			inventory.setCreatedDate(new Date());
 			inventory.setLastUpdatedDate(new Date());
 			inventory.setCreatedBy(createdBy);
+			inventory.setLastUpdatedBy(createdBy);
 			EntityService.addObject(inventory);
 		}
 	}
@@ -56,6 +57,7 @@ public class InventoriesController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("inventory_name").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			String name = request.getParameter("inventory_name");
 			String description = request.getParameter("inventory_description");
@@ -67,6 +69,7 @@ public class InventoriesController extends HttpServlet {
 			inventory.setDescription(description);
 			inventory.setBranch(branch);
 			inventory.setLastUpdatedDate(new Date());
+			inventory.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(inventory);
 		}
 	}

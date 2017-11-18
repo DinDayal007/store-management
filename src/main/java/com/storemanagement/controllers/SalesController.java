@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ import com.storemanagement.entities.Unit;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.GroupService;
+import com.storemanagement.services.InvoiceService;
 import com.storemanagement.services.ItemService;
 import com.storemanagement.utils.InvoicesCounterUtil;
 @WebServlet("/sales")
@@ -54,6 +56,8 @@ public class SalesController extends HttpServlet {
 			getItemById(request, response);
 		else if(request.getParameter("action").equals("4"))
 			getItemFromCode(request, response);
+		else if(request.getParameter("action").equals("5"))
+			searchInvoices(request, response);
 		else if(request.getParameter("action").equals("save"))
 			saveInvoice(request, response);
 	}
@@ -140,6 +144,66 @@ public class SalesController extends HttpServlet {
 				jsonObject.put("itemMin", itemBalance.getItemMin());
 				response.getWriter().print(jsonObject.toString());
 			}
+		}
+	}
+	
+	//get items from subgroups
+	protected void searchInvoices(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("userId").equals("") || !request.getParameter("from").equals("")
+				|| !request.getParameter("to").equals("") || !request.getParameter("paymentType").equals("")
+				|| !request.getParameter("cacheId").equals("") || !request.getParameter("inventoryId").equals("")
+				|| !request.getParameter("clientId").equals("")){
+			Integer userId = null, paymentType = null, cacheId = null, inventoryId = null, clientId = null;
+			if(!request.getParameter("userId").equals(""))
+				userId = Integer.parseInt(request.getParameter("userId"));
+			if(!request.getParameter("paymentType").equals(""))
+				paymentType = Integer.parseInt(request.getParameter("paymentType"));
+			if(!request.getParameter("cacheId").equals(""))
+				cacheId = Integer.parseInt(request.getParameter("cacheId"));
+			if(!request.getParameter("inventoryId").equals(""))
+				inventoryId = Integer.parseInt(request.getParameter("inventoryId"));
+			if(!request.getParameter("clientId").equals(""))
+				clientId = Integer.parseInt(request.getParameter("clientId"));
+			Date from = null, to = null;
+			try{
+				if(!request.getParameter("from").equals(""))
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
+				if(!request.getParameter("to").equals(""))
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			List<SalesInvoiceHeader> salesInvoiceHeaders = InvoiceService.searchInvoices(userId, paymentType, cacheId, inventoryId, clientId, from, to);
+			StringBuilder out = new StringBuilder();
+			out.append("<table class=\"table table-striped table-bordered table-hover\" id=\"dataTables-example\"><thead>" +
+					"		 <tr><th>رقم الفاتورة</th>" + 
+					"		 <th>تاريخ الفاتورة</th>" + 
+					"		 <th>المستخدم</th>" + 
+					"		 <th>إجمالى الفاتورة</th>" + 
+					"        <th>طريقة الدفع</th>" + 
+					"        <th>المخزن</th>" + 
+					"        <th>الخزنة</th>" + 
+					"        <th>مشاهدة</th></tr>" + 
+					"        </thead><tbody>");
+			if(salesInvoiceHeaders.size() == 0)
+				out.append("<tr><td colspan=\"8\"><p class=\"lead text-center text-danger\">عفوا لا يوجد فواتير بيع</p></td></tr>");
+			else{
+				for(SalesInvoiceHeader salesInvoiceHeader : salesInvoiceHeaders){
+					out.append("<tr><td>" + salesInvoiceHeader.getNumber() + "</td>");
+					out.append("<td>" + salesInvoiceHeader.getDate() + "</td>");
+					out.append("<td>" + salesInvoiceHeader.getUser().getName() + "</td>");
+					out.append("<td>" + salesInvoiceHeader.getFinalTotal() + "</td>");
+					out.append("<td>" + (salesInvoiceHeader.getType() == 0 ? "فورى" : "اجل") + "</td>");
+					out.append("<td>" + salesInvoiceHeader.getInventory().getName() + "</td>");
+					out.append("<td>" + salesInvoiceHeader.getCache().getName() + "</td>");
+					out.append("<td><a href=\"/store-management-system/sales/invoice.jsp?id=" + salesInvoiceHeader.getId() + "\"><button class=\"btn btn-default\"><i class=\"fa fa-eye\"></i></button></a></td></tr>");
+				}
+			}
+			out.append("</tbody></table>");
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(out.toString());
 		}
 	}
 	

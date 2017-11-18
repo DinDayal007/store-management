@@ -43,6 +43,7 @@ public class CachesController extends HttpServlet {
 			cache.setCreatedDate(new Date());
 			cache.setLastUpdatedDate(new Date());
 			cache.setCreatedBy(createdBy);
+			cache.setLastUpdatedBy(createdBy);
 			EntityService.addObject(cache);
 		}
 	}
@@ -50,12 +51,14 @@ public class CachesController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("cache_name").equals("") && !request.getParameter("cache_qty").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			Cache cache = new Cache();
 			cache.setId(id);
 			cache.setName(request.getParameter("cache_name"));
 			cache.setQty(Double.parseDouble(request.getParameter("cache_qty")));
 			cache.setLastUpdatedDate(new Date());
+			cache.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(cache);
 		}
 	}

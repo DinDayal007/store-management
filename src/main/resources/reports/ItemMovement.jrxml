@@ -20,7 +20,7 @@ FROM
   where ITEM_ID = $P{itemId}]]>
 	</queryString>
 	<field name="inv_number" class="java.lang.String"/>
-	<field name="date" class="java.sql.Date"/>
+	<field name="date" class="java.util.Date"/>
 	<field name="inventory_id" class="java.lang.Integer"/>
 	<field name="inventory_name" class="java.lang.String"/>
 	<field name="CLIENT_ID" class="java.lang.Integer"/>

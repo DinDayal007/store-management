@@ -33,14 +33,17 @@ public class User {
 	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
 	private Inventory inventory;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATED_DATE")
+	@Column(name = "CREATED_DATE", updatable = false)
 	private Date createdDate;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LAST_UPDATED_DATE")
 	private Date lastUpdatedDate;
 	@OneToOne
-	@JoinColumn(name = "CREATED_BY", referencedColumnName = "ID")
+	@JoinColumn(name = "CREATED_BY", referencedColumnName = "ID", updatable = false)
 	private User createdBy;
+	@OneToOne
+	@JoinColumn(name = "LAST_UPDATED_BY", referencedColumnName = "ID")
+	private User lastUpdatedBy;
 	public int getId() {
 		return id;
 	}
@@ -100,5 +103,11 @@ public class User {
 	}
 	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
+	}
+	public User getLastUpdatedBy() {
+		return lastUpdatedBy;
+	}
+	public void setLastUpdatedBy(User lastUpdatedBy) {
+		this.lastUpdatedBy = lastUpdatedBy;
 	}
 }

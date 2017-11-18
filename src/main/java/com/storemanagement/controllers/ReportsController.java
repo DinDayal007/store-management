@@ -12,11 +12,10 @@ import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
-import com.storemanagement.entities.PurchaseInvoiceHeader;
-import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.Supplier;
 import com.storemanagement.services.CachesMovementService;
 import com.storemanagement.services.EntityService;
+import com.storemanagement.services.InvoiceService;
 import com.storemanagement.utils.ReportsUtil;
 @WebServlet("/reports")
 public class ReportsController extends HttpServlet {
@@ -24,11 +23,51 @@ public class ReportsController extends HttpServlet {
 	private ReportsUtil reportsUtil = new ReportsUtil();
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("r").equals("s"))
-			reportsUtil.showSalesInvoicesReport(request, response, EntityService.getAllObjects(SalesInvoiceHeader.class));
-		else if(request.getParameter("r").equals("p"))
-			reportsUtil.showPurchaseInvoicesReport(request, response, EntityService.getAllObjects(PurchaseInvoiceHeader.class));
-		else if(request.getParameter("r").equals("c"))
+		if(request.getParameter("r").equals("s")){
+			Integer userId = null, paymentType = null, cacheId = null, inventoryId = null, clientId = null;
+			if(!request.getParameter("user").equals(""))
+				userId = Integer.parseInt(request.getParameter("user"));
+			if(!request.getParameter("type").equals(""))
+				paymentType = Integer.parseInt(request.getParameter("type"));
+			if(!request.getParameter("cache").equals(""))
+				cacheId = Integer.parseInt(request.getParameter("cache"));
+			if(!request.getParameter("inventory").equals(""))
+				inventoryId = Integer.parseInt(request.getParameter("inventory"));
+			if(!request.getParameter("client").equals(""))
+				clientId = Integer.parseInt(request.getParameter("client"));
+			Date from = null, to = null;
+			try{
+				if(!request.getParameter("from").equals(""))
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
+				if(!request.getParameter("to").equals(""))
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			reportsUtil.showSalesInvoicesReport(request, response, InvoiceService.searchInvoices(userId, paymentType, cacheId, inventoryId, clientId, from, to));
+		}else if(request.getParameter("r").equals("p")){
+			Integer userId = null, paymentType = null, cacheId = null, inventoryId = null, supplierId = null;
+			if(!request.getParameter("user").equals(""))
+				userId = Integer.parseInt(request.getParameter("user"));
+			if(!request.getParameter("type").equals(""))
+				paymentType = Integer.parseInt(request.getParameter("type"));
+			if(!request.getParameter("cache").equals(""))
+				cacheId = Integer.parseInt(request.getParameter("cache"));
+			if(!request.getParameter("inventory").equals(""))
+				inventoryId = Integer.parseInt(request.getParameter("inventory"));
+			if(!request.getParameter("supplier").equals(""))
+				supplierId = Integer.parseInt(request.getParameter("supplier"));
+			Date from = null, to = null;
+			try{
+				if(!request.getParameter("from").equals(""))
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
+				if(!request.getParameter("to").equals(""))
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			reportsUtil.showPurchaseInvoicesReport(request, response, InvoiceService.searchPurchaseInvoices(userId, paymentType, cacheId, inventoryId, supplierId, from, to));
+		}else if(request.getParameter("r").equals("c"))
 			reportsUtil.showCachsQtyReport(request, response, EntityService.getAllObjects(Cache.class));
 		else if(request.getParameter("r").equals("cm")){
 			Inventory inventory = new Inventory();

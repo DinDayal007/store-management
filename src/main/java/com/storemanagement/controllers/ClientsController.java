@@ -48,6 +48,7 @@ public class ClientsController extends HttpServlet {
 			client.setCreatedDate(new Date());
 			client.setLastUpdatedDate(new Date());
 			client.setCreatedBy(createdBy);
+			client.setLastUpdatedBy(createdBy);
 			EntityService.addObject(client);
 		}
 	}
@@ -55,6 +56,7 @@ public class ClientsController extends HttpServlet {
 	protected void edit(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		if(!request.getParameter("client_name").equals("")) {
+			User lastUpdatedBy = (User) request.getSession().getAttribute("user");
 			int id = Integer.parseInt(request.getParameter("id"));
 			Client client = new Client();
 			client.setId(id);
@@ -66,6 +68,7 @@ public class ClientsController extends HttpServlet {
 			client.setMobile1(request.getParameter("client_mobile1"));
 			client.setMobile2(request.getParameter("client_mobile2"));
 			client.setLastUpdatedDate(new Date());
+			client.setLastUpdatedBy(lastUpdatedBy);
 			EntityService.updateObject(client);
 		}
 	}

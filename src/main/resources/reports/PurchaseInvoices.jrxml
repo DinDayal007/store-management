@@ -17,7 +17,7 @@
 	<field name="user" class="java.lang.String"/>
 	<field name="supplier" class="java.lang.String"/>
 	<field name="total" class="java.lang.Double"/>
-	<field name="date" class="java.lang.String"/>
+	<field name="date" class="java.util.Date"/>
 	<field name="number" class="java.lang.Long"/>
 	<variable name="sumTotal" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{total}]]></variableExpression>
@@ -260,7 +260,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="24" isBold="true"/>
 				</textElement>
-				<text><![CDATA[لم يتم شراء أى من الأصناف حتى الان]]></text>
+				<text><![CDATA[عفوا لا يوجد فواتير شراء]]></text>
 			</staticText>
 		</band>
 	</noData>
