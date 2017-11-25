@@ -13,12 +13,14 @@
 	<parameter name="from" class="java.util.Date"/>
 	<parameter name="to" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[select * from profit_margin where DATE >=$P{from} and DATE <= $P{to}
-order by DATE DESC
-]]>
+		<![CDATA[select * from profit_margin where
+ DATE(DATE) >= $P{from} 
+ and 
+ DATE(DATE) <= $P{to}
+order by DATE DESC]]>
 	</queryString>
 	<field name="NUMBER" class="java.lang.String"/>
-	<field name="DATE" class="java.sql.Date"/>
+	<field name="DATE" class="java.sql.Timestamp"/>
 	<field name="USER_NAME" class="java.lang.String"/>
 	<field name="FINAL_TOTAL" class="java.lang.Double"/>
 	<field name="inv_type" class="java.lang.String"/>
