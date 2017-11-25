@@ -20,7 +20,7 @@ FROM
   where ITEM_ID = $P{itemId}]]>
 	</queryString>
 	<field name="inv_number" class="java.lang.String"/>
-	<field name="date" class="java.util.Date"/>
+	<field name="date" class="java.sql.Timestamp"/>
 	<field name="inventory_id" class="java.lang.Integer"/>
 	<field name="inventory_name" class="java.lang.String"/>
 	<field name="CLIENT_ID" class="java.lang.Integer"/>
@@ -33,12 +33,13 @@ FROM
 	<field name="item_name" class="java.lang.String"/>
 	<field name="unit_id" class="java.lang.Integer"/>
 	<field name="unit_name" class="java.lang.String"/>
-	<field name="ITEM_QTY" class="java.math.BigDecimal"/>
+	<field name="ITEM_QTY" class="java.lang.Long"/>
 	<field name="MIN_LIMIT" class="java.lang.Integer"/>
 	<field name="MAX_LIMIT" class="java.lang.Integer"/>
 	<field name="HOME" class="java.lang.String"/>
 	<field name="CODE" class="java.lang.String"/>
-	<field name="PRICE" class="java.lang.Double"/>
+	<field name="PURCHASE_PRICE" class="java.lang.Double"/>
+	<field name="SALE_PRICE" class="java.lang.Double"/>
 	<field name="FINAL_TOTAL" class="java.lang.Double"/>
 	<field name="inv_type" class="java.lang.String"/>
 	<variable name="sumQty" class="java.math.BigDecimal" calculation="Sum">
@@ -134,65 +135,65 @@ FROM
 		<band height="13"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="149">
+		<band height="175">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<staticText>
-				<reportElement mode="Opaque" x="325" y="120" width="75" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="9c3ae09c-72fe-4772-837e-b48f5b9de016"/>
+				<reportElement mode="Opaque" x="325" y="147" width="75" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="9c3ae09c-72fe-4772-837e-b48f5b9de016"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[المخزن]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="255" y="120" width="70" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e9f6678d-4d0a-4ae7-a11f-2d07dc56a1d9"/>
+				<reportElement mode="Opaque" x="255" y="147" width="70" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e9f6678d-4d0a-4ae7-a11f-2d07dc56a1d9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[الخزنة]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="178" y="120" width="78" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="1b00bddb-e4f4-40c9-be1f-422b7f7c0c8b"/>
+				<reportElement mode="Opaque" x="178" y="147" width="78" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="1b00bddb-e4f4-40c9-be1f-422b7f7c0c8b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[العميل / المورد]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="126" y="120" width="52" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="16292a14-1774-4325-ac1c-631ef38ac48c"/>
+				<reportElement mode="Opaque" x="126" y="147" width="52" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="16292a14-1774-4325-ac1c-631ef38ac48c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[الوحدة]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="68" y="120" width="60" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="39c7ea22-d773-4b6b-85ea-60f6e28b930e"/>
+				<reportElement mode="Opaque" x="68" y="147" width="60" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="39c7ea22-d773-4b6b-85ea-60f6e28b930e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[الكمية]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="-2" y="120" width="70" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e3f908d5-8f79-40a4-98a9-c79d4cac6fb0"/>
+				<reportElement mode="Opaque" x="-2" y="147" width="70" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e3f908d5-8f79-40a4-98a9-c79d4cac6fb0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[الإجمالى]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="400" y="120" width="65" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="908dcb48-20a1-4d44-882e-396e96545163"/>
+				<reportElement mode="Opaque" x="400" y="147" width="65" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="908dcb48-20a1-4d44-882e-396e96545163"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[التاريخ]]></text>
 			</staticText>
 			<line>
-				<reportElement x="-2" y="145" width="555" height="1" uuid="effbe9c0-72cc-4139-a8da-5c04310355a0">
+				<reportElement x="-2" y="172" width="555" height="1" uuid="effbe9c0-72cc-4139-a8da-5c04310355a0">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="465" y="120" width="72" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="3ae067af-d0be-4ede-a161-8e9176c1b9b2"/>
+				<reportElement mode="Opaque" x="465" y="147" width="72" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="3ae067af-d0be-4ede-a161-8e9176c1b9b2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
@@ -238,19 +239,19 @@ FROM
 			<textField>
 				<reportElement x="26" y="10" width="154" height="20" uuid="30202219-aa03-432f-b30d-c3eb73747334"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Ariel" size="12"/>
+					<font fontName="Ariel" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{CODE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="289" y="90" width="164" height="20" uuid="441a1757-fa0f-4dc4-80ac-42d6af2ce702"/>
+				<reportElement x="289" y="120" width="164" height="20" uuid="441a1757-fa0f-4dc4-80ac-42d6af2ce702"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{HOME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="459" y="90" width="96" height="20" uuid="4021e3f7-3c3e-4d9a-85d1-7121b4eeff2f"/>
+				<reportElement x="459" y="120" width="96" height="20" uuid="4021e3f7-3c3e-4d9a-85d1-7121b4eeff2f"/>
 				<textElement textAlignment="Right">
 					<font fontName="Ariel" size="15"/>
 				</textElement>
@@ -293,14 +294,14 @@ FROM
 				<textElement textAlignment="Right">
 					<font fontName="Ariel" size="15"/>
 				</textElement>
-				<text><![CDATA[السعر : ]]></text>
+				<text><![CDATA[سعر البيع : ]]></text>
 			</staticText>
 			<textField pattern="# EGP">
 				<reportElement x="40" y="90" width="138" height="20" uuid="ee1f9421-3706-452e-b3d4-e9883939ee80"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{PRICE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{SALE_PRICE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="450" y="8" width="104" height="30" uuid="6e97c701-7baf-4839-89aa-508b1ed2af2e"/>
@@ -319,12 +320,32 @@ FROM
 				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="536" y="120" width="17" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="304cc8ff-42dc-47f9-b382-b8e6783aeb42"/>
+				<reportElement mode="Opaque" x="536" y="147" width="17" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="304cc8ff-42dc-47f9-b382-b8e6783aeb42"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Ariel" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[#]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="451" y="90" width="102" height="20" uuid="30668920-6ef3-4e84-9f1a-5cce624469ec">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Ariel" size="15"/>
+				</textElement>
+				<text><![CDATA[سعر الشراء :]]></text>
+			</staticText>
+			<textField pattern="# EGP">
+				<reportElement x="296" y="90" width="154" height="20" uuid="c423704d-6442-43b9-bca1-5720e60c9f8a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Ariel" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PURCHASE_PRICE}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>

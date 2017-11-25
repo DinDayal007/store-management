@@ -119,7 +119,7 @@ public class SalesController extends HttpServlet {
 				jsonObject.put("itemId", itemId);
 				jsonObject.put("itemCode", itemBalance.getItemCode());
 				jsonObject.put("itemName", itemBalance.getItemName());
-				jsonObject.put("itemPrice", itemBalance.getItemPrice());
+				jsonObject.put("itemPrice", itemBalance.getItemSalePrice());
 				jsonObject.put("itemQty", itemBalance.getItemQty());
 				jsonObject.put("itemMin", itemBalance.getItemMin());
 				response.getWriter().print(jsonObject.toString());
@@ -139,7 +139,7 @@ public class SalesController extends HttpServlet {
 				jsonObject.put("itemId", itemBalance.getItemId());
 				jsonObject.put("itemCode", request.getParameter("itemCode"));
 				jsonObject.put("itemName", itemBalance.getItemName());
-				jsonObject.put("itemPrice", itemBalance.getItemPrice());
+				jsonObject.put("itemPrice", itemBalance.getItemSalePrice());
 				jsonObject.put("itemQty", itemBalance.getItemQty());
 				jsonObject.put("itemMin", itemBalance.getItemMin());
 				response.getWriter().print(jsonObject.toString());
@@ -279,6 +279,7 @@ public class SalesController extends HttpServlet {
 				salesInvoiceDetails.setSalesInvoiceHeader(salesInvoiceHeader);
 				Item item = new Item();
 				item.setId(Integer.parseInt(itemIds[i]));
+				System.out.println(item.getId());
 				Unit unit = new Unit();
 				unit.setId(Integer.parseInt(unitIds[i]));
 				salesInvoiceDetails.setItem(item);

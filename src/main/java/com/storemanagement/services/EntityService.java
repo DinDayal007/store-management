@@ -1,6 +1,8 @@
 package com.storemanagement.services;
 import java.util.List;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.utils.HibernateDriver;
 public class EntityService extends HibernateDriver {
 	public EntityService() {}
@@ -106,6 +108,26 @@ public class EntityService extends HibernateDriver {
 				objects = getSession().createCriteria(cls.getName()).addOrder(Order.desc(column)).list();
 			else if(order.equals("asc"))
 				objects = getSession().createCriteria(cls.getName()).addOrder(Order.asc(column)).list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return objects;
+	}
+	
+	/**
+	 * Generic method to return list of entities with restriction of column eq value
+	 * @param cls
+	 * @param column
+	 * @param value
+	 * @return
+	 */
+	public static <T extends Object> List<T> getObjectsWithEqRestriction(Class<T> cls, String column, Object value){
+		List<T> objects = null;
+		try {
+			openSession();
+			objects = getSession().createCriteria(cls.getName()).add(Restrictions.eq(column, value)).list();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

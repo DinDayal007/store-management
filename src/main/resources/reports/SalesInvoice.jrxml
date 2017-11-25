@@ -477,12 +477,12 @@ and A.ID= $P{id}]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DISCOUNT}]]></textFieldExpression>
 			</textField>
-			<textField pattern="# %">
+			<textField pattern="">
 				<reportElement x="25" y="21" width="100" height="20" uuid="d4639cad-979f-4bf3-8876-1861fc65e007"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ariel" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{TAX}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TAX} + " %"]]></textFieldExpression>
 			</textField>
 			<textField pattern="# EGP">
 				<reportElement x="358" y="46" width="100" height="20" uuid="9a7b913f-c4f7-43c1-967c-042761992343">

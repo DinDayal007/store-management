@@ -59,8 +59,12 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        		<td class="value"><label><%= item.getName() %></label></td>
 	                        	</tr>
 	                        	<tr>
-	                        		<td class="key"><label>السعر</label></td>
-	                        		<td class="value"><label><%= item.getPrice() %> EGP</label></td>
+	                        		<td class="key"><label>سعر الشراء</label></td>
+	                        		<td class="value"><label><%= item.getPurchasePrice() %> EGP</label></td>
+	                        	</tr>
+	                        	<tr>
+	                        		<td class="key"><label>سعر البيع</label></td>
+	                        		<td class="value"><label><%= item.getSalePrice() %> EGP</label></td>
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>بلد المنشأ</label></td>

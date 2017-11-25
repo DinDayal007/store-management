@@ -9,7 +9,8 @@ public class ItemBalance {
 	private String itemName;
 	private String itemHome;
 	private String itemCode;
-	private double itemPrice;
+	private double itemPurchasePrice;
+	private double itemSalePrice;
 	private int itemQty;
 	private int itemMin;
 	private int itemMax;
@@ -61,11 +62,17 @@ public class ItemBalance {
 	public void setItemCode(String itemCode) {
 		this.itemCode = itemCode;
 	}
-	public double getItemPrice() {
-		return itemPrice;
+	public double getItemPurchasePrice() {
+		return itemPurchasePrice;
 	}
-	public void setItemPrice(double itemPrice) {
-		this.itemPrice = itemPrice;
+	public void setItemPurchasePrice(double itemPurchasePrice) {
+		this.itemPurchasePrice = itemPurchasePrice;
+	}
+	public double getItemSalePrice() {
+		return itemSalePrice;
+	}
+	public void setItemSalePrice(double itemSalePrice) {
+		this.itemSalePrice = itemSalePrice;
 	}
 	public int getItemQty() {
 		return itemQty;

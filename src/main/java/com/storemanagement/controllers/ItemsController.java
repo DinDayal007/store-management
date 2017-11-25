@@ -56,7 +56,8 @@ public class ItemsController extends HttpServlet {
 			item.setSubGroup(subGroup);
 			item.setCode(request.getParameter("item_code"));
 			item.setName(request.getParameter("item_name"));
-			item.setPrice(Double.parseDouble(request.getParameter("item_price")));
+			item.setPurchasePrice(Double.parseDouble(request.getParameter("item_purchase_price")));
+			item.setSalePrice(Double.parseDouble(request.getParameter("item_sale_price")));
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));
@@ -92,7 +93,8 @@ public class ItemsController extends HttpServlet {
 			item.setSubGroup(subGroup);
 			item.setCode(request.getParameter("item_code"));
 			item.setName(request.getParameter("item_name"));
-			item.setPrice(Double.parseDouble(request.getParameter("item_price")));
+			item.setPurchasePrice(Double.parseDouble(request.getParameter("item_purchase_price")));
+			item.setSalePrice(Double.parseDouble(request.getParameter("item_sale_price")));
 			item.setHome(request.getParameter("item_home"));
 			item.setMinLimit(Integer.parseInt(request.getParameter("item_minLimit")));
 			item.setMaxLimit(Integer.parseInt(request.getParameter("item_maxLimit")));

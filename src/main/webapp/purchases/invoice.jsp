@@ -7,7 +7,7 @@
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 PurchaseInvoiceHeader purchaseInvoiceHeader = (PurchaseInvoiceHeader) InvoiceService.getObject(PurchaseInvoiceHeader.class, id);
-List<PurchaseInvoiceDetails> invoiceDetails = (List<PurchaseInvoiceDetails>) purchaseInvoiceHeader.getPurchaseInvoiceDetails();
+List<PurchaseInvoiceDetails> invoiceDetails = InvoiceService.getObjectsWithEqRestriction(PurchaseInvoiceDetails.class, "purchaseInvoiceHeader.id", id);
 boolean hasReturnInvoice = InvoiceService.hasReturnPurchaseInvoice(purchaseInvoiceHeader);
 %>
 <!DOCTYPE html>

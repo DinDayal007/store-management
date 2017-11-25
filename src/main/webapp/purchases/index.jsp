@@ -194,7 +194,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 					<div class="col-md-3 col-md-offset-9">
 						<div class="form-group form-inline">
 							<input type="hidden" name="action" value="save" />
-							<input type="submit" class="btn btn-lg btn-primary" value="طباعة الفاتورة" />
+							<input type="submit" id="saveInvoiceBtn" class="btn btn-lg btn-primary" value="طباعة الفاتورة" />
 							<a href="purchases/invoices.jsp"><button class="btn btn-lg btn-default" type="button">خروج</button></a>
 						</div>
 						</form>
@@ -478,6 +478,7 @@ $(document).ready(function(){
 			dataType : "text",
 			success : function(data){
 				if(data){
+					$('#saveInvoiceBtn').attr('disabled', 'disabled');
 					console.log("done");
 					window.location.replace('/store-management-system/reports?r=pi&id=' + inv_num);
 				}

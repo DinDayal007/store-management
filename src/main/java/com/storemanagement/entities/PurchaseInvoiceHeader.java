@@ -53,7 +53,7 @@ public class PurchaseInvoiceHeader {
 //	private double remain;
 	@Column(name = "FINAL_TOTAL")
 	private double finalTotal;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseInvoiceHeader", fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseInvoiceHeader")
 	private Collection<PurchaseInvoiceDetails> purchaseInvoiceDetails = new ArrayList<PurchaseInvoiceDetails>();
 	public int getId() {
 		return id;

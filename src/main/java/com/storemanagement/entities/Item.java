@@ -23,8 +23,10 @@ public class Item {
 	private String code;
 	@Column(name = "NAME")
 	private String name;
-	@Column(name = "PRICE")
-	private double price;
+	@Column(name = "PURCHASE_PRICE")
+	private double purchasePrice;
+	@Column(name = "SALE_PRICE")
+	private double salePrice;
 	@Column(name = "HOME")
 	private String home;
 	@Column(name = "TAX")
@@ -75,11 +77,17 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public double getPrice() {
-		return price;
+	public double getPurchasePrice(){
+		return purchasePrice;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+	public void setPurchasePrice(double purchasePrice){
+		this.purchasePrice = purchasePrice;
+	}
+	public double getSalePrice(){
+		return salePrice;
+	}
+	public void setSalePrice(double salePrice){
+		this.salePrice = salePrice;
 	}
 	public String getHome() {
 		return home;

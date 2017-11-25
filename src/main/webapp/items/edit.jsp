@@ -28,12 +28,16 @@ List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainG
     <!-- Custom Fonts -->
     <link href="../css/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
+	<style>
+		textarea {resize: vertical;}
+		.login-panel{margin-top: 50px;}
+	</style>
 </head>
 <body>
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">تعديل صنف</h3>
@@ -42,58 +46,68 @@ List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainG
                     <div class="panel-body">
                         <form method="post" action="/store-management-system/items">
                             <fieldset>
-                            	<div class="form-group">
-                            		<label for="mainGroups">اختر المجموعة الرئيسية</label>
-	                        		<select class="form-control" name="mainGroups" id="mainGroups" required autofocus>
-	                        			<option value="">اختر مجموعة رئيسية</option>
-	                        			<% for(MainGroup mainGroup : mainGroups){ %>
-	                        			<option value="<%= mainGroup.getId() %>" <%= mainGroup.getId() == item.getSubGroup().getMainGroup().getId() ? "selected" : "" %>><%= mainGroup.getName() %></option>
-	                        			<% } %>
-	                        		</select>
+                            	<div class="col-md-6">
+                            		<div class="form-group">
+	                            		<label for="mainGroups">اختر المجموعة الرئيسية</label>
+		                        		<select class="form-control" name="mainGroups" id="mainGroups" required autofocus>
+		                        			<option value="">اختر مجموعة رئيسية</option>
+		                        			<% for(MainGroup mainGroup : mainGroups){ %>
+		                        			<option value="<%= mainGroup.getId() %>" <%= mainGroup.getId() == item.getSubGroup().getMainGroup().getId() ? "selected" : "" %>><%= mainGroup.getName() %></option>
+		                        			<% } %>
+		                        		</select>
+	                            	</div>
+	                            	<div class="form-group">
+	                                	<label for="item_name">اسم الصنف</label>
+	                                    <input class="form-control" placeholder="اسم الصنف" value="<%= item.getName() %>" name="item_name" type="text" id="item_name" required>
+                                	</div>
+	                            	<div class="form-group">
+	                                	<label for="item_purchase_price">سعر الشراء</label>
+	                                	<input class="form-control" placeholder="سعر الشراء" value="<%= item.getPurchasePrice() %>" name="item_purchase_price" type="number" min="1" id="item_purchase_price" required>
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_minLimit">أقل كمية</label>
+	                                    <input class="form-control" placeholder="أقل كمية" value="<%= item.getMinLimit() %>" name="item_minLimit" type="number" min="1" id="item_minLimit" >
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_home">بلد المنشأ</label>
+	                                    <input class="form-control" placeholder="بلد المنشأ" value="<%= item.getHome() %>" name="item_home" type="text" id="item_home" >
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_expirationDate">تاريخ انتهاء الصلاحية</label>
+	                                    <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" value="<%= item.getExpirationDate() %>" name="item_expirationDate" type="date" min="1" id="item_expirationDate">
+	                                	<input type="hidden" name="action" value="edit" />
+	                                </div>
                             	</div>
-                            	<div class="form-group">
-                                	<label for="item_name">اختر المجموعة الفرعية</label>
-                                    <select class="form-control" name="subGroups" id="subGroups" required>
-                                    	<option value="<%= item.getSubGroup().getId() %>"><%= item.getSubGroup().getName() %></option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_name">اسم الصنف</label>
-                                    <input class="form-control" placeholder="اسم الصنف" value="<%= item.getName() %>" name="item_name" type="text" id="item_name" required>
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_code">كود الصنف</label>
-                                    <input class="form-control" placeholder="كود الصنف" value="<%= item.getCode() %>" name="item_code" type="text" id="item_code" required>
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_price">سعر الصنف</label>
-                                    <input class="form-control" placeholder="سعر الصنف" value="<%= item.getPrice() %>" name="item_price" type="number" min="1" id="item_price" required>
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_home">بلد المنشأ</label>
-                                    <input class="form-control" placeholder="بلد المنشأ" value="<%= item.getHome() %>" name="item_home" type="text" id="item_home" >
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_minLimit">أقل كمية</label>
-                                    <input class="form-control" placeholder="أقل كمية" value="<%= item.getMinLimit() %>" name="item_minLimit" type="number" min="1" id="item_minLimit" >
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_maxLimit">أعلى كمية</label>
-                                    <input class="form-control" placeholder="أعلى كمية" value="<%= item.getMaxLimit() %>" name="item_maxLimit" type="number" min="1" id="item_maxLimit" >
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_productionDate">تاريخ الانتاج</label>
-                                    <input class="form-control" placeholder="تاريخ الانتاج" value="<%= item.getProductionDate() %>" name="item_productionDate" type="date" min="1" id="item_productionDate">
-                                </div>
-                                <div class="form-group">
-                                	<label for="item_expirationDate">تاريخ انتهاء الصلاحية</label>
-                                    <input class="form-control" placeholder="تاريخ انتهاء الصلاحية" value="<%= item.getExpirationDate() %>" name="item_expirationDate" type="date" min="1" id="item_expirationDate">
-                                	<input type="hidden" name="action" value="edit" />
-                                </div>
-                                <div class="form-group">
-                                	<label for="description">الوصف</label>
-                                	<textarea class="form-control" name="description" id="description" placeholder="وصف الصنف"><%= item.getDescription() %></textarea>
-                                </div>
+                            	
+                            	<div class="col-md-6">
+                            		<div class="form-group">
+	                                	<label for="item_name">اختر المجموعة الفرعية</label>
+	                                    <select class="form-control" name="subGroups" id="subGroups" required>
+	                                    	<option value="<%= item.getSubGroup().getId() %>"><%= item.getSubGroup().getName() %></option>
+	                                    </select>
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_code">كود الصنف</label>
+	                                    <input class="form-control" placeholder="كود الصنف" value="<%= item.getCode() %>" name="item_code" type="text" id="item_code" required>
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_sale_price">سعر البيع</label>
+	                                    <input class="form-control" placeholder="سعر البيع" value="<%= item.getSalePrice() %>" name="item_sale_price" type="number" min="1" id="item_sale_price" required>
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_maxLimit">أعلى كمية</label>
+	                                    <input class="form-control" placeholder="أعلى كمية" value="<%= item.getMaxLimit() %>" name="item_maxLimit" type="number" min="1" id="item_maxLimit" >
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="item_productionDate">تاريخ الانتاج</label>
+	                                    <input class="form-control" placeholder="تاريخ الانتاج" value="<%= item.getProductionDate() %>" name="item_productionDate" type="date" min="1" id="item_productionDate">
+	                                </div>
+	                                <div class="form-group">
+	                                	<label for="description">الوصف</label>
+	                                	<textarea class="form-control" name="description" id="description" placeholder="وصف الصنف"><%= item.getDescription() %></textarea>
+	                                </div>
+                            	</div>
+                            	
                                 <!-- Change this to a button or input when using this as a form -->
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="submit" class="btn btn-lg btn-primary btn-block" value="تعديل" />

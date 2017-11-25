@@ -165,7 +165,7 @@ public class InvoiceService extends EntityService {
 		return false;
 	}
 	
-	//search invoices
+	//search sales invoices
 	public static List<SalesInvoiceHeader> searchInvoices(Integer userId, Integer paymentType, Integer cacheId, Integer inventoryId, Integer clientId, Date from, Date to){
 		List<SalesInvoiceHeader> salesInvoiceHeaders = null;
 		try {
@@ -194,7 +194,7 @@ public class InvoiceService extends EntityService {
 		return salesInvoiceHeaders;
 	}
 	
-	//search invoices
+	//search purchase invoices
 	public static List<PurchaseInvoiceHeader> searchPurchaseInvoices(Integer userId, Integer paymentType, Integer cacheId, Integer inventoryId, Integer supplierId, Date from, Date to){
 		List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = null;
 		try {
@@ -222,4 +222,5 @@ public class InvoiceService extends EntityService {
 		}
 		return purchaseInvoiceHeaders;
 	}
+
 }

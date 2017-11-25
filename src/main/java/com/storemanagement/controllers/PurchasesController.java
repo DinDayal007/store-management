@@ -117,7 +117,7 @@ public class PurchasesController extends HttpServlet {
 			jsonObject.put("itemId", itemId);
 			jsonObject.put("itemCode", item.getCode());
 			jsonObject.put("itemName", item.getName());
-			jsonObject.put("itemPrice", item.getPrice());
+			jsonObject.put("itemPrice", item.getPurchasePrice());
 			jsonObject.put("itemQty", itemQty);
 			jsonObject.put("itemMax", item.getMaxLimit());
 			response.getWriter().print(jsonObject.toString());
@@ -139,7 +139,7 @@ public class PurchasesController extends HttpServlet {
 				jsonObject.put("itemId", item.getId());
 				jsonObject.put("itemCode", request.getParameter("itemCode"));
 				jsonObject.put("itemName", item.getName());
-				jsonObject.put("itemPrice", item.getPrice());
+				jsonObject.put("itemPrice", item.getPurchasePrice());
 				jsonObject.put("itemQty", itemQty);
 				jsonObject.put("itemMax", item.getMaxLimit());
 				response.getWriter().print(jsonObject.toString());

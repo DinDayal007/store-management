@@ -529,6 +529,7 @@ $(document).ready(function(){
 			dataType : "text",
 			success : function(data){
 				if(data){
+					$('#saveInvoiceBtn').attr('disabled', 'disabled');
 					console.log("done");
 					window.location.replace('/store-management-system/reports?r=si&id=' + inv_num);
 				}

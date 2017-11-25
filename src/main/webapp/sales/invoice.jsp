@@ -8,7 +8,7 @@
 <%
 int id = Integer.parseInt(request.getParameter("id"));
 SalesInvoiceHeader salesInvoiceHeader = (SalesInvoiceHeader) InvoiceService.getObject(SalesInvoiceHeader.class, id);
-List<SalesInvoiceDetails> invoiceDetails = (List<SalesInvoiceDetails>) salesInvoiceHeader.getSalesInvoiceDetails();
+List<SalesInvoiceDetails> invoiceDetails = InvoiceService.getObjectsWithEqRestriction(SalesInvoiceDetails.class, "salesInvoiceHeader.id", id);
 boolean hasReturnInvoice = InvoiceService.hasReturnSalesInvoice(salesInvoiceHeader);
 Client client = salesInvoiceHeader.getClient();
 %>
