@@ -22,14 +22,14 @@ import com.storemanagement.services.ItemService;
 public class Application {
 	public static void main(String[] args) {
 					
-//		String[] names = {"فاتورة بيع جديدة" ,"متابعة فواتير البيع", "متابعة فواتير مرتجع البيع", "فاتورة شراء جديدة", "متابعة فواتير الشراء", "متابعة فواتير مرتجع الشراء", "الأصناف", "جرد الأصناف", "مجموعات الأصناف الرئيسية", "مجموعات الأصناف الفرعية", "وحدات الأصناف", "الموردين", "العملاء", "الخزائن", "حركة الخزنة", "كشف حساب حركة الخزنة", "كشف مديونيات العملاء", "تقرير هامش الربح", "الفروع", "المخازن", "المستخدمين", "لوحة التحكم"};
-//		String[] urls = {"sales", "sales/invoices.jsp", "sales/return-invoices.jsp", "purchases", "purchases/invoices.jsp", "purchases/return-invoices.jsp", "items", "item-balance", "groups", "subgroups", "units", "suppliers", "clients", "caches", "cache-movements", "cache-sum", "debits", "profit", "branches", "inventories", "users", "settings"};
-//		for(int i = names.length - 1; i >= 0; i--){
-//			Page page = new Page();
-//			page.setName(names[i]);
-//			page.setUrl("/store-management/" + urls[i]);
-//			EntityService.addObject(page);
-//		}
+		String[] names = {"متابعة فواتير البيع", "متابعة فواتير مرتجع البيع", "فاتورة شراء جديدة", "متابعة فواتير الشراء", "متابعة فواتير مرتجع الشراء", "الأصناف", "جرد الأصناف", "مجموعات الأصناف الرئيسية", "مجموعات الأصناف الفرعية", "وحدات الأصناف", "الموردين", "العملاء", "الخزائن", "حركة الخزنة", "كشف حساب حركة الخزنة", "كشف مديونيات العملاء", "تقرير هامش الربح", "الفروع", "المخازن", "المستخدمين", "لوحة التحكم", "التقارير"};
+		String[] urls = {"sales/invoices.jsp", "sales/return-invoices.jsp", "purchases", "purchases/invoices.jsp", "purchases/return-invoices.jsp", "items", "item-balance", "groups", "subgroups", "units", "suppliers", "clients", "caches", "cache-movements", "cache-sum", "debits", "profit", "branches", "inventories", "users", "settings", "reports"};
+		for(int i = names.length - 1; i >= 0; i--){
+			Page page = new Page();
+			page.setName(names[i]);
+			page.setUrl("/store-management-system/" + urls[i]);
+			EntityService.addObject(page);
+		}
 				
 //		int itemBalance = ItemService.getItemBalance(6, 1);
 //		System.out.println(itemBalance);

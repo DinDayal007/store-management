@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Supplier;
 import com.storemanagement.services.CachesMovementService;
 import com.storemanagement.services.EntityService;
@@ -23,6 +25,8 @@ public class ReportsController extends HttpServlet {
 	private ReportsUtil reportsUtil = new ReportsUtil();
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(21).isView()) response.sendRedirect("error");
 		if(request.getParameter("r").equals("s")){
 			Integer userId = null, paymentType = null, cacheId = null, inventoryId = null, clientId = null;
 			if(!request.getParameter("user").equals(""))
