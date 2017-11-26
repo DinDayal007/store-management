@@ -1,8 +1,12 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
+<%@page import="java.util.List"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Item"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(5).isView()) response.sendRedirect("/store-management-system/error");
 int id = Integer.parseInt(request.getParameter("id"));
 Item item = (Item) EntityService.getObject(Item.class, id);
 %>

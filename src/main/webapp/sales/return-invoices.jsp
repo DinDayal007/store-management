@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.entities.ReturnSalesInvoiceHeader"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.SalesInvoiceHeader"%>
@@ -5,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(1).isView()) response.sendRedirect("/store-management-system/error");
 List<ReturnSalesInvoiceHeader> returnSalesInvoiceHeaders = EntityService.getAllObjects(ReturnSalesInvoiceHeader.class);
 request.setAttribute("title", "متابعة فواتير مرتجع البيع");
 %>

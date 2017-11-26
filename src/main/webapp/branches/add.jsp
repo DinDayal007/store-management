@@ -1,3 +1,11 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(17).isInsert()) response.sendRedirect("/store-management-system-system/error");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

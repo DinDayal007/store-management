@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.SubGroup;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
@@ -22,12 +23,16 @@ public class ItemsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
-		List<Item> items = EntityService.getAllObjects(Item.class);
-		request.setAttribute("mainGroups", mainGroups);
-		request.setAttribute("items", items);
-		request.setAttribute("title", "الأصناف");
-		request.getRequestDispatcher("items/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(5).isView()) response.sendRedirect("error");
+		else{
+			List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
+			List<Item> items = EntityService.getAllObjects(Item.class);
+			request.setAttribute("mainGroups", mainGroups);
+			request.setAttribute("items", items);
+			request.setAttribute("title", "الأصناف");
+			request.getRequestDispatcher("items/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

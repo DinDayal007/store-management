@@ -15,7 +15,7 @@
 
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="branches/add.html"><button class="btn btn-lg btn-primary">إضافة فرع جديد</button></a>
+                            <a href="branches/add.jsp"><button class="btn btn-lg btn-primary">إضافة فرع جديد</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%

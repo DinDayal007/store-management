@@ -14,7 +14,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="clients/add.html"><button class="btn btn-lg btn-primary">إضافة عميل جديد</button></a>
+                            <a href="clients/add.jsp"><button class="btn btn-lg btn-primary">إضافة عميل جديد</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%

@@ -14,6 +14,7 @@ import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.PurchaseInvoiceDetails;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SubGroup;
@@ -31,18 +32,22 @@ public class PurchasesController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
-		List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
-		List<Cache> caches = EntityService.getAllObjects(Cache.class);
-		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
-		List<Unit> units = EntityService.getObjectsWithOrder(Unit.class, "id", "asc");
-		request.setAttribute("suppliers", suppliers);
-		request.setAttribute("inventories", inventories);
-		request.setAttribute("caches", caches);
-		request.setAttribute("mainGroups", mainGroups);
-		request.setAttribute("units", units);
-		request.setAttribute("title", "فاتورة شراء جديدة");
-		request.getRequestDispatcher("purchases/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		//2 is the privilege of purchase page
+		if(privileges.get(2).isView()){
+			List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
+			List<Inventory> inventories = EntityService.getAllObjects(Inventory.class);
+			List<Cache> caches = EntityService.getAllObjects(Cache.class);
+			List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
+			List<Unit> units = EntityService.getObjectsWithOrder(Unit.class, "id", "asc");
+			request.setAttribute("suppliers", suppliers);
+			request.setAttribute("inventories", inventories);
+			request.setAttribute("caches", caches);
+			request.setAttribute("mainGroups", mainGroups);
+			request.setAttribute("units", units);
+			request.setAttribute("title", "فاتورة شراء جديدة");
+			request.getRequestDispatcher("purchases/index.jsp").forward(request, response);
+		}else response.sendRedirect("error");
 	}
 
 	protected void doPost(HttpServletRequest request,

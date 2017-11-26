@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="com.storemanagement.entities.SalesInvoiceHeader"%>
 <%@page import="java.util.List"%>
@@ -5,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(11).isDelete()) response.sendRedirect("/store-management-system/error");
 int id = Integer.parseInt(request.getParameter("id"));
 Client client = new Client();
 client.setId(id);

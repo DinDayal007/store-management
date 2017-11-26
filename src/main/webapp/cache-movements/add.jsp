@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
 <%@page import="com.storemanagement.entities.Client"%>
@@ -5,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(13).isInsert()) response.sendRedirect("/store-management-system/error");
 List<Client> clients = EntityService.getAllObjects(Client.class);
 List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
 %>

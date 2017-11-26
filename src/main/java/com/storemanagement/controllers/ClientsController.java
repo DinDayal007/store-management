@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Client;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/clients")
@@ -16,10 +17,14 @@ public class ClientsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<Client> clients = EntityService.getAllObjects(Client.class);
-		request.setAttribute("clients", clients);
-		request.setAttribute("title", "العملاء");
-		request.getRequestDispatcher("clients/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(11).isView()) response.sendRedirect("error");
+		else{
+			List<Client> clients = EntityService.getAllObjects(Client.class);
+			request.setAttribute("clients", clients);
+			request.setAttribute("title", "العملاء");
+			request.getRequestDispatcher("clients/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

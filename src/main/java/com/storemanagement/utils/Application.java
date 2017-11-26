@@ -10,6 +10,7 @@ import com.storemanagement.entities.Item;
 import com.storemanagement.entities.ItemBalance;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.Page;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Role;
 import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SubGroup;
@@ -20,7 +21,7 @@ import com.storemanagement.services.EntityService;
 import com.storemanagement.services.ItemService;
 public class Application {
 	public static void main(String[] args) {
-			
+					
 //		String[] names = {"فاتورة بيع جديدة" ,"متابعة فواتير البيع", "متابعة فواتير مرتجع البيع", "فاتورة شراء جديدة", "متابعة فواتير الشراء", "متابعة فواتير مرتجع الشراء", "الأصناف", "جرد الأصناف", "مجموعات الأصناف الرئيسية", "مجموعات الأصناف الفرعية", "وحدات الأصناف", "الموردين", "العملاء", "الخزائن", "حركة الخزنة", "كشف حساب حركة الخزنة", "كشف مديونيات العملاء", "تقرير هامش الربح", "الفروع", "المخازن", "المستخدمين", "لوحة التحكم"};
 //		String[] urls = {"sales", "sales/invoices.jsp", "sales/return-invoices.jsp", "purchases", "purchases/invoices.jsp", "purchases/return-invoices.jsp", "items", "item-balance", "groups", "subgroups", "units", "suppliers", "clients", "caches", "cache-movements", "cache-sum", "debits", "profit", "branches", "inventories", "users", "settings"};
 //		for(int i = names.length - 1; i >= 0; i--){

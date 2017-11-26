@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.utils.DateUtil"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
 <%@page import="com.storemanagement.entities.Unit"%>
@@ -7,6 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(5).isInsert()) response.sendRedirect("/store-management-system/error");
 List<MainGroup> mainGroups = (List<MainGroup>) EntityService.getAllObjects(MainGroup.class);
 List<Unit> units = (List<Unit>) EntityService.getAllObjects(Unit.class);
 String code = DateUtil.getDate();

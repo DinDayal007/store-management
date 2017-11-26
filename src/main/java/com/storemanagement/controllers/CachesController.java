@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/caches")
@@ -16,10 +17,14 @@ public class CachesController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<Cache> caches = EntityService.getAllObjects(Cache.class);
-		request.setAttribute("caches", caches);
-		request.setAttribute("title", "أرصدة الخزائن");
-		request.getRequestDispatcher("caches/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(12).isView()) response.sendRedirect("error");
+		else{
+			List<Cache> caches = EntityService.getAllObjects(Cache.class);
+			request.setAttribute("caches", caches);
+			request.setAttribute("title", "أرصدة الخزائن");
+			request.getRequestDispatcher("caches/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

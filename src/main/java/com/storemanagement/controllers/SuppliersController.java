@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Supplier;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
@@ -16,10 +17,14 @@ public class SuppliersController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<Supplier> suppliers  = EntityService.getAllObjects(Supplier.class);
-		request.setAttribute("suppliers", suppliers);
-		request.setAttribute("title", "الموردين");
-		request.getRequestDispatcher("suppliers/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(10).isView()) response.sendRedirect("error");
+		else{
+			List<Supplier> suppliers  = EntityService.getAllObjects(Supplier.class);
+			request.setAttribute("suppliers", suppliers);
+			request.setAttribute("title", "الموردين");
+			request.getRequestDispatcher("suppliers/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

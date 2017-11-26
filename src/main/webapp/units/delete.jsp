@@ -1,9 +1,12 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="java.util.List"%>
 <%@page import="com.storemanagement.entities.Unit"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(9).isDelete()) response.sendRedirect("/store-management-system/error");
 int id = Integer.parseInt(request.getParameter("id"));
 Unit unit = new Unit();
 unit.setId(id);

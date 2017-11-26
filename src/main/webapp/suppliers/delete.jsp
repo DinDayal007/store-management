@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.InvoiceService"%>
 <%@page import="com.storemanagement.entities.PurchaseInvoiceHeader"%>
 <%@page import="java.util.List"%>
@@ -5,11 +6,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-int id = Integer.parseInt(request.getParameter("id"));
-Supplier supplier = new Supplier();
-supplier.setId(id);
-List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = InvoiceService.getPurchaseInvoicesFromSupplier(supplier);
-if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management-system/suppliers/delete-error.jsp");
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(10).isDelete()) response.sendRedirect("/store-management-system/error");
+else{
+	int id = Integer.parseInt(request.getParameter("id"));
+	Supplier supplier = new Supplier();
+	supplier.setId(id);
+	List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = InvoiceService.getPurchaseInvoicesFromSupplier(supplier);
+	if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management-system/suppliers/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,3 +69,4 @@ if(purchaseInvoiceHeaders.size() > 0) response.sendRedirect("/store-management-s
 </body>
 
 </html>
+<% } %> 

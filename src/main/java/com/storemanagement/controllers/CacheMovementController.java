@@ -11,6 +11,7 @@ import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Supplier;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
@@ -19,10 +20,14 @@ public class CacheMovementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<CacheMovement> cacheMovements = EntityService.getAllObjects(CacheMovement.class);
-		request.setAttribute("cacheMovements", cacheMovements);
-		request.setAttribute("title", "حركات الخزنة");
-		request.getRequestDispatcher("cache-movements/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(13).isView()) response.sendRedirect("error");
+		else{
+			List<CacheMovement> cacheMovements = EntityService.getAllObjects(CacheMovement.class);
+			request.setAttribute("cacheMovements", cacheMovements);
+			request.setAttribute("title", "حركات الخزنة");
+			request.getRequestDispatcher("cache-movements/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

@@ -1,5 +1,6 @@
 package com.storemanagement.controllers;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.storemanagement.entities.Facility;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.UserService;
@@ -40,6 +42,8 @@ public class HomeController extends HttpServlet {
 				httpSession.setAttribute("user", user);
 				Facility facility = (Facility) EntityService.getObject(Facility.class, 1);
 				httpSession.setAttribute("facility", facility);
+				List<Privilege> privileges = EntityService.getObjectsWithEqRestriction(Privilege.class, "role.id", user.getRole().getId());
+				httpSession.setAttribute("privileges", privileges);
 				response.sendRedirect("sales");
 			}else {
 				request.setAttribute("error", "الاسم أو الرقم السرى غير صحيح");

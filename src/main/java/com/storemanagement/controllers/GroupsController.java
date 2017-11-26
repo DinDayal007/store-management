@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 @WebServlet("/groups")
@@ -16,10 +17,14 @@ public class GroupsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
-		request.setAttribute("mainGroups", mainGroups);
-		request.setAttribute("title", "مجموعات الأصناف الرئيسية");
-		request.getRequestDispatcher("groups/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(7).isView()) response.sendRedirect("error");
+		else{
+			List<MainGroup> mainGroups = EntityService.getAllObjects(MainGroup.class);
+			request.setAttribute("mainGroups", mainGroups);
+			request.setAttribute("title", "مجموعات الأصناف الرئيسية");
+			request.getRequestDispatcher("groups/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

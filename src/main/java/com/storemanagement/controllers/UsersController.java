@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Role;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
@@ -21,10 +22,14 @@ public class UsersController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<User> users = UserService.getUsers();
-		request.setAttribute("users", users);
-		request.setAttribute("title", "المستخدمين");
-		request.getRequestDispatcher("users/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(19).isView()) response.sendRedirect("error");
+		else{
+			List<User> users = UserService.getUsers();
+			request.setAttribute("users", users);
+			request.setAttribute("title", "المستخدمين");
+			request.getRequestDispatcher("users/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.ItemService"%>
 <%@page import="com.storemanagement.entities.Item"%>
 <%@page import="java.util.List"%>
@@ -5,6 +6,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(8).isDelete()) response.sendRedirect("/store-management-system/error");
 int id = Integer.parseInt(request.getParameter("id"));
 SubGroup subGroup = new SubGroup();
 subGroup.setId(id);

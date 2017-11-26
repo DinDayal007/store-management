@@ -18,14 +18,18 @@ public class SettingsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		Facility facility = (Facility) EntityService.getObject(Facility.class, 1);
-		List<Role> roles = EntityService.getAllObjects(Role.class);
-		List<Page> pages = EntityService.getAllObjects(Page.class);
-		request.setAttribute("facility", facility);
-		request.setAttribute("roles", roles);
-		request.setAttribute("pages", pages);
-		request.setAttribute("title", "لوحة التحكم");
-		request.getRequestDispatcher("settings/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(20).isView()) response.sendRedirect("error");
+		else{
+			Facility facility = (Facility) EntityService.getObject(Facility.class, 1);
+			List<Role> roles = EntityService.getAllObjects(Role.class);
+			List<Page> pages = EntityService.getAllObjects(Page.class);
+			request.setAttribute("facility", facility);
+			request.setAttribute("roles", roles);
+			request.setAttribute("pages", pages);
+			request.setAttribute("title", "لوحة التحكم");
+			request.getRequestDispatcher("settings/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

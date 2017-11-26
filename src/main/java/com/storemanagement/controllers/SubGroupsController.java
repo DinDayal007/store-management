@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.SubGroup;
 import com.storemanagement.entities.User;
 import com.storemanagement.services.GroupService;
@@ -17,12 +18,16 @@ public class SubGroupsController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		List<SubGroup> subGroups = GroupService.getAllObjects(SubGroup.class);
-		request.setAttribute("subGroups", subGroups);
-		List<MainGroup> mainGroups = GroupService.getAllObjects(MainGroup.class);
-		request.setAttribute("mainGroups", mainGroups);
-		request.setAttribute("title", "مجموعات الأصناف الفرعية");
-		request.getRequestDispatcher("subgroups/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(8).isView()) response.sendRedirect("error");
+		else{
+			List<SubGroup> subGroups = GroupService.getAllObjects(SubGroup.class);
+			request.setAttribute("subGroups", subGroups);
+			List<MainGroup> mainGroups = GroupService.getAllObjects(MainGroup.class);
+			request.setAttribute("mainGroups", mainGroups);
+			request.setAttribute("title", "مجموعات الأصناف الفرعية");
+			request.getRequestDispatcher("subgroups/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request,

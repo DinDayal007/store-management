@@ -1,9 +1,12 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.EntityService"%>
 <%@page import="com.storemanagement.entities.Branch"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(18).isInsert()) response.sendRedirect("/store-management-system/error");
 List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);
 %>
 <!DOCTYPE html>

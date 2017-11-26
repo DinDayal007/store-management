@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.entities.User"%>
 <%@page import="com.storemanagement.entities.Branch"%>
 <%@page import="com.storemanagement.entities.Cache"%>
@@ -7,8 +8,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-// User user = (User) session.getAttribute("user");
-// if(user.getRole().getId() != 1) response.sendRedirect("/store-management-system/users");
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(19).isInsert()) response.sendRedirect("/store-management-system/error");
 List<Role> roles = (List<Role>) EntityService.getAllObjects(Role.class);
 List<Cache> caches = (List<Cache>) EntityService.getAllObjects(Cache.class);
 List<Branch> branchs = (List<Branch>) EntityService.getAllObjects(Branch.class);

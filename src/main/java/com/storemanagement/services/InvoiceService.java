@@ -20,7 +20,7 @@ import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.Supplier;
 import com.storemanagement.entities.Unit;
 public class InvoiceService extends EntityService {
-	public static List<PurchaseInvoiceHeader> getPurchaseInvoicesFromSupplier( Supplier supplier) {
+	public static List<PurchaseInvoiceHeader> getPurchaseInvoicesFromSupplier(Supplier supplier) {
 		List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = null;
 		try {
 			openSession();

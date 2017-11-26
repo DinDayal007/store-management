@@ -14,7 +14,7 @@
             
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                        	<a href="groups/add.html"><button class="btn btn-lg btn-primary">إضافة مجموعة رئيسية</button></a>
+                        	<a href="groups/add.jsp"><button class="btn btn-lg btn-primary">إضافة مجموعة رئيسية</button></a>
                         </div>
                         <!-- /.panel-heading -->
                         <%

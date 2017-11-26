@@ -1,8 +1,12 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
+<%@page import="java.util.List"%>
 <%@page import="com.storemanagement.services.InventoryService"%>
 <%@page import="com.storemanagement.entities.Inventory"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(18).isDelete()) response.sendRedirect("/store-management-system/error");
 int id = Integer.parseInt(request.getParameter("id"));
 Inventory inventory = new Inventory();
 inventory.setId(id);

@@ -1,9 +1,14 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.services.GroupService"%>
 <%@page import="com.storemanagement.entities.MainGroup"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% List<MainGroup> mainGroups = (List<MainGroup>) GroupService.getAllObjects(MainGroup.class); %>
+<%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(8).isInsert()) response.sendRedirect("/store-management-system/error");
+List<MainGroup> mainGroups = (List<MainGroup>) GroupService.getAllObjects(MainGroup.class); 
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>

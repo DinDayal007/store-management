@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
 <%@page import="com.storemanagement.entities.Supplier"%>
 <%@page import="com.storemanagement.entities.Inventory"%>
 <%@page import="com.storemanagement.entities.Cache"%>
@@ -9,6 +10,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(3).isView()) response.sendRedirect("/store-management-system/error");
 List<PurchaseInvoiceHeader> purchaseInvoiceHeaders = EntityService.getAllObjects(PurchaseInvoiceHeader.class);
 List<User> users = UserService.getUsers();
 List<Cache> caches = EntityService.getAllObjects(Cache.class);

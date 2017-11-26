@@ -1,12 +1,17 @@
+<%@page import="com.storemanagement.entities.Privilege"%>
+<%@page import="java.util.List"%>
 <%@page import="com.storemanagement.services.RoleService"%>
 <%@page import="com.storemanagement.entities.Role"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-int id = Integer.parseInt(request.getParameter("id"));
-Role role = new Role();
-role.setId(id);
-if(RoleService.hasUsers(role)) response.sendRedirect("/store-management-system/settings/delete-role-error.html");
+List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+if(!privileges.get(20).isDelete()) response.sendRedirect("/store-management-system/error");
+else{
+	int id = Integer.parseInt(request.getParameter("id"));
+	Role role = new Role();
+	role.setId(id);
+	if(RoleService.hasUsers(role)) response.sendRedirect("/store-management-system/settings/delete-role-error.html");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,3 +67,5 @@ if(RoleService.hasUsers(role)) response.sendRedirect("/store-management-system/s
 </body>
 
 </html>
+
+<% } %>

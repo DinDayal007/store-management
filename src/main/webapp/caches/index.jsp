@@ -14,7 +14,7 @@
 
                 <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a href="caches/add.html"><button class="btn btn-lg btn-primary">إضافة خزنة جديدة</button></a>
+                            <a href="caches/add.jsp"><button class="btn btn-lg btn-primary">إضافة خزنة جديدة</button></a>
                         	<a href="/store-management-system/reports?r=c" target="_blank"><button class="btn btn-lg btn-primary">طباعة أرصدة الخزائن</button></a>
                         </div>
                         <!-- /.panel-heading -->
