@@ -60,4 +60,26 @@ public class CachesMovementService extends EntityService {
 		}
 		return cacheMovements;
 	}
+	
+	//get suppliers debt
+	public static List<CacheMovement> getSuppliersDebits(Supplier supplier, Date from, Date to){
+		List<CacheMovement> cacheMovements = null;
+		try {
+			openSession();
+			Criteria criteria = getSession().createCriteria(CacheMovement.class).addOrder(Order.desc("id"));
+			criteria.add(Restrictions.or(Restrictions.in("type", 0, 5), Restrictions.eq("description", "فاتورة شراء - آجل")));
+			if(supplier != null)
+				criteria.add(Restrictions.eq("supplier.id", supplier.getId()));
+			if(from != null)
+				criteria.add(Restrictions.ge("date", from));
+			if(to != null)
+				criteria.add(Restrictions.le("date", to));
+			cacheMovements = criteria.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeSession();
+		}
+		return cacheMovements;
+	}
 }

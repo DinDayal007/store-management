@@ -17,6 +17,7 @@ import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Facility;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
+import com.storemanagement.entities.Supplier;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -296,6 +297,57 @@ public class ReportsUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	//clients debit report
+	public void showSuppliersDebitReport(HttpServletRequest request, HttpServletResponse response, List<CacheMovement> cacheMovements, int supplierId) throws IOException{
+		List<Map<String, ?>> ds = new ArrayList<>();
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put client debits to the report
+		for(CacheMovement cacheMovement : cacheMovements){
+			Map<String, Object> map = new HashMap<>();
+			Supplier supplier = cacheMovement.getSupplier();
+			String title = "";
+			if(supplierId > 0) title = "كشف مديونيات المورد : " + supplier.getName();
+			if(supplierId == 0) title = "كشف مديونيات الموردين";
+			map.put("title", title);
+			map.put("user", cacheMovement.getUser().getName());
+			map.put("inventory", cacheMovement.getInventory().getName());
+			map.put("cache", cacheMovement.getCache().getName());
+			map.put("number", cacheMovement.getRefNumber());
+			map.put("client", supplier.getName());
+			map.put("total", cacheMovement.getType() == 5 ? (cacheMovement.getAmount() * -1) : cacheMovement.getAmount());
+			map.put("date", cacheMovement.getDate());
+			map.put("type", cacheMovement.getType() == 0 ? "سحب" : "إيداع");
+			map.put("description", cacheMovement.getDescription());
+			ds.add(map);
+		}
+		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("reports/SuppliersDebits.jrxml").getFile());
+		InputStream inputStream = new FileInputStream(file);
+		try {
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Supplier debits report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Client debits report.pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (JRException e) {
+			e.printStackTrace();
+		}
+	}
+		
 	//single cache movement report
 	public void showSingleCacheMovementReport(HttpServletRequest request, HttpServletResponse response, CacheMovement cacheMovement) throws IOException{
 		List<Map<String, ?>> ds = new ArrayList<>();

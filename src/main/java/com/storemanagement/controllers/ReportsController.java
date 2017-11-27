@@ -128,6 +128,9 @@ public class ReportsController extends HttpServlet {
 			if(request.getParameter("client").equals(""))
 				client = null;
 			else client.setId(Integer.parseInt(request.getParameter("client")));
+			Supplier supplier = new Supplier();
+			if(request.getParameter("supplier").equals("")) supplier = null;
+			else supplier.setId(Integer.parseInt(request.getParameter("supplier")));
 			try{
 				Date from = null, to = null;
 				if(!request.getParameter("from").equals("")){
@@ -138,7 +141,11 @@ public class ReportsController extends HttpServlet {
 					String t = request.getParameter("to") + " 23:59:59";
 					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
 				}
-				reportsUtil.showClientsDebitReport(request, response, CachesMovementService.getClientsDebits(client, from, to), client == null ? 0 : client.getId());
+				int debitType = Integer.parseInt(request.getParameter("debitType"));
+				if(debitType == 0)
+					reportsUtil.showClientsDebitReport(request, response, CachesMovementService.getClientsDebits(client, from, to), client == null ? 0 : client.getId());
+				else if(debitType == 1)
+					reportsUtil.showSuppliersDebitReport(request, response, CachesMovementService.getSuppliersDebits(supplier, from, to), supplier == null ? 0 : supplier.getId());
 			}catch (ParseException e) {
 				e.printStackTrace();
 			}

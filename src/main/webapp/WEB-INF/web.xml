@@ -188,6 +188,12 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.PrintBarCodeController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>SupplierDebitsController</servlet-name>
+  	<display-name>SupplierDebitsController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.SupplierDebitsController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>
@@ -207,5 +213,9 @@
   <servlet-mapping>
   	<servlet-name>PrintBarCodeController</servlet-name>
   	<url-pattern>/print-barcode</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>SupplierDebitsController</servlet-name>
+  	<url-pattern>/supplier-debits</url-pattern>
   </servlet-mapping>
 </web-app>

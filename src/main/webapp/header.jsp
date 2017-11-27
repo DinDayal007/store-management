@@ -159,7 +159,7 @@
                             		<a href="http://localhost:8080/store-management-system/cache-sum">كشف حساب حركة الخزنة</a>
                        			 </li>
                        			 <li>
-                            		<a href="http://localhost:8080/store-management-system/debits">كشف مديونيات العملاء</a>
+                            		<a href="http://localhost:8080/store-management-system/debits">كشف مديونيات العملاء والموردين</a>
                        			 </li>
                        			 <li>
                             		<a href="http://localhost:8080/store-management-system/profit">هامش الربح</a>

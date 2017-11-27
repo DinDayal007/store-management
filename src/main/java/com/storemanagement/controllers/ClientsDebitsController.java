@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Privilege;
+import com.storemanagement.entities.Supplier;
 import com.storemanagement.services.EntityService;
 @WebServlet("/debits")
 public class ClientsDebitsController extends HttpServlet {
@@ -19,7 +20,9 @@ public class ClientsDebitsController extends HttpServlet {
 		if(!privileges.get(15).isView()) response.sendRedirect("error");
 		else{
 			List<Client> clients = EntityService.getAllObjects(Client.class);
+			List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
 			request.setAttribute("clients", clients);
+			request.setAttribute("suppliers", suppliers);
 			request.setAttribute("title", "مديونيات العملاء");
 			request.getRequestDispatcher("debits/index.jsp").forward(request, response);
 		}
