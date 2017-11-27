@@ -31,7 +31,7 @@
 	                        <div class="form-group">
 	                        	<p class="lead text-danger">عفوا لا يمكن حذف هذا الفرع حيث انه يحتوى على مخازن</p>
 	                        </div>
-	                        <a href="/store-management/branches"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                        <a href="/store-management-system/branches"><button type="button" class="btn btn-primary">رجوع</button></a>
 	                    </fieldset>
                     </div>
                 </div>

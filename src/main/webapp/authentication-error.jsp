@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,12 +26,13 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">خطأ فى الصلاحية</h3>
                     </div>
+                    <% String url = request.getHeader("referer"); %>
                     <div class="panel-body">
 	                    <fieldset>
 	                        <div class="form-group">
 	                        	<p class="lead text-danger">عفوا لا تمتلك الصلاحية لمشاهدة هذه الصفحة</p>
 	                        </div>
-	                        <a href="/store-management-system/sales"><button type="button" class="btn btn-primary">رجوع</button></a>
+	                        <a href="<%= url %>"><button type="button" class="btn btn-primary">رجوع</button></a>
 	                    </fieldset>
                     </div>
                 </div>

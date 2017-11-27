@@ -41,10 +41,14 @@ public class ReportsController extends HttpServlet {
 				clientId = Integer.parseInt(request.getParameter("client"));
 			Date from = null, to = null;
 			try{
-				if(!request.getParameter("from").equals(""))
-					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
-				if(!request.getParameter("to").equals(""))
-					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				if(!request.getParameter("from").equals("")){
+					String f = request.getParameter("from") + " 00:00:00";
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(f);
+				}
+				if(!request.getParameter("to").equals("")){
+					String t = request.getParameter("to") + " 23:59:59";
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
+				}
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -63,10 +67,14 @@ public class ReportsController extends HttpServlet {
 				supplierId = Integer.parseInt(request.getParameter("supplier"));
 			Date from = null, to = null;
 			try{
-				if(!request.getParameter("from").equals(""))
-					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
-				if(!request.getParameter("to").equals(""))
-					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				if(!request.getParameter("from").equals("")){
+					String f = request.getParameter("from") + " 00:00:00";
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(f);
+				}
+				if(!request.getParameter("to").equals("")){
+					String t = request.getParameter("to") + " 23:59:59";
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
+				}
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -95,11 +103,15 @@ public class ReportsController extends HttpServlet {
 				Integer type = null;
 				if(!request.getParameter("type").equals(""))
 					type = Integer.parseInt(request.getParameter("type"));
-				if(!request.getParameter("from").equals(""))
-					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
-				if(!request.getParameter("to").equals(""))
-					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
-			reportsUtil.showCachsMovementReport(request, response, CachesMovementService.getCacheMovements(inventory, cache, client, supplier, from, to, type), client == null ? 0 : client.getId(), supplier == null ? 0 : supplier.getId());
+				if(!request.getParameter("from").equals("")){
+					String f = request.getParameter("from") + " 00:00:00";
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(f);
+				}
+				if(!request.getParameter("to").equals("")){
+					String t = request.getParameter("to") + " 23:59:59";
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
+				}
+				reportsUtil.showCachsMovementReport(request, response, CachesMovementService.getCacheMovements(inventory, cache, client, supplier, from, to, type), client == null ? 0 : client.getId(), supplier == null ? 0 : supplier.getId());
 			} catch (ParseException e) {
 			e.printStackTrace();
 			}
@@ -118,10 +130,14 @@ public class ReportsController extends HttpServlet {
 			else client.setId(Integer.parseInt(request.getParameter("client")));
 			try{
 				Date from = null, to = null;
-				if(!request.getParameter("from").equals(""))
-					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
-				if(!request.getParameter("to").equals(""))
-					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				if(!request.getParameter("from").equals("")){
+					String f = request.getParameter("from") + " 00:00:00";
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(f);
+				}
+				if(!request.getParameter("to").equals("")){
+					String t = request.getParameter("to") + " 23:59:59";
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
+				}
 				reportsUtil.showClientsDebitReport(request, response, CachesMovementService.getClientsDebits(client, from, to), client == null ? 0 : client.getId());
 			}catch (ParseException e) {
 				e.printStackTrace();
@@ -142,10 +158,14 @@ public class ReportsController extends HttpServlet {
 		}else if(request.getParameter("r").equals("profit")){
 			try{
 				Date from = null, to = null;
-				if(!request.getParameter("from").equals(""))
-					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
-				if(!request.getParameter("to").equals(""))
-					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				if(!request.getParameter("from").equals("")){
+					String f = request.getParameter("from") + " 00:00:00";
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(f);
+				}
+				if(!request.getParameter("to").equals("")){
+					String t = request.getParameter("to") + " 23:59:59";
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
+				}			
 				reportsUtil.showProfitReport(request, response, from, to);
 			}catch (ParseException e) {
 				e.printStackTrace();

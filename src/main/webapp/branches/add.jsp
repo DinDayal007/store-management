@@ -4,7 +4,7 @@
     pageEncoding="UTF-8"%>
 <%
 List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
-if(!privileges.get(17).isInsert()) response.sendRedirect("/store-management-system-system/error");
+if(!privileges.get(17).isInsert()) response.sendRedirect("/store-management-system/error");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +35,7 @@ if(!privileges.get(17).isInsert()) response.sendRedirect("/store-management-syst
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading" style="overflow: hidden;">
                         <h3 class="panel-title" style="float: right;">إضافة فرع جديد</h3>
-                    	<a href="/store-management-system-system/branches" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+                    	<a href="/store-management-system/branches" style="float: left;"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
                     </div>
                     <div class="panel-body">
                         <form method="post" action="/store-management-system/branches">

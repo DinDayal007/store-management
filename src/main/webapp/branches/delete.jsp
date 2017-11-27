@@ -6,12 +6,13 @@
     pageEncoding="UTF-8"%>
 <%
 List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
-if(!privileges.get(17).isDelete()) response.sendRedirect("/store-management-system-system/error");
-int id = Integer.parseInt(request.getParameter("id"));
-Branch branch = new Branch();
-branch.setId(id);
-boolean hasInventories = InventoryService.hasInventoriesFromBranch(branch);
-if(hasInventories) response.sendRedirect("/store-management/branches/delete-error.jsp");
+if(!privileges.get(17).isDelete()) response.sendRedirect("/store-management-system/error");
+else{
+	int id = Integer.parseInt(request.getParameter("id"));
+	Branch branch = new Branch();
+	branch.setId(id);
+	boolean hasInventories = InventoryService.hasInventoriesFromBranch(branch);
+	if(hasInventories) response.sendRedirect("/store-management-system/branches/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +41,7 @@ if(hasInventories) response.sendRedirect("/store-management/branches/delete-erro
                         <h3 class="panel-title">حذف فرع</h3>
                     </div>
                     <div class="panel-body">
-                        <form method="post" action="/store-management/branches">
+                        <form method="post" action="/store-management-system/branches">
                             <fieldset>
                                 <div class="form-group">
                                 	<p class="lead">هل انت متأكد من حذف هذا الفرع ؟</p>
@@ -49,7 +50,7 @@ if(hasInventories) response.sendRedirect("/store-management/branches/delete-erro
                                 <input type="hidden" name="id" value="<%= id %>" />
                                 <input type="hidden" name="action" value="delete" />
                                 <input type="submit" class="btn btn-danger" value="حذف" />
-                                <a href="/store-management/branches"><button type="button" class="btn btn-default">الغاء</button></a>
+                                <a href="/store-management-system/branches"><button type="button" class="btn btn-default">الغاء</button></a>
                             </fieldset>
                         </form>
                     </div>
@@ -67,3 +68,4 @@ if(hasInventories) response.sendRedirect("/store-management/branches/delete-erro
 </body>
 
 </html>
+<% } %>

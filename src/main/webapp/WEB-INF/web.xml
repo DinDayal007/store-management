@@ -182,6 +182,12 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.ErrorController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>PrintBarCodeController</servlet-name>
+  	<display-name>PrintBarCodeController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.PrintBarCodeController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>
@@ -197,5 +203,9 @@
   <servlet-mapping>
   	<servlet-name>ProfitController</servlet-name>
   	<url-pattern>/profit</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>PrintBarCodeController</servlet-name>
+  	<url-pattern>/print-barcode</url-pattern>
   </servlet-mapping>
 </web-app>

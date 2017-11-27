@@ -6,7 +6,7 @@
     pageEncoding="UTF-8"%>
 <%
 List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
-if(!privileges.get(17).isUpdate()) response.sendRedirect("/store-management-system-system/error");
+if(!privileges.get(17).isUpdate()) response.sendRedirect("/store-management-system/error");
 int id = Integer.parseInt(request.getParameter("id"));
 Branch branch = (Branch) EntityService.getObject(Branch.class, id);
 %>

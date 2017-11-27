@@ -7,11 +7,12 @@
 <%
 List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
 if(!privileges.get(18).isDelete()) response.sendRedirect("/store-management-system/error");
-int id = Integer.parseInt(request.getParameter("id"));
-Inventory inventory = new Inventory();
-inventory.setId(id);
-int inventoriesCount = InventoryService.getInvoicesFromInventory(inventory);
-if(inventoriesCount > 0) response.sendRedirect("/store-management-system/inventories/delete-error.jsp");
+else{
+	int id = Integer.parseInt(request.getParameter("id"));
+	Inventory inventory = new Inventory();
+	inventory.setId(id);
+	int inventoriesCount = InventoryService.getInvoicesFromInventory(inventory);
+	if(inventoriesCount > 0) response.sendRedirect("/store-management-system/inventories/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,3 +68,4 @@ if(inventoriesCount > 0) response.sendRedirect("/store-management-system/invento
 </body>
 
 </html>
+<% } %>

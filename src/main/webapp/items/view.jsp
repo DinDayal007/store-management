@@ -30,7 +30,7 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	<style>
 		.key{width: 30%}
 		.value{width: 60%}
-		.login-panel{margin-top: 10%}
+		.login-panel{margin-top: 5%}
 	</style>
 </head>
 <body>
@@ -56,11 +56,11 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>الكود</label></td>
-	                        		<td class="value"><label><%= item.getCode() %></label></td>
+	                        		<td class="value" id="code"><label><%= item.getCode() %></label></td>
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>الاسم</label></td>
-	                        		<td class="value"><label><%= item.getName() %></label></td>
+	                        		<td class="value" id="name"><label><%= item.getName() %></label></td>
 	                        	</tr>
 	                        	<tr>
 	                        		<td class="key"><label>سعر الشراء</label></td>
@@ -94,6 +94,10 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 	                        		<td class="key"><label>وصف الصنف</label></td>
 	                        		<td class="value"><label><%= item.getDescription() %></label></td>
 	                        	</tr>
+	                        	<tr>
+	                        		<td class="key"><input type="number" class="form-control" value="1" placeholder="عدد مرات طباعة الباركود" min="1" id="barCodeNumber" name="barCodeNumber" /></td>
+	                        		<td class="value"><button class="btn btn-primary btn-block" id="printBarCode">طباعة الباركود</button></td>
+	                        	</tr>
 	                        </thead>
                         </table>
                     </div>
@@ -107,6 +111,31 @@ Item item = (Item) EntityService.getObject(Item.class, id);
 
     <!-- Bootstrap Core JavaScript -->
     <script src="../js/bootstrap.min.js"></script>
+    
+    <script>
+    	$(document).ready(function(){
+    		$('#printBarCode').click(function(){
+    			var barCodeNumber = $('#barCodeNumber').val();
+    			if(barCodeNumber == '' || barCodeNumber <= 0)
+    				alert('عدد مرات طباعة الباركود يجب أن تكون أكبر من الصفر')
+    			else{
+    				var barCode = $('#code').text();
+    				var name = $('#name').text();
+    				$.ajax({
+    					url : "/store-management-system/items",
+    					method : "POST",
+    					data : {barCodeNumber : barCodeNumber, barCode : barCode, name : name, action : "barcode"},
+    					beforeSend : function(){
+    						$('#printBarCode').text('جار الطباعة');
+    					},
+    					success : function(data){
+    						window.location.replace('/store-management-system/print-barcode?barCodeNumber=' + barCodeNumber + '&barCode=' + barCode + '&name=' + name);
+    					}
+    				});
+    			}
+    		});
+    	})
+    </script>
 
 </body>
 

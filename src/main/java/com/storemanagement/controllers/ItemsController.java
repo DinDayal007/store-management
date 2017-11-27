@@ -41,6 +41,8 @@ public class ItemsController extends HttpServlet {
 			getSubGroups(request, response);
 		else if(request.getParameter("action").equals("2"))
 			getItemsFromSubGroup(request, response);
+		else if(request.getParameter("action").equals("barcode"))
+			printBarCode(request, response);
 		else {
 			if(request.getParameter("action").equals("add"))
 				add(request, response);
@@ -185,6 +187,16 @@ public class ItemsController extends HttpServlet {
 			response.setContentType("text/html");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(out.toString());
+		}
+	}
+	
+	//get items from subGroup
+	protected void printBarCode(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("barCodeNumber").equals("")) {
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print("تم طباعة الباركود بنجاح");
 		}
 	}
 }

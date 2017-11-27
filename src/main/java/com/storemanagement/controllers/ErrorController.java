@@ -10,6 +10,6 @@ public class ErrorController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("authentication-error.html").forward(request, response);
+		request.getRequestDispatcher("authentication-error.jsp").forward(request, response);
 	}
 }

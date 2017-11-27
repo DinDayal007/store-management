@@ -7,11 +7,12 @@
 <%
 List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
 if(!privileges.get(12).isDelete()) response.sendRedirect("/store-management-system/error");
-int id = Integer.parseInt(request.getParameter("id"));
-Cache cache = new Cache();
-cache.setId(id);
-int invoicesCount = CacheService.getInvoicesFromCache(cache);
-if(invoicesCount > 0) response.sendRedirect("/store-management-system/caches/delete-error.jsp");
+else{
+	int id = Integer.parseInt(request.getParameter("id"));
+	Cache cache = new Cache();
+	cache.setId(id);
+	int invoicesCount = CacheService.getInvoicesFromCache(cache);
+	if(invoicesCount > 0) response.sendRedirect("/store-management-system/caches/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -67,3 +68,4 @@ if(invoicesCount > 0) response.sendRedirect("/store-management-system/caches/del
 </body>
 
 </html>
+<% } %>
