@@ -85,6 +85,31 @@ public class ItemService extends EntityService {
 		}
 		return itemBalance;
 	}
+	
+	//get items from inventory id
+	public static List<ItemBalance> getItemsFromInventory(int inventoryId){
+		List<ItemBalance> itemBalances = new ArrayList<>();
+		connection = JDBCUtil.getCon();
+		try {
+			String query = "select sum(ITEM_QTY), ITEM_ID, item_name, CODE, PURCHASE_PRICE from item_movment where inventory_id = ? group by ITEM_ID, item_name, CODE, MIN_LIMIT, MAX_LIMIT, PURCHASE_PRICE, SALE_PRICE";
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, inventoryId);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				ItemBalance itemBalance = new ItemBalance();
+				itemBalance.setItemQty(resultSet.getInt(1));
+				itemBalance.setItemId(resultSet.getInt(2));
+				itemBalance.setItemName(resultSet.getString(3));
+				itemBalance.setItemCode(resultSet.getString(4));
+				itemBalance.setItemPurchasePrice(resultSet.getDouble(5));
+				itemBalances.add(itemBalance);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return itemBalances;
+	}
+	
 	//get item quantities from code
 	public static ItemBalance getItemFromCode(String code){
 		ItemBalance itemBalance = null;

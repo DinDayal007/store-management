@@ -167,10 +167,14 @@ public class SalesController extends HttpServlet {
 				clientId = Integer.parseInt(request.getParameter("clientId"));
 			Date from = null, to = null;
 			try{
-				if(!request.getParameter("from").equals(""))
-					from = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("from"));
-				if(!request.getParameter("to").equals(""))
-					to = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("to"));
+				if(!request.getParameter("from").equals("")){
+					String f = request.getParameter("from") + " 00:00:00";
+					from = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(f);
+				}
+				if(!request.getParameter("to").equals("")){
+					String t = request.getParameter("to") + " 23:59:59";
+					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
+				}
 			}catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -194,6 +194,12 @@
   	<description></description>
   	<servlet-class>com.storemanagement.controllers.SupplierDebitsController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>TransferController</servlet-name>
+  	<display-name>TransferController</display-name>
+  	<description></description>
+  	<servlet-class>com.storemanagement.controllers.TransferController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ReturnInvoicesController</servlet-name>
   	<url-pattern>/return-invoices</url-pattern>
@@ -217,5 +223,9 @@
   <servlet-mapping>
   	<servlet-name>SupplierDebitsController</servlet-name>
   	<url-pattern>/supplier-debits</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>TransferController</servlet-name>
+  	<url-pattern>/transfer</url-pattern>
   </servlet-mapping>
 </web-app>

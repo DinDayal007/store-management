@@ -173,6 +173,9 @@
                             <a href="http://localhost:8080/store-management-system/inventories"><i class="fa fa-database fa-fw"></i> المخازن</a>
                         </li>
                         <li>
+                            <a href="http://localhost:8080/store-management-system/transfer"><i class="fa fa-exchange fa-fw"></i> التحويلات بين المخازن</a>
+                        </li>
+                        <li>
                             <a href="http://localhost:8080/store-management-system/users"><i class="fa fa-users fa-fw"></i> المستخدمين</a>
                         </li>
 
