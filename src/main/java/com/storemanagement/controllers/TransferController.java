@@ -35,6 +35,8 @@ public class TransferController extends HttpServlet {
 			getInventoriesFromBranch(request, response);
 		else if(request.getParameter("action").equals("2"))
 			getItemsFromInventory(request, response);
+		else if(request.getParameter("action").equals("save"))
+			saveTransfer(request, response);
 	}
 	
 	//get inventories from branch
@@ -76,6 +78,16 @@ public class TransferController extends HttpServlet {
 			response.setContentType("text/html");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().print(out.toString());
+		}
+	}
+	
+	//get items from inventory
+	protected void saveTransfer(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("inventoryFrom").equals("")){
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print("saved!");
 		}
 	}
 

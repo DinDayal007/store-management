@@ -46,5 +46,7 @@
         <mapping class="com.storemanagement.entities.Facility"/>
         <mapping class="com.storemanagement.entities.Privilege"/>
         <mapping class="com.storemanagement.entities.Page"/>
+        <mapping class="com.storemanagement.entities.TransferHeader"/>
+        <mapping class="com.storemanagement.entities.TransferDetails"/>
     </session-factory>
 </hibernate-configuration>

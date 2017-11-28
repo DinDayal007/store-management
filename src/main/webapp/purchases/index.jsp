@@ -192,10 +192,10 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 				<hr />
 				<div class="row">
 					<div class="col-md-3 col-md-offset-9">
-						<div class="form-group form-inline">
+						<div class="form-group form-inline text-left">
 							<input type="hidden" name="action" value="save" />
 							<input type="submit" id="saveInvoiceBtn" class="btn btn-lg btn-primary" value="طباعة الفاتورة" />
-							<a href="purchases/invoices.jsp"><button class="btn btn-lg btn-default" type="button">خروج</button></a>
+							<a href="purchases/invoices.jsp"><button id="exitBtn" class="btn btn-lg btn-default" type="button">خروج</button></a>
 						</div>
 						</form>
 					</div>
@@ -301,13 +301,19 @@ $(document).ready(function(){
 	//modify price each time a change is happened to quantity
 	$(document).on('change keyup', '.itemQty', function(){
 		var max = $(this).data('max');
+		var price = $(this).closest('td').next().find('input').val();
 		var inventory = $(this).data('inventory');
 		var unitQty = $(this).closest('td').prev().find('input').val();
 		var qty = $(this).val();
-		var price = $(this).closest('td').next().find('input').val();
-		$(this).closest('td').next().next().find('input').val(qty * price * unitQty);
-		if(inventory + (unitQty * qty) > max){
-			alert("الكمية المختارة ستتخطى الحد الأقصى للصنف فى المخزن");
+		if(qty <= 0) {
+			alert("كمية الصنف يجب أن تكون أكبر من صفر");
+			$(this).val(1);
+			$(this).closest('td').next().next().find('input').val(price);
+		} else {
+			if(inventory + (unitQty * qty) > max){
+				alert("الكمية المختارة ستتخطى الحد الأقصى للصنف فى المخزن");
+			}
+			$(this).closest('td').next().next().find('input').val(qty * price * unitQty);
 		}
 		sumTotal();
 	});
@@ -466,24 +472,28 @@ $(document).ready(function(){
 // 		var discountType = $('#discountType').val();
 // 		var discount = $('#discount').val();
 // 		var tax = $('#tax').val();
-		$.ajax({
-			url : "/store-management-system/purchases",
-			method : "POST",
-			data : {
-				itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal, unitId : unitId,
-				inv_num : inv_num, inv_type : inv_type, supplier : supplier, itemPrice : itemPrice,
-				//inventory : inventory, cache : cache,
-				totalPrice : totalPrice, action : "save"
-			},
-			dataType : "text",
-			success : function(data){
-				if(data){
-					$('#saveInvoiceBtn').attr('disabled', 'disabled');
-					console.log("done");
-					window.location.replace('/store-management-system/reports?r=pi&id=' + inv_num);
-				}
-			}	
-		});
+		if(itemIds.length < 1) alert('يجب إضافة على الأقل صنف واحد للفاتورة');
+		else{
+			$.ajax({
+				url : "/store-management-system/purchases",
+				method : "POST",
+				data : {
+					itemIds : itemIds, itemQty : itemQty, itemTotal : itemTotal, unitId : unitId,
+					inv_num : inv_num, inv_type : inv_type, supplier : supplier, itemPrice : itemPrice,
+					//inventory : inventory, cache : cache,
+					totalPrice : totalPrice, action : "save"
+				},
+				dataType : "text",
+				success : function(data){
+					if(data){
+						$('#saveInvoiceBtn').attr('disabled', 'disabled');
+						$('#exitBtn').attr('disabled', 'disabled');
+						console.log("done");
+						window.location.replace('/store-management-system/reports?r=pi&id=' + inv_num);
+					}
+				}	
+			});
+		}
 	});
 })
 </script>

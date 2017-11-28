@@ -130,6 +130,25 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 					</tbody>
 				</table>	
 			</div>
+			<!-- /.table-responsive -->
+		</div>
+		
+		<div class="panel-footer">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group form-inline">
+						<label for="totalPrice">إجمالى المبلغ الذى سيتم تحويله</label>
+						<input type="number" style="width: 40%;" class="form-control" value="0" name="totalPrice" id="totalPrice" readonly />
+					</div>
+				</div>
+				<div class="col-md-3 col-md-offset-3 text-left">
+					<div class="form-group form-inline">
+						<input type="hidden" name="action" value="save" />
+						<input type="submit" id="saveTransferBtn" class="btn btn-primary" value="حفظ التحويل" />
+						<a href=""><button id="exitBtn" class="btn btn-default" type="button">خروج</button></a>
+					</div>
+				</div>
+			</div>
 		</div>
 		
 	</div>
@@ -218,7 +237,7 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 			'<td><input class="form-control itemTotal" value="' + itemPrice +'" type="number" name="itemTotal[]" min="1" disabled /></td>' +
 			'<td><button class="btn btn-danger btn-remove" name="remove" id="' + i + '"><i class="fa fa-close"></i></button></td>' +
 			'</tr>');
-			//sumTotal();
+			sumTotal();
 		}
 		
 		//remove item from invoice
@@ -226,6 +245,83 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 			var buttonId = $(this).attr('id');
 			$('#row' + buttonId).remove();
 			sumTotal();
+		});
+		
+		//sum total for the totalPrice and finalTotal
+		function sumTotal(){
+			var sum = 0;
+			$('.itemTotal').each(function(){
+				sum += parseFloat($(this).val());
+			});
+			$('#totalPrice').val(sum);
+		}
+		
+		//modify total price each time a change is happened to quantity
+		$(document).on('change keyup', '.itemQty', function(){
+			var price = $(this).closest('td').next().find('input').val();
+			var inventory = $(this).data('inventory');
+			var qty = $(this).val();
+			if(qty <= 0) {
+				alert("كمية الصنف يجب أن تكون أكبر من صفر");
+				$(this).val(1);
+				$(this).closest('td').next().next().find('input').val(price);
+			} else if(inventory - qty < 0) {
+				alert("كمية الصنف فى المخزن غير كافية");
+				$(this).val(1);
+				$(this).closest('td').next().next().find('input').val(price);
+			} else{
+				$(this).closest('td').next().next().find('input').val(qty * price);
+			}
+			sumTotal();
+		});
+		
+		//modify total price each time a change is happened to price
+		$(document).on('change keyup', '.itemPrice', function(){
+			var price = $(this).val();
+			var qty = $(this).closest('td').prev().find('input').val();
+			$(this).closest('td').next().find('input').val(qty * price);
+			sumTotal();
+		});
+		
+		//submit the values
+		$('#saveTransferBtn').click(function(){
+			//send transferHeader data
+			var inventoryFrom = $('#inventoryFrom').val();
+			var inventoryTo = $('#inventoryTo').val();
+			var cacheFrom = $('#cacheFrom').val();
+			var cacheTo = $('#cacheTo').val();
+			var totalPrice = $('#totalPrice').val();
+			//send transferDetails data
+			var itemIds = $('input.itemId[type=hidden]').map(function() {
+			       return $(this).val(); }).get().join();
+			var itemQty = $('input.itemQty[type=number]').map(function() {
+			       return $(this).val(); }).get().join();
+			var itemPrice = $('input.itemPrice[type=number]').map(function() {
+			       return $(this).val(); }).get().join();
+			var itemTotal = $('input.itemTotal[type=number]').map(function() {
+			       return $(this).val(); }).get().join();
+			if(itemIds.length < 1) alert('يجب إضافة على الأقل صنف واحد لتحويله');
+			else{
+				$.ajax({
+					url : "/store-management-system/transfer",
+					method : "POST",
+					data : {
+						inventoryFrom : inventoryFrom, inventoryTo : inventoryTo,
+						cacheFrom : cacheFrom, cacheTo : cacheTo, totalPrice : totalPrice,
+						itemIds : itemIds, itemQty : itemQty,
+						itemPrice : itemPrice, itemTotal : itemTotal, action : "save"
+					},
+					dataType : "text",
+					success : function(data){
+						if(data){
+							$('#saveTransferBtn').attr('disabled', 'disabled');
+							$('#exitBtn').attr('disabled', 'disabled');
+							console.log("done");
+							//window.location.replace('/store-management-system/reports?r=si&id=' + inv_num);
+						}
+					}
+				});
+			}
 		});
 	})
 </script>
