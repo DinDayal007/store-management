@@ -1,6 +1,7 @@
 package com.storemanagement.controllers;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,8 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Item;
 import com.storemanagement.entities.ItemBalance;
+import com.storemanagement.entities.TransferDetails;
+import com.storemanagement.entities.TransferHeader;
 import com.storemanagement.entities.Unit;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.InventoryService;
 import com.storemanagement.services.ItemService;
@@ -84,9 +89,51 @@ public class TransferController extends HttpServlet {
 	//get items from inventory
 	protected void saveTransfer(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(!request.getParameter("inventoryFrom").equals("")){
-			response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
+		if(!request.getParameter("inventoryFrom").equals("") && !request.getParameter("totalPrice").equals("")){
+			TransferHeader header = new TransferHeader();
+			
+			User createdBy = (User) request.getSession().getAttribute("user");
+			header.setCreatedBy(createdBy);
+			header.setCreatedDate(new Date());
+			header.setStatus(false);
+			
+			Inventory inventoryFrom = new Inventory();
+			inventoryFrom.setId(Integer.parseInt(request.getParameter("inventoryFrom")));
+			header.setInventoryFrom(inventoryFrom);
+			
+			Inventory inventoryTo = new Inventory();
+			inventoryTo.setId(Integer.parseInt(request.getParameter("inventoryTo")));
+			header.setInventoryTo(inventoryTo);
+			
+			Cache cacheFrom = new Cache();
+			cacheFrom.setId(Integer.parseInt(request.getParameter("cacheFrom")));
+			header.setCacheFrom(cacheFrom);
+			
+			Cache cacheTo = new Cache();
+			cacheTo.setId(Integer.parseInt(request.getParameter("cacheTo")));
+			header.setCacheTo(cacheTo);
+			
+			header.setTotalPrice(Double.parseDouble(request.getParameter("totalPrice")));
+
+			EntityService.addObject(header);
+			
+			String[] itemIds = request.getParameter("itemIds").split(",");
+			String[] itemQty = request.getParameter("itemQty").split(",");
+			String[] itemPrice = request.getParameter("itemPrice").split(",");
+			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			
+			for(int i = 0; i < itemIds.length; i++){
+				TransferDetails details = new TransferDetails();
+				details.setTransferHeader(header);
+				Item item = new Item();
+				item.setId(Integer.parseInt(itemIds[i]));
+				details.setItem(item);
+				details.setQty(Integer.parseInt(itemQty[i]));
+				details.setPrice(Double.parseDouble(itemPrice[i]));
+				details.setTotal(Double.parseDouble(itemTotal[i]));
+				EntityService.addObject(details);
+			}
+			
 			response.getWriter().print("saved!");
 		}
 	}

@@ -145,7 +145,7 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 					<div class="form-group form-inline">
 						<input type="hidden" name="action" value="save" />
 						<input type="submit" id="saveTransferBtn" class="btn btn-primary" value="حفظ التحويل" />
-						<a href=""><button id="exitBtn" class="btn btn-default" type="button">خروج</button></a>
+						<a href="" id="exitBtn"><button class="btn btn-default" type="button">خروج</button></a>
 					</div>
 				</div>
 			</div>
@@ -312,11 +312,13 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 						itemPrice : itemPrice, itemTotal : itemTotal, action : "save"
 					},
 					dataType : "text",
+					beforeSend : function(){
+						$('#saveTransferBtn').attr('disabled', 'disabled');
+						$('#exitBtn').addClass('hidden');
+					},
 					success : function(data){
 						if(data){
-							$('#saveTransferBtn').attr('disabled', 'disabled');
-							$('#exitBtn').attr('disabled', 'disabled');
-							console.log("done");
+							alert("done");
 							//window.location.replace('/store-management-system/reports?r=si&id=' + inv_num);
 						}
 					}

@@ -196,7 +196,7 @@ public class PurchasesController extends HttpServlet {
 						"        <th>مشاهدة</th></tr>" + 
 						"        </thead><tbody>");
 				if(purchaseInvoiceHeaders.size() == 0)
-					out.append("<tr><td colspan=\"8\"><p class=\"lead text-center text-danger\">عفوا لا يوجد فواتير بيع</p></td></tr>");
+					out.append("<tr><td colspan=\"8\"><p class=\"lead text-center text-danger\">عفوا لا يوجد فواتير شراء</p></td></tr>");
 				else{
 					for(PurchaseInvoiceHeader purchaseInvoiceHeader : purchaseInvoiceHeaders){
 						out.append("<tr><td>" + purchaseInvoiceHeader.getNumber() + "</td>");

@@ -219,7 +219,7 @@ long invNumber = InvoicesCounterUtil.getSalesInvoiceCounter();
 						<div class="form-group form-inline text-left">
 							<input type="hidden" name="action" value="save" />
 							<input type="submit" id="saveInvoiceBtn" class="btn btn-lg btn-primary" value="طباعة الفاتورة" />
-							<a href="sales/invoices.jsp"><button id="exitBtn" class="btn btn-lg btn-default" type="button">خروج</button></a>
+							<a href="sales/invoices.jsp" id="exitBtn"><button class="btn btn-lg btn-default" type="button">خروج</button></a>
 						</div>
 						</form>
 					</div>
@@ -529,10 +529,12 @@ $(document).ready(function(){
 					action : "save"
 				},
 				dataType : "text",
+				beforeSend : function(){
+					$('#saveInvoiceBtn').attr('disabled', 'disabled');
+					$('#exitBtn').addClass('hidden');
+				},
 				success : function(data){
 					if(data){
-						$('#saveInvoiceBtn').attr('disabled', 'disabled');
-						$('#exitBtn').attr('disabled', 'disabled');
 						console.log("done");
 						window.location.replace('/store-management-system/reports?r=si&id=' + inv_num);
 					}

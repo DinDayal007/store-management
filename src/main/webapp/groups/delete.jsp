@@ -8,11 +8,12 @@
 <%
 List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
 if(!privileges.get(7).isDelete()) response.sendRedirect("/store-management-system/error");
-int id = Integer.parseInt(request.getParameter("id"));
-MainGroup mainGroup = new MainGroup();
-mainGroup.setId(id);
-List<SubGroup> subGroups = GroupService.getSubGroupsFromMainGroup(mainGroup);
-if(subGroups.size() > 0) response.sendRedirect("/store-management-system/groups/delete-error.jsp");
+else{
+	int id = Integer.parseInt(request.getParameter("id"));
+	MainGroup mainGroup = new MainGroup();
+	mainGroup.setId(id);
+	List<SubGroup> subGroups = GroupService.getSubGroupsFromMainGroup(mainGroup);
+	if(subGroups.size() > 0) response.sendRedirect("/store-management-system/groups/delete-error.jsp");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,3 +69,5 @@ if(subGroups.size() > 0) response.sendRedirect("/store-management-system/groups/
 </body>
 
 </html>
+
+<% } %>

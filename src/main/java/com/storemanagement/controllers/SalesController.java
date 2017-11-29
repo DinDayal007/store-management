@@ -283,7 +283,6 @@ public class SalesController extends HttpServlet {
 				salesInvoiceDetails.setSalesInvoiceHeader(salesInvoiceHeader);
 				Item item = new Item();
 				item.setId(Integer.parseInt(itemIds[i]));
-				System.out.println(item.getId());
 				Unit unit = new Unit();
 				unit.setId(Integer.parseInt(unitIds[i]));
 				salesInvoiceDetails.setItem(item);
