@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.ItemBalance;
@@ -121,6 +122,32 @@ public class TransferController extends HttpServlet {
 			String[] itemQty = request.getParameter("itemQty").split(",");
 			String[] itemPrice = request.getParameter("itemPrice").split(",");
 			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			
+			CacheMovement cacheMovementFrom = new CacheMovement();
+			cacheMovementFrom.setUser(createdBy);
+			cacheMovementFrom.setInventory(inventoryFrom);
+			cacheMovementFrom.setCache(cacheFrom);
+			cacheMovementFrom.setClient(null);
+			cacheMovementFrom.setSupplier(null);
+			cacheMovementFrom.setDate(new Date());
+			cacheMovementFrom.setType(0);
+			cacheMovementFrom.setDescription("سحب أصناف");
+			cacheMovementFrom.setAmount(header.getTotalPrice() * -1);
+			cacheMovementFrom.setRefNumber(0);
+			EntityService.addObject(cacheMovementFrom);
+			
+			CacheMovement cacheMovementTo = new CacheMovement();
+			cacheMovementTo.setUser(createdBy);
+			cacheMovementTo.setInventory(inventoryTo);
+			cacheMovementTo.setCache(cacheTo);
+			cacheMovementTo.setClient(null);
+			cacheMovementTo.setSupplier(null);
+			cacheMovementTo.setDate(new Date());
+			cacheMovementTo.setType(1);
+			cacheMovementTo.setDescription("إيداع أصناف");
+			cacheMovementTo.setAmount(header.getTotalPrice());
+			cacheMovementTo.setRefNumber(0);
+			EntityService.addObject(cacheMovementTo);
 			
 			for(int i = 0; i < itemIds.length; i++){
 				TransferDetails details = new TransferDetails();
