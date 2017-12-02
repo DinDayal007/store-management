@@ -458,6 +458,39 @@ public class ReportsUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	//show transfer items report
+	public void showTransferItemsReport(HttpServletRequest request, HttpServletResponse response, int transferId) throws IOException{
+		Facility facility = (Facility) request.getSession().getAttribute("facility");
+		//put facility information
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("facilityName", facility.getName());
+		parameters.put("facilityLocation", facility.getGovernorate() + " - " + facility.getCity());
+		parameters.put("facilityAddress", facility.getAddress());
+		parameters.put("facilityPhone", facility.getPhone());
+		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
+		parameters.put("facilityInfo", facility.getMoreInfo());
+		//put the transfer id
+		parameters.put("id", transferId);
+		ClassLoader classLoader = getClass().getClassLoader();
+		File file = new File(classLoader.getResource("reports/TransferItems.jrxml").getFile());
+		InputStream inputStream = new FileInputStream(file);
+		try {
+			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
+			response.setCharacterEncoding("UTF-8");
+			response.setHeader("contentType", "application/pdf");
+			response.addHeader("Content-disposition", "filename=Transfer items report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Transfer items report.pdf");
+			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+		} catch (JRException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	//show item quantities report
 	public void showItemQuantitiesReport(HttpServletRequest request, HttpServletResponse response, String data) throws IOException{
 		String fileName = "";

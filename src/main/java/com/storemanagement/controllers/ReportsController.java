@@ -162,6 +162,10 @@ public class ReportsController extends HttpServlet {
 		}else if(request.getParameter("r").equals("im")){
 			int itemId = Integer.parseInt(request.getParameter("item"));
 			reportsUtil.showItemMovementReport(request, response, itemId);
+		}else if(request.getParameter("r").equals("ti")){
+			//transfer items report
+			int transferId = Integer.parseInt(request.getParameter("id"));
+			reportsUtil.showTransferItemsReport(request, response, transferId);
 		}else if(request.getParameter("r").equals("profit")){
 			try{
 				Date from = null, to = null;

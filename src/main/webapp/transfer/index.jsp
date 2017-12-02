@@ -318,8 +318,8 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 					},
 					success : function(data){
 						if(data){
-							alert("done");
-							//window.location.replace('/store-management-system/reports?r=si&id=' + inv_num);
+							console.log("done: " + data);
+							window.location.replace('/store-management-system/reports?r=ti&id=' + data);
 						}
 					}
 				});

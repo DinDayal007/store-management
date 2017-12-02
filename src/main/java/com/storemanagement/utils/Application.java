@@ -37,24 +37,24 @@ import com.storemanagement.services.ItemService;
 public class Application {
 	public static void main(String[] args) throws DocumentException, IOException {
 			
-		Document document = new Document(new Rectangle(PageSize.A4));
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/home/mohammed/Desktop/test.pdf"));
-		document.open();
-		BaseFont baseFont = BaseFont.createFont("src/main/resources/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-		Font font = new Font(baseFont);
+//		Document document = new Document(new Rectangle(PageSize.A4));
+//		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/home/mohammed/Desktop/test.pdf"));
+//		document.open();
+//		BaseFont baseFont = BaseFont.createFont("src/main/resources/fonts/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//		Font font = new Font(baseFont);
+//		
+//		document.add(new Paragraph(new Phrase("طباعة الباركود", font)));
+//		Barcode128 barcode128 = new Barcode128();
+//		barcode128.setGenerateChecksum(true);
+//		for(int i = 0; i < 20; i++){
+//			barcode128.setCode("12346579813");
+//			document.add(barcode128.createImageWithBarcode(writer.getDirectContent(), null, null));
+//		}
+//		document.close();
+//		System.out.println("Document Generated");
 		
-		document.add(new Paragraph(new Phrase("طباعة الباركود", font)));
-		Barcode128 barcode128 = new Barcode128();
-		barcode128.setGenerateChecksum(true);
-		for(int i = 0; i < 20; i++){
-			barcode128.setCode("12346579813");
-			document.add(barcode128.createImageWithBarcode(writer.getDirectContent(), null, null));
-		}
-		document.close();
-		System.out.println("Document Generated");
-		
-//		String[] names = {"متابعة فواتير البيع", "متابعة فواتير مرتجع البيع", "فاتورة شراء جديدة", "متابعة فواتير الشراء", "متابعة فواتير مرتجع الشراء", "الأصناف", "جرد الأصناف", "مجموعات الأصناف الرئيسية", "مجموعات الأصناف الفرعية", "وحدات الأصناف", "الموردين", "العملاء", "الخزائن", "حركة الخزنة", "كشف حساب حركة الخزنة", "كشف مديونيات العملاء", "تقرير هامش الربح", "الفروع", "المخازن", "المستخدمين", "لوحة التحكم", "التقارير"};
-//		String[] urls = {"sales/invoices.jsp", "sales/return-invoices.jsp", "purchases", "purchases/invoices.jsp", "purchases/return-invoices.jsp", "items", "item-balance", "groups", "subgroups", "units", "suppliers", "clients", "caches", "cache-movements", "cache-sum", "debits", "profit", "branches", "inventories", "users", "settings", "reports"};
+//		String[] names = {"متابعة فواتير البيع", "متابعة فواتير مرتجع البيع", "فاتورة شراء جديدة", "متابعة فواتير الشراء", "متابعة فواتير مرتجع الشراء", "الأصناف", "جرد الأصناف", "مجموعات الأصناف الرئيسية", "مجموعات الأصناف الفرعية", "وحدات الأصناف", "الموردين", "العملاء", "الخزائن", "حركة الخزنة", "كشف حساب حركة الخزنة", "كشف مديونيات العملاء", "تقرير هامش الربح", "الفروع", "المخازن", "المستخدمين", "لوحة التحكم", "التقارير", "التحويلات بين المخازن"};
+//		String[] urls = {"sales/invoices.jsp", "sales/return-invoices.jsp", "purchases", "purchases/invoices.jsp", "purchases/return-invoices.jsp", "items", "item-balance", "groups", "subgroups", "units", "suppliers", "clients", "caches", "cache-movements", "cache-sum", "debits", "profit", "branches", "inventories", "users", "settings", "reports", "transfer"};
 //		for(int i = names.length - 1; i >= 0; i--){
 //			Page page = new Page();
 //			page.setName(names[i]);

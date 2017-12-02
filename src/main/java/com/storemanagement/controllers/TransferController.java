@@ -13,6 +13,7 @@ import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.ItemBalance;
+import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.TransferDetails;
 import com.storemanagement.entities.TransferHeader;
 import com.storemanagement.entities.Unit;
@@ -26,14 +27,18 @@ public class TransferController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Branch>branchs = EntityService.getAllObjects(Branch.class);
-		List<Unit> units = EntityService.getObjectsWithOrder(Unit.class, "id", "asc");
-		List<Cache> caches = EntityService.getAllObjects(Cache.class); 
-		request.setAttribute("branchs", branchs);
-		request.setAttribute("units", units);
-		request.setAttribute("caches", caches);
-		request.setAttribute("title", "التحويلات بين المخازن");
-		request.getRequestDispatcher("transfer/index.jsp").forward(request, response);
+		List<Privilege> privileges = (List<Privilege>) request.getSession().getAttribute("privileges");
+		if(!privileges.get(22).isView()) response.sendRedirect("error");
+		else{
+			List<Branch>branchs = EntityService.getAllObjects(Branch.class);
+			List<Unit> units = EntityService.getObjectsWithOrder(Unit.class, "id", "asc");
+			List<Cache> caches = EntityService.getAllObjects(Cache.class); 
+			request.setAttribute("branchs", branchs);
+			request.setAttribute("units", units);
+			request.setAttribute("caches", caches);
+			request.setAttribute("title", "التحويلات بين المخازن");
+			request.getRequestDispatcher("transfer/index.jsp").forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -116,12 +121,15 @@ public class TransferController extends HttpServlet {
 			
 			header.setTotalPrice(Double.parseDouble(request.getParameter("totalPrice")));
 
-			EntityService.addObject(header);
+			int transferId = EntityService.addObject(header);
 			
-			String[] itemIds = request.getParameter("itemIds").split(",");
-			String[] itemQty = request.getParameter("itemQty").split(",");
-			String[] itemPrice = request.getParameter("itemPrice").split(",");
-			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			cacheFrom = (Cache) EntityService.getObject(Cache.class, cacheFrom.getId());
+			cacheFrom.setQty(cacheFrom.getQty() - header.getTotalPrice());
+			EntityService.updateObject(cacheFrom);
+			
+			cacheTo = (Cache) EntityService.getObject(Cache.class, cacheTo.getId());
+			cacheTo.setQty(cacheTo.getQty() + header.getTotalPrice());
+			EntityService.updateObject(cacheTo);
 			
 			CacheMovement cacheMovementFrom = new CacheMovement();
 			cacheMovementFrom.setUser(createdBy);
@@ -149,6 +157,11 @@ public class TransferController extends HttpServlet {
 			cacheMovementTo.setRefNumber(0);
 			EntityService.addObject(cacheMovementTo);
 			
+			String[] itemIds = request.getParameter("itemIds").split(",");
+			String[] itemQty = request.getParameter("itemQty").split(",");
+			String[] itemPrice = request.getParameter("itemPrice").split(",");
+			String[] itemTotal = request.getParameter("itemTotal").split(",");
+			
 			for(int i = 0; i < itemIds.length; i++){
 				TransferDetails details = new TransferDetails();
 				details.setTransferHeader(header);
@@ -161,7 +174,7 @@ public class TransferController extends HttpServlet {
 				EntityService.addObject(details);
 			}
 			
-			response.getWriter().print("saved!");
+			response.getWriter().print(transferId);
 		}
 	}
 
