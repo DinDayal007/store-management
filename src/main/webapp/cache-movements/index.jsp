@@ -62,6 +62,8 @@
                                             		if(client == null) out.print("عميل نقدى");
                                             		else out.print(client.getName());
                                             	}
+                                            }else if(type == 10){
+                                            	typeValue = "مصروفات";
                                             }else{
                                             	typeValue = "ايداع";
                                             	if(type == 1 || type == 5) out.print("");

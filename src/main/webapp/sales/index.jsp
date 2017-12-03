@@ -535,8 +535,8 @@ $(document).ready(function(){
 				},
 				success : function(data){
 					if(data){
-						console.log("done");
-						window.location.replace('/store-management-system/reports?r=si&id=' + inv_num);
+						console.log(data);
+						window.location.replace('/store-management-system/reports?r=si&id=' + data);
 					}
 				}	
 			});

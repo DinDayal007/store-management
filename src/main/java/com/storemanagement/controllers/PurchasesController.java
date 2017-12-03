@@ -254,7 +254,7 @@ public class PurchasesController extends HttpServlet {
 				cache.setQty(cache.getQty() - purchaseInvoiceHeader.getTotal());
 			else cache.setQty(cache.getQty() + purchaseInvoiceHeader.getTotal());
 			EntityService.updateObject(cache);
-			EntityService.addObject(purchaseInvoiceHeader);
+			int invoiceId = EntityService.addObject(purchaseInvoiceHeader);
 			//add new cache movement from the purchase invoice
 			CacheMovement cacheMovement = new CacheMovement();
 			if(purchaseInvoiceHeader.getType() == 0)
@@ -292,7 +292,7 @@ public class PurchasesController extends HttpServlet {
 				purchaseInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
 				EntityService.addObject(purchaseInvoiceDetails);
 			}
-			response.getWriter().print("saved!");
+			response.getWriter().print(invoiceId);
 		}
 	}
 }

@@ -254,7 +254,7 @@ public class SalesController extends HttpServlet {
 				cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
 			else cache.setQty(cache.getQty() - salesInvoiceHeader.getPaid());
 			EntityService.updateObject(cache);
-			EntityService.addObject(salesInvoiceHeader);
+			int invoiceId = EntityService.addObject(salesInvoiceHeader);
 			//add new cache movement from the sales invoice
 			CacheMovement cacheMovement = new CacheMovement();
 			if(salesInvoiceHeader.getType() == 0)
@@ -292,7 +292,7 @@ public class SalesController extends HttpServlet {
 				salesInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
 				EntityService.addObject(salesInvoiceDetails);
 			}
-			response.getWriter().print("saved!");
+			response.getWriter().print(invoiceId);
 		}
 	}
 }

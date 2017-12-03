@@ -51,13 +51,14 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
                                     	<option value="">اختر نوع الحركة</option>
                                     	<option value="0">سحب</option>
                                     	<option value="1">إيداع</option>
+                                    	<option value="10">مصروفات</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                 	<label for="movement_refNum">رقم الحركة</label>
                                     <input class="form-control" placeholder="رقم الحركة" name="movement_refNum" type="number" id="movement_refNum" required>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="client">
                                 	<label for="movement_client">العميل</label>
                                     <select class="form-control" name="movement_client" id="movement_client">
                                     	<option value="">اختر العميل</option>
@@ -66,7 +67,7 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
                                     	<% } %>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="supplier">
                                 	<label for="movement_supplier">المورد</label>
                                     <select class="form-control" name="movement_supplier" id="movement_supplier">
                                     	<option value="">اختر المورد</option>
@@ -101,6 +102,20 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
     <script src="../js/bootstrap.min.js"></script>
     <script>
     	$(document).ready(function(){
+    		$('#movement_type').change(function(){
+    			var type = $(this).val();
+    			if(type == 0){
+    				$('#client').addClass('hidden');
+    				$('#supplier').removeClass('hidden');
+    			}else if(type == 1){
+    				$('#client').removeClass('hidden');
+    				$('#supplier').addClass('hidden');
+    			}else if(type == 10){
+    				$('#client').addClass('hidden');
+    				$('#supplier').addClass('hidden');
+    			}
+    		});
+    		//submit the form
     		$('#saveMovement').submit(function(e){
     			e.preventDefault();
     			$.ajax({
@@ -108,7 +123,7 @@ List<Supplier> suppliers = EntityService.getAllObjects(Supplier.class);
     				method : "POST",
     				data : $(this).serialize(),
     				beforeSend : function(){
-    					$('#submitData').addClass("hidden");
+    					$('#submitData').attr("disabled", "disabled");
     				},
     				success : function(data){
     					if(data){

@@ -207,7 +207,10 @@ public class ReportsUtil {
             		if(client == null) map.put("client", "عميل نقدى");
             		else map.put("client", client.getName());
             	}
-            }else{
+            }else if(type == 10) {
+            	map.put("type", "مصروفات");
+            }
+			else{
             	map.put("type", "إيداع");
             	if(type == 1 || type == 5) map.put("client", "");
             	else {
@@ -372,7 +375,11 @@ public class ReportsUtil {
 		map.put("number", cacheMovement.getRefNumber());
 		map.put("supplier", cacheMovement.getSupplier() == null ? "" : cacheMovement.getSupplier().getName());
 		map.put("date", cacheMovement.getDate());
-		map.put("type", cacheMovement.getType() == 0 ? "إيصال سحب نقدية" : "إيصال إيداع نقدية");
+		if(cacheMovement.getType() == 0)
+			map.put("type", "إيصال سحب نقدية");
+		else if(cacheMovement.getType() == 10)
+			map.put("type", "إيصال مصروفات");
+		else map.put("type", "إيصال إيداع نقدية");
 		map.put("description", cacheMovement.getDescription());
 		map.put("total", cacheMovement.getAmount());
 		ds.add(map);

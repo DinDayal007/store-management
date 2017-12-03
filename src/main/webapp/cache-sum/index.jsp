@@ -70,6 +70,7 @@ List<Supplier> suppliers = (List<Supplier>) request.getAttribute("suppliers");
 	                        				<option value="2">فاتورة شراء</option>
 	                        				<option value="3">فاتورة مرتجع بيع</option>
 	                        				<option value="5">فاتورة مرتجع شراء</option>
+	                        				<option value="10">مصروفات</option>
 	                        			</select>
 	                        			<label for="supplier">إختر المورد</label>
 	                        			<select class="form-control" name="supplier" id="supplier">

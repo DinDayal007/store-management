@@ -45,7 +45,7 @@ public class CacheMovementController extends HttpServlet {
 			int type = Integer.parseInt(request.getParameter("movement_type"));
 			cacheMovement.setType(type);
 			double amount = Double.parseDouble(request.getParameter("movement_amount"));
-			cacheMovement.setAmount(type == 0 ? amount * -1 : amount);
+			cacheMovement.setAmount(type == 1 ? amount : amount * -1);
 			cacheMovement.setDescription(request.getParameter("movement_description"));
 			cacheMovement.setDate(new Date());
 			cacheMovement.setRefNumber(Long.parseLong(request.getParameter("movement_refNum")));
