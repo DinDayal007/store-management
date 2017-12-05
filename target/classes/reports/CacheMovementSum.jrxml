@@ -110,7 +110,7 @@
 					<textFieldExpression><![CDATA[$P{facilityInfo}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="200" y="41" width="195" height="30" uuid="9f93388c-93a8-4d14-a767-07d42971fc6d"/>
+					<reportElement x="200" y="41" width="195" height="45" uuid="9f93388c-93a8-4d14-a767-07d42971fc6d"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Ariel" size="18"/>
 					</textElement>
