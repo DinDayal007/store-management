@@ -472,7 +472,8 @@ $(document).ready(function(){
 // 		var discountType = $('#discountType').val();
 // 		var discount = $('#discount').val();
 // 		var tax = $('#tax').val();
-		if(itemIds.length < 1) alert('يجب إضافة على الأقل صنف واحد للفاتورة');
+		if(supplier == '') alert('يجب إختيار المورد');
+		else if(itemIds.length < 1) alert('يجب إضافة على الأقل صنف واحد للفاتورة');
 		else{
 			$.ajax({
 				url : "/store-management-system/purchases",
