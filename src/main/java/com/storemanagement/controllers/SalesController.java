@@ -16,6 +16,7 @@ import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.ItemBalance;
 import com.storemanagement.entities.MainGroup;
+import com.storemanagement.entities.Profit;
 import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.SubGroup;
@@ -122,6 +123,7 @@ public class SalesController extends HttpServlet {
 				jsonObject.put("itemPrice", itemBalance.getItemSalePrice());
 				jsonObject.put("itemQty", itemBalance.getItemQty());
 				jsonObject.put("itemMin", itemBalance.getItemMin());
+				jsonObject.put("itemPurchasePrice", itemBalance.getItemPurchasePrice());
 				response.getWriter().print(jsonObject.toString());
 			}
 		}
@@ -142,6 +144,7 @@ public class SalesController extends HttpServlet {
 				jsonObject.put("itemPrice", itemBalance.getItemSalePrice());
 				jsonObject.put("itemQty", itemBalance.getItemQty());
 				jsonObject.put("itemMin", itemBalance.getItemMin());
+				jsonObject.put("itemPurchasePrice", itemBalance.getItemPurchasePrice());
 				response.getWriter().print(jsonObject.toString());
 			}
 		}
@@ -254,6 +257,7 @@ public class SalesController extends HttpServlet {
 				cache.setQty(cache.getQty() + salesInvoiceHeader.getPaid());
 			else cache.setQty(cache.getQty() - salesInvoiceHeader.getPaid());
 			EntityService.updateObject(cache);
+			//save the invoice
 			int invoiceId = EntityService.addObject(salesInvoiceHeader);
 			//add new cache movement from the sales invoice
 			CacheMovement cacheMovement = new CacheMovement();
@@ -278,6 +282,7 @@ public class SalesController extends HttpServlet {
 			String[] itemPrice = request.getParameter("itemPrice").split(",");
 			String[] itemTotal = request.getParameter("itemTotal").split(",");
 			String[] unitIds = request.getParameter("unitId").split(",");
+			String[] itemPurchasePrices = request.getParameter("itemPurchasePrices").split(",");
 			for(int i = 0; i < itemIds.length; i++) {
 				SalesInvoiceDetails salesInvoiceDetails = new SalesInvoiceDetails();
 				salesInvoiceDetails.setSalesInvoiceHeader(salesInvoiceHeader);
@@ -291,6 +296,16 @@ public class SalesController extends HttpServlet {
 				salesInvoiceDetails.setPrice(Double.parseDouble(itemPrice[i]));
 				salesInvoiceDetails.setTotal(Double.parseDouble(itemTotal[i]));
 				EntityService.addObject(salesInvoiceDetails);
+				
+				//add the profit record
+				Profit profit = new Profit();
+				profit.setSalesInvoiceHeader(salesInvoiceHeader);
+				profit.setItem(item);
+				profit.setQty(Integer.parseInt(itemQty[i]));
+				profit.setPrice(Double.parseDouble(itemPrice[i]));
+				double profitMargin = (profit.getPrice() - Double.parseDouble(itemPurchasePrices[i])) * profit.getQty();
+				profit.setProfit(profitMargin);
+				EntityService.addObject(profit);
 			}
 			response.getWriter().print(invoiceId);
 		}

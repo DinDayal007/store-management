@@ -15,6 +15,7 @@ import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Facility;
+import com.storemanagement.entities.Profit;
 import com.storemanagement.entities.PurchaseInvoiceHeader;
 import com.storemanagement.entities.SalesInvoiceHeader;
 import com.storemanagement.entities.Supplier;
@@ -531,7 +532,8 @@ public class ReportsUtil {
 		}
 	}
 	//show profit margin report
-	public void showProfitReport(HttpServletRequest request, HttpServletResponse response, Date from, Date to) throws IOException{
+	public void showProfitReport(HttpServletRequest request, HttpServletResponse response, List<Profit> profits) throws IOException{
+		List<Map<String, ?>> ds = new ArrayList<>();
 		Facility facility = (Facility) request.getSession().getAttribute("facility");
 		//put facility information
 		Map<String, Object> parameters = new HashMap<>();
@@ -541,19 +543,30 @@ public class ReportsUtil {
 		parameters.put("facilityPhone", facility.getPhone());
 		parameters.put("facilityMobiles", facility.getMobile1() + " / " + facility.getMobile2());
 		parameters.put("facilityInfo", facility.getMoreInfo());
-		//put the date from and date to
-		parameters.put("from", from);
-		parameters.put("to", to);
+		//put profits data
+		for(Profit profit : profits){
+			Map<String, Object> map = new HashMap<>();
+			map.put("invNumber", profit.getSalesInvoiceHeader().getNumber());
+			map.put("invDate", profit.getSalesInvoiceHeader().getDate());
+			map.put("itemCode", profit.getItem().getCode());
+			map.put("itemName", profit.getItem().getName());
+			map.put("itemPurchasePrice", profit.getItem().getPurchasePrice());
+			map.put("price", profit.getPrice());
+			map.put("qty", profit.getQty());
+			map.put("profit", profit.getProfit());
+			ds.add(map);
+		}
+		JRDataSource dataSource = new JRBeanCollectionDataSource(ds);
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("reports/Profit.jrxml").getFile());
+		File file = new File(classLoader.getResource("reports/ProfitMargin.jrxml").getFile());
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, JDBCUtil.getCon());
+			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 			response.setCharacterEncoding("UTF-8");
 			response.setHeader("contentType", "application/pdf");
 			response.addHeader("Content-disposition", "filename=Profit margin report.pdf");
-			//response.addHeader("Content-disposition", "attachement; filename=Item balance report.pdf");
+			//response.addHeader("Content-disposition", "attachement; filename=Profit margin report.pdf");
 			JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());
 			response.getOutputStream().flush();
 			response.getOutputStream().close();

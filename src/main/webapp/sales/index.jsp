@@ -252,7 +252,7 @@ $(document).ready(function(){
 				success : function(data){
 					if(data){
 						if(unitQuantity <= data.itemQty)
-							addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMin, unit, unitQuantity);
+							addRows(data.itemId, data.itemCode, data.itemName, data.itemPrice, data.itemQty, data.itemMin, unit, unitQuantity, data.itemPurchasePrice);
 						else alert("هذه الكمية غير متوفرة فى المخزن لهذا الصنف");
 					}else alert('لا توجد فواتير شراء لهذا الصنف');
 				}
@@ -269,9 +269,10 @@ $(document).ready(function(){
 	});
 	
 	//add new items to the invoice if the request is success
-	function addRows(id, code, name, price, itemQty, itemMin, unit, unitQuantity){
+	function addRows(id, code, name, price, itemQty, itemMin, unit, unitQuantity, itemPurchasePrice){
 		i++;
 		$('#item-rows').append('<tr id="row' + i + '">' + 
+		'<input type="hidden" class="itemPurchasePrice" name="itemPurchasePrice[]" value = "' + itemPurchasePrice + '"/>' +
 		'<input type="hidden" class="itemId" name="itemId[]" value = "' + id + '"/>' +
 		'<input type="hidden" class="unitId" name="unitId[]" value = "' + unit + '"/>' +
 		'<td><input class="form-control" value="' + code + '" type="text" name="item_code[]" disabled /></td>' +
@@ -291,6 +292,7 @@ $(document).ready(function(){
 	function addRowsBarCode(unit, unitQuantity){
 		i++;
 		$('#item-rows').append('<tr id="row' + i + '">' + 
+		'<input type="hidden" class="itemPurchasePrice" name = "itemPurchasePrice[]"' +
 		'<input type="hidden" class="itemId" name="itemId[]" />' +
 		'<input type="hidden" class="unitId" name="unitId[]" value = "' + unit + '"/>' +
 		'<td><input class="form-control itemBarCode" type="number" name="item_code[]" autofocus /></td>' +
@@ -458,6 +460,7 @@ $(document).ready(function(){
 						if(data){
 							if(data.itemQty <= 0) alert("كمية الصنف فى المخزن غير كافية");
 							else{
+								$(item).parents('tr').find('input.itemPurchasePrice[type=hidden]').val(data.itemPurchasePrice);
 								$(item).parents('tr').find('input.itemId[type=hidden]').val(data.itemId);
 								$(item).closest('td').next().find('input').val(data.itemName);
 								$(item).closest('td').next().next().find('input').val(data.itemQty);
@@ -487,6 +490,8 @@ $(document).ready(function(){
 	//submit the form
 	$('#saveInvoiceForm').on('submit', function(e){
 		e.preventDefault();
+		var itemPurchasePrices = $('input.itemPurchasePrice[type=hidden]').map(function() {
+		       return $(this).val(); }).get().join();
 		var itemIds = $('input.itemId[type=hidden]').map(function() {
 		       return $(this).val(); }).get().join();
 		var itemQty = $('input.itemQty[type=number]').map(function() {
@@ -524,12 +529,13 @@ $(document).ready(function(){
 					inv_num : inv_num, inv_type :inv_type, paid : paid, itemPrice : itemPrice,
 					remain : remain, finalTotal : finalTotal, client : client,
 					//inventory : inventory, cache : cache,
-					totalPrice :totalPrice,
+					totalPrice :totalPrice, itemPurchasePrices : itemPurchasePrices,
 					discountType : discountType, discount : discount, tax : tax,
 					action : "save"
 				},
 				dataType : "text",
 				beforeSend : function(){
+					$('#saveInvoiceBtn').val('جار الطباعة');
 					$('#saveInvoiceBtn').attr('disabled', 'disabled');
 					$('#exitBtn').addClass('hidden');
 				},

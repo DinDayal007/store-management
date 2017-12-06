@@ -48,5 +48,6 @@
         <mapping class="com.storemanagement.entities.Page"/>
         <mapping class="com.storemanagement.entities.TransferHeader"/>
         <mapping class="com.storemanagement.entities.TransferDetails"/>
+        <mapping class="com.storemanagement.entities.Profit"/>
     </session-factory>
 </hibernate-configuration>

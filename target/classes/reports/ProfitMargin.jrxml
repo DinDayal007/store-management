@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Profit" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f03a15c9-32b4-42fa-9cbe-a8e241e5fa70">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="details" mode="Opaque" forecolor="#162387" backcolor="#FFFFFF" hTextAlign="Center" vTextAlign="Middle" fontName="Ariel" fontSize="10"/>
+	<parameter name="facilityName" class="java.lang.String"/>
+	<parameter name="facilityLocation" class="java.lang.String"/>
+	<parameter name="facilityAddress" class="java.lang.String"/>
+	<parameter name="facilityPhone" class="java.lang.String"/>
+	<parameter name="facilityMobiles" class="java.lang.String"/>
+	<parameter name="facilityInfo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="profit" class="java.lang.Double"/>
+	<field name="price" class="java.lang.Double"/>
+	<field name="itemPurchasePrice" class="java.lang.Double"/>
+	<field name="qty" class="java.lang.Integer"/>
+	<field name="itemCode" class="java.lang.String"/>
+	<field name="itemName" class="java.lang.String"/>
+	<field name="invDate" class="java.sql.Timestamp"/>
+	<field name="invNumber" class="java.lang.Long"/>
+	<variable name="sumTotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{profit}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group3">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="Group4">
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#FFFFFF" uuid="ef85268f-b9cb-4451-b63e-650158bad9b5"/>
+				<staticText>
+					<reportElement x="200" y="43" width="192" height="43" forecolor="#0F0F0F" uuid="c0e702e4-2215-4956-9c7a-93dff111a59f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Ariel" size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[هامش الربح]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="395" y="13" width="180" height="19" uuid="22c69888-f103-44c5-95b5-be0ce2aa712a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityName}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="395" y="35" width="180" height="19" uuid="4dfe1777-1d38-4ed6-ba80-3ef47195efd9"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityLocation}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="395" y="57" width="180" height="29" uuid="fe9556e7-3540-408c-812f-d98865de10d1">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Top">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityAddress}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="13" width="180" height="19" uuid="a84f909a-91c7-454a-a706-1f47a09aca6c"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityPhone}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="35" width="180" height="19" uuid="a900f406-c553-4706-a87c-6cf3a9499572"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityMobiles}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="57" width="180" height="29" uuid="b332a5ae-5e07-4377-b8fb-39480094f4dd"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="Ariel" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{facilityInfo}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="89" width="595" height="1" uuid="70730eef-cd81-40e3-8720-2b24a028a5aa">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+				</line>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement mode="Opaque" x="466" y="0" width="64" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="9c3ae09c-72fe-4772-837e-b48f5b9de016"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[رقم الفاتورة]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="395" y="0" width="71" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e9f6678d-4d0a-4ae7-a11f-2d07dc56a1d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[التاريخ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="310" y="0" width="85" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="16292a14-1774-4325-ac1c-631ef38ac48c">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[اسم الصنف]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="234" y="0" width="76" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="39c7ea22-d773-4b6b-85ea-60f6e28b930e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[كود الصنف]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="50" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e3f908d5-8f79-40a4-98a9-c79d4cac6fb0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الربح]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="530" y="0" width="25" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="dfd94307-f64a-4583-8f5d-0e20c7a0b7c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[#]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="107" y="0" width="71" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="8a32f060-d8b2-43e9-9dac-016351a00d26"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[سعر الشراء]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="50" y="0" width="57" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="2cffa9cf-e98c-41d5-a4dc-3a4d4c7888d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[سعر البيع]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="178" y="0" width="56" height="25" forecolor="#2C1780" backcolor="#E6E6E6" uuid="9d8c7d64-dd76-415f-a77d-7f725d15fe62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[الكمية]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<line>
+				<reportElement x="0" y="32" width="554" height="1" uuid="e45a875a-dc54-440b-964e-5fba6e54444d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField>
+				<reportElement x="530" y="1" width="24" height="30" forecolor="#162387" uuid="84439585-6f8c-48ba-8085-d030b22208c4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="0" y="2" width="50" height="30" uuid="0ee69f69-2198-4854-9c68-9473213d37a8"/>
+				<textFieldExpression><![CDATA[$F{profit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="50" y="2" width="57" height="30" uuid="7d712c8e-f46d-4e8f-9bc6-3dbc7dac1c39"/>
+				<textFieldExpression><![CDATA[$F{price}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="107" y="2" width="73" height="30" uuid="c42691f7-bbc4-4770-93c9-5fb43ebb017b"/>
+				<textFieldExpression><![CDATA[$F{itemPurchasePrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="180" y="2" width="54" height="30" uuid="26722eb2-a87d-4ca6-87c7-41473abd7da8"/>
+				<textFieldExpression><![CDATA[$F{qty}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="234" y="2" width="76" height="30" uuid="d527b7bf-d750-48c5-b825-e738970a0cad"/>
+				<textFieldExpression><![CDATA[$F{itemCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="310" y="2" width="85" height="30" uuid="edfd3f27-53f3-4053-a5f2-53ca7d070f56"/>
+				<textFieldExpression><![CDATA[$F{itemName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="395" y="2" width="71" height="30" uuid="cc572765-9e19-47aa-9322-023cbfc5fb16"/>
+				<textFieldExpression><![CDATA[$F{invDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="details" x="466" y="2" width="64" height="30" uuid="e0d0b791-8c49-4023-b8d4-76ab98ac7fb9"/>
+				<textFieldExpression><![CDATA[$F{invNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="19">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="5400b84a-e306-4533-a603-31089432a73d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="91afb76d-5600-48fd-a6af-5cae5aa16caa"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="4" y="4" width="100" height="13" uuid="5c62e62e-f60d-4c43-ba57-c597322b5eb9"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="160" y="4" width="231" height="15" uuid="ef47a4eb-4955-4a34-acb1-bb27ee9262d1"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[Unlimited Solutions Arabia - 01014713133]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="41">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement mode="Opaque" x="104" y="0" width="112" height="20" forecolor="#2C1780" backcolor="#E6E6E6" uuid="e8bb61a0-b1d2-4663-a2cf-5497599ce4f0">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[هامش الربح]]></text>
+			</staticText>
+			<textField pattern="# EGP">
+				<reportElement mode="Opaque" x="0" y="0" width="104" height="20" forecolor="#2C1780" backcolor="#E6E6E6" uuid="ee55bcd2-8a12-4f6c-9a61-7f23a7c483a4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="82" y="10" width="398" height="30" forecolor="#0E2B6B" uuid="6e7301ad-80ec-4520-97dd-2e8fd97325eb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ariel" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[لا يوجد فواتير]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

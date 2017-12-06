@@ -343,6 +343,7 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 					},
 					dataType : "text",
 					beforeSend : function(){
+						$('#saveTransferBtn').val('جار الطباعة');
 						$('#saveTransferBtn').attr('disabled', 'disabled');
 						$('#exitBtn').addClass('hidden');
 					},

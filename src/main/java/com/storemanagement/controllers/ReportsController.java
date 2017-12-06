@@ -13,11 +13,13 @@ import com.storemanagement.entities.Cache;
 import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Client;
 import com.storemanagement.entities.Inventory;
+import com.storemanagement.entities.Item;
 import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Supplier;
 import com.storemanagement.services.CachesMovementService;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.InvoiceService;
+import com.storemanagement.services.ProfitService;
 import com.storemanagement.utils.ReportsUtil;
 @WebServlet("/reports")
 public class ReportsController extends HttpServlet {
@@ -166,7 +168,16 @@ public class ReportsController extends HttpServlet {
 			//transfer items report
 			int transferId = Integer.parseInt(request.getParameter("id"));
 			reportsUtil.showTransferItemsReport(request, response, transferId);
-		}else if(request.getParameter("r").equals("profit")){
+		}
+		else if(request.getParameter("r").equals("profit")){
+			Inventory inventory = new Inventory();
+			if(request.getParameter("inventory").equals(""))
+				inventory = null;
+			else inventory.setId(Integer.parseInt(request.getParameter("inventory")));
+			Item item = new Item();
+			if(request.getParameter("item").equals(""))
+				item = null;
+			else item.setId(Integer.parseInt(request.getParameter("item")));
 			try{
 				Date from = null, to = null;
 				if(!request.getParameter("from").equals("")){
@@ -177,7 +188,7 @@ public class ReportsController extends HttpServlet {
 					String t = request.getParameter("to") + " 23:59:59";
 					to = (Date) new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(t);
 				}			
-				reportsUtil.showProfitReport(request, response, from, to);
+				reportsUtil.showProfitReport(request, response, ProfitService.getProfitMargin(inventory, item, from, to));
 			}catch (ParseException e) {
 				e.printStackTrace();
 			}

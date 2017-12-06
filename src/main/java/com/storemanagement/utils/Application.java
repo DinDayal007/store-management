@@ -26,6 +26,7 @@ import com.storemanagement.entities.ItemBalance;
 import com.storemanagement.entities.MainGroup;
 import com.storemanagement.entities.Page;
 import com.storemanagement.entities.Privilege;
+import com.storemanagement.entities.Profit;
 import com.storemanagement.entities.Role;
 import com.storemanagement.entities.SalesInvoiceDetails;
 import com.storemanagement.entities.SubGroup;
@@ -37,6 +38,11 @@ import com.storemanagement.services.ItemService;
 public class Application {
 	public static void main(String[] args) throws DocumentException, IOException {
 			
+		
+//	List<Profit> profits = EntityService.getAllObjects(Profit.class);
+//	for(Profit profit : profits){
+//		System.out.println(profit.getSalesInvoiceHeader().getDate());
+//	}
 //		Document document = new Document(new Rectangle(PageSize.A4));
 //		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("/home/mohammed/Desktop/test.pdf"));
 //		document.open();

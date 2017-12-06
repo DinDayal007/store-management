@@ -7,6 +7,7 @@ encoding//src/main/resources/reports/ItemMin.jrxml=UTF-8
 encoding//src/main/resources/reports/ItemMovement.jrxml=UTF-8
 encoding//src/main/resources/reports/ItemQuantities.jrxml=UTF-8
 encoding//src/main/resources/reports/Profit.jrxml=UTF-8
+encoding//src/main/resources/reports/ProfitMargin.jrxml=UTF-8
 encoding//src/main/resources/reports/PurchaseInvoice.jrxml=UTF-8
 encoding//src/main/resources/reports/PurchaseInvoices.jrxml=UTF-8
 encoding//src/main/resources/reports/SalesInvoice.jrxml=UTF-8

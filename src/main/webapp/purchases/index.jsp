@@ -486,6 +486,7 @@ $(document).ready(function(){
 				},
 				dataType : "text",
 				beforeSend : function(){
+					$('#saveInvoiceBtn').val('جار الطباعة');
 					$('#saveInvoiceBtn').attr('disabled', 'disabled');
 					$('#exitBtn').addClass('hidden');
 				},
