@@ -214,13 +214,16 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 			var item = $('#item').val();
 			if(inventoryFrom == '' || inventoryTo == '' || item == ''){
 				alert('يجب ملأ جميع مدخلات البحث');
-			}else{
+			}else if(inventoryFrom == inventoryTo)
+				alert('يجب اختيار مخزنين مختلفين للتحويل بينهم');
+			else{
 				var itemId = $('#item option:selected').data('id');
 				var itemName = $('#item option:selected').text();
 				var itemCode = $('#item').find(':selected').data('code');
 				var itemQty = $('#item option:selected').data('qty');
 				var itemPrice = $('#item option:selected').data('price');
 				addRows(itemId, itemName, itemCode, itemQty, itemPrice);
+				disableSearchFields();
 			}
 		});
 		
@@ -240,11 +243,35 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 			sumTotal();
 		}
 		
+		function disableSearchFields(){
+			$('#branchFrom').attr('disabled', 'disabled');
+			$('#branchTo').attr('disabled', 'disabled');
+			
+			$('#inventoryFrom').attr('disabled', 'disabled');
+			$('#inventoryTo').attr('disabled', 'disabled');
+			
+			$('#cacheFrom').attr('disabled', 'disabled');
+			$('#cacheTo').attr('disabled', 'disabled');
+		}
+		
+		function enableSearchFields(){
+			$('#branchFrom').removeAttr('disabled');
+			$('#branchTo').removeAttr('disabled');
+			
+			$('#inventoryFrom').removeAttr('disabled');
+			$('#inventoryTo').removeAttr('disabled');
+			
+			$('#cacheFrom').removeAttr('disabled');
+			$('#cacheTo').removeAttr('disabled');
+		}
+		
 		//remove item from invoice
 		$(document).on('click', '.btn-remove', function(){
 			var buttonId = $(this).attr('id');
 			$('#row' + buttonId).remove();
 			sumTotal();
+			var tot = $('#totalPrice').val();
+			if(tot == 0) enableSearchFields();
 		});
 		
 		//sum total for the totalPrice and finalTotal
@@ -285,12 +312,6 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 		
 		//submit the values
 		$('#saveTransferBtn').click(function(){
-			//send transferHeader data
-			var inventoryFrom = $('#inventoryFrom').val();
-			var inventoryTo = $('#inventoryTo').val();
-			var cacheFrom = $('#cacheFrom').val();
-			var cacheTo = $('#cacheTo').val();
-			var totalPrice = $('#totalPrice').val();
 			//send transferDetails data
 			var itemIds = $('input.itemId[type=hidden]').map(function() {
 			       return $(this).val(); }).get().join();
@@ -300,8 +321,17 @@ List<Cache> caches = (List<Cache>) request.getAttribute("caches");
 			       return $(this).val(); }).get().join();
 			var itemTotal = $('input.itemTotal[type=number]').map(function() {
 			       return $(this).val(); }).get().join();
+			
 			if(itemIds.length < 1) alert('يجب إضافة على الأقل صنف واحد لتحويله');
 			else{
+				enableSearchFields();
+				//send transferHeader data
+				var inventoryFrom = $('#inventoryFrom').val();
+				var inventoryTo = $('#inventoryTo').val();
+				var cacheFrom = $('#cacheFrom').val();
+				var cacheTo = $('#cacheTo').val();
+				var totalPrice = $('#totalPrice').val();
+				
 				$.ajax({
 					url : "/store-management-system/transfer",
 					method : "POST",
