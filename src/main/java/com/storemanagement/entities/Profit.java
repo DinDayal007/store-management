@@ -1,11 +1,13 @@
 package com.storemanagement.entities;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -16,8 +18,8 @@ public class Profit {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private int id;
-	@OneToOne
-	@JoinColumn(name = "SALES_INVOICE_HEADER_ID", referencedColumnName = "ID")
+	@ManyToOne
+	@JoinColumn(name = "SALES_INVOICE_HEADER_ID")
 	private SalesInvoiceHeader salesInvoiceHeader;
 	@OneToOne
 	@JoinColumn(name = "ITEM_ID", referencedColumnName = "ID")
@@ -28,6 +30,11 @@ public class Profit {
 	private double price;
 	@Column(name = "PROFIT")
 	private double profit;
+	@Column(name = "INV_DATE")
+	private Date invDate;
+	@OneToOne
+	@JoinColumn(name = "INVENTORY_ID", referencedColumnName = "ID")
+	private Inventory inventory;
 	public int getId() {
 		return id;
 	}
@@ -63,5 +70,17 @@ public class Profit {
 	}
 	public void setProfit(double profit) {
 		this.profit = profit;
+	}
+	public Date getInvDate() {
+		return invDate;
+	}
+	public void setInvDate(Date invDate) {
+		this.invDate = invDate;
+	}
+	public Inventory getInventory() {
+		return inventory;
+	}
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 }

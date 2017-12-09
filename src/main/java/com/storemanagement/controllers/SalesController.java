@@ -305,6 +305,8 @@ public class SalesController extends HttpServlet {
 				profit.setPrice(Double.parseDouble(itemPrice[i]));
 				double profitMargin = (profit.getPrice() - Double.parseDouble(itemPurchasePrices[i])) * profit.getQty();
 				profit.setProfit(profitMargin);
+				profit.setInvDate(salesInvoiceHeader.getDate());
+				profit.setInventory(inventory);
 				EntityService.addObject(profit);
 			}
 			response.getWriter().print(invoiceId);

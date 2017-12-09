@@ -54,6 +54,8 @@ public class SalesInvoiceHeader {
 	private double finalTotal;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "salesInvoiceHeader")
 	private Collection<SalesInvoiceDetails> salesInvoiceDetails = new ArrayList<SalesInvoiceDetails>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "salesInvoiceHeader")
+	private Collection<Profit> profits = new ArrayList<Profit>();
 	public int getId() {
 		return id;
 	}
@@ -144,5 +146,11 @@ public class SalesInvoiceHeader {
 	public void setSalesInvoiceDetails(
 			Collection<SalesInvoiceDetails> salesInvoiceDetails) {
 		this.salesInvoiceDetails = salesInvoiceDetails;
+	}
+	public Collection<Profit> getProfits() {
+		return profits;
+	}
+	public void setProfits(Collection<Profit> profits) {
+		this.profits = profits;
 	}
 }

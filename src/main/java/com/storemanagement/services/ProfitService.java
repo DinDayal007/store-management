@@ -16,13 +16,13 @@ public class ProfitService extends EntityService {
 			openSession();
 			Criteria criteria = getSession().createCriteria(Profit.class).addOrder(Order.desc("id"));
 			if(inventory != null)
-				criteria.add(Restrictions.eq("salesInvoiceHeader.inventory.id", inventory.getId()));
+				criteria.add(Restrictions.eq("inventory.id", inventory.getId()));
 			if(item != null)
 				criteria.add(Restrictions.eq("item.id", item.getId()));
 			if(from != null)
-				criteria.add(Restrictions.ge("salesInvoiceHeader.date", from));
+				criteria.add(Restrictions.ge("invDate", from));
 			if(to != null)
-				criteria.add(Restrictions.le("salesInvoiceHeader.date", to));
+				criteria.add(Restrictions.le("invDate", to));
 			profits = criteria.list();
 		} catch (Exception e) {
 			e.printStackTrace();
