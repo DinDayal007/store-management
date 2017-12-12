@@ -1,3 +1,4 @@
+<%@page import="com.storemanagement.entities.TransferHeader"%>
 <%@page import="com.storemanagement.entities.Page"%>
 <%@page import="com.storemanagement.entities.Role"%>
 <%@page import="java.util.List"%>
@@ -14,6 +15,7 @@ textarea{resize: none;}
 Facility facility = (Facility) request.getAttribute("facility");
 List<Role> roles = (List<Role>) request.getAttribute("roles");
 List<Page> pages = (List<Page>) request.getAttribute("pages");
+List<TransferHeader> transferHeaders = (List<TransferHeader>) request.getAttribute("transferHeaders");
 int i = 1;
 %>
 
@@ -22,6 +24,7 @@ int i = 1;
 		<ul class="nav nav-tabs" style="margin-top: 50px">
 			<li class="active"><a data-toggle="tab" href="#facility"><i class="fa fa-home fa-fw"></i> معلومات المنشأة</a></li>
 			<li><a data-toggle="tab" href="#roles"><i class="fa fa-lock fa-fw"></i> الأدوار</a></li>
+			<li><a data-toggle="tab" href="#transfer"><i class="fa fa-check-square fa-fw"></i> تأكيد التحويلات</a></li>
 		</ul>
 	</div>
 	<!-- /.col-lg-12 -->
@@ -119,6 +122,61 @@ int i = 1;
 	         <!-- /.panel-body -->
 	     	</div>
 		</div>
+		
+		<!-- transfer section -->
+		<div id="transfer" class="tab-pane fade">
+			<div class="panel panel-default">
+	         <div class="panel-heading">
+	         	<label>تأكيد تحويلات الأصناف بين المخازن</label>
+	         </div>
+	         <!-- /.panel-heading -->
+	         
+	         <div class="panel-body">
+	             <div class="table-responsive">
+	             	<table class="table table-striped table-bordered table-hover">
+                         <thead>
+                             <tr>
+                                 <th>#</th>
+                                 <th>التاريخ</th>
+                                 <th>المستخدم</th>
+                                 <th>من مخزن</th>
+                                 <th>إلى مخزن</th>
+                                 <th>من خزنة</th>
+                                 <th>إلى خزنة</th>
+                                 <th>السعر</th>
+                                 <th>مشاهدة</th>
+                                 <th>تأكيد</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                         	<% 
+                         	if(transferHeaders.size() > 0){
+                         	for(TransferHeader transferHeader : transferHeaders){ %>
+                         	<tr>
+                         		<td><%= i %></td>
+                         		<td><%= transferHeader.getCreatedDate() %></td>
+                         		<td><%= transferHeader.getCreatedBy().getName() %></td>
+                         		<td><%= transferHeader.getInventoryFrom().getName() %></td>
+                         		<td><%= transferHeader.getInventoryTo().getName() %></td>
+                         		<td><%= transferHeader.getCacheFrom().getName() %></td>
+                         		<td><%= transferHeader.getCacheTo().getName() %></td>
+                         		<td><%= transferHeader.getTotalPrice() %> EGP</td>
+                         		<td><button type="button" id="<%= transferHeader.getId() %>" class="btn btn-default viewTransfer" data-toggle="modal" data-target="#viewTransferModal"><i class="fa fa-eye"></i></button></td>
+                         		<td><button type="button" id="<%= transferHeader.getId() %>" class="btn btn-success confirmTransfer"><i class="fa fa-check"></i></button></td>
+                         	</tr>
+                         	<% i++;} } else{
+                         		%>
+                         		<tr>
+                         			<td colspan="10" class="text-center text-danger"><p class="lead">عفوا لا يوجد تحويلات للتأكيد</p></td>
+                         		</tr>
+                         		<% } %>
+                         </tbody>
+                     </table>
+	             </div>
+	         </div>
+	         <!-- /.panel-body -->
+	     	</div>
+		</div>
 	</div>
 </div>
 
@@ -186,6 +244,24 @@ int i = 1;
 				<h4 class="modal-title">مشاهدة صلاحيات الدور</h4>
 			</div>
 			<div class="modal-body" id="role_privileges">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">رجوع</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- view transfer details modal -->
+<div id="viewTransferModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content -->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">تفاصيل التحويلات</h4>
+			</div>
+			<div class="modal-body" id="transferDetails">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">رجوع</button>
@@ -275,6 +351,40 @@ int i = 1;
 				success : function(data){
 					$('#role_privileges').html(data);
 					$('#viewRoleModal').show();
+				}
+			});
+		});
+		
+		//view transfer details on modal
+		$(document).on('click', '.viewTransfer', function(){
+			var transferId = $(this).attr('id');
+			$.ajax({
+				url : "/store-management-system/settings",
+				method : "POST",
+				data : {
+					action : "3", transferId : transferId
+				},
+				success : function(data){
+					$('#transferDetails').html(data);
+					$('#viewTransferModal').show();
+				}
+			});
+		});
+		
+		//confirm transfer
+		$(document).on('click', '.confirmTransfer', function(){
+			var transferId = $(this).attr('id');
+			$.ajax({
+				url : "/store-management-system/settings",
+				method : "POST",
+				data : {
+					action : "4", transferId : transferId
+				},
+				success : function(data){
+					if(data){
+						alert("تم تأكيد التحويل بنجاح");
+						window.location.reload();
+					}
 				}
 			});
 		});

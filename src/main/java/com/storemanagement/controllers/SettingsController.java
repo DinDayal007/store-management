@@ -10,8 +10,12 @@ import com.storemanagement.entities.Facility;
 import com.storemanagement.entities.Page;
 import com.storemanagement.entities.Privilege;
 import com.storemanagement.entities.Role;
+import com.storemanagement.entities.TransferDetails;
+import com.storemanagement.entities.TransferHeader;
+import com.storemanagement.entities.User;
 import com.storemanagement.services.EntityService;
 import com.storemanagement.services.RoleService;
+import com.storemanagement.services.TransferService;
 @WebServlet("/settings")
 public class SettingsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,10 +28,12 @@ public class SettingsController extends HttpServlet {
 			Facility facility = (Facility) EntityService.getObject(Facility.class, 1);
 			List<Role> roles = EntityService.getAllObjects(Role.class);
 			List<Page> pages = EntityService.getAllObjects(Page.class);
+			List<TransferHeader> transferHeaders = EntityService.getObjectsWithEqRestriction(TransferHeader.class, "status", false);
 			request.setAttribute("facility", facility);
 			request.setAttribute("roles", roles);
 			request.setAttribute("pages", pages);
 			request.setAttribute("title", "لوحة التحكم");
+			request.setAttribute("transferHeaders", transferHeaders);
 			request.getRequestDispatcher("settings/index.jsp").forward(request, response);
 		}
 	}
@@ -38,6 +44,10 @@ public class SettingsController extends HttpServlet {
 			saveRole(request, response);
 		else if(request.getParameter("action").equals("2"))
 			getRole(request, response);
+		else if(request.getParameter("action").equals("3"))
+			getTransferDetails(request, response);
+		else if(request.getParameter("action").equals("4"))
+			confirmTransfer(request, response);
 		else if(request.getParameter("action").equals("delete")){
 			delete(request, response);
 			response.sendRedirect("settings");
@@ -104,6 +114,47 @@ public class SettingsController extends HttpServlet {
 			response.getWriter().print(out.toString());
 		}
 	}
+	
+	//get role from its id
+	protected void getTransferDetails(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("transferId").equals("")){
+			int transferId = Integer.parseInt(request.getParameter("transferId"));
+			List<TransferDetails> transferDetails = EntityService.getObjectsWithEqRestriction(TransferDetails.class, "transferHeader.id", transferId);
+			StringBuilder out = new StringBuilder("");
+			out.append("<div class=\"table-responsive\">"
+	                   + "<table class=\"table table-striped table-bordered table-hover\" >"
+	                       +" <thead><tr class=\"text-center\">"
+	                           + "<th>الكود</th>"
+	                           + "<th>الصنف</th>"
+	                           + "<th>الكمية</th>"
+	                           + "<th>السعر</th>"
+	                           + "<th>الإجمالى</th></tr></thead><tbody>");
+			for(TransferDetails detail : transferDetails){
+				out.append("<tr><td>" + detail.getItem().getCode() + "</td>");
+				out.append("<td>" + detail.getItem().getName() + "</td>");
+				out.append("<td>" + detail.getQty() + "</td>");
+				out.append("<td>" + detail.getPrice() + " EGP</td>");
+				out.append("<td>" + detail.getTotal() + " EGP</td></tr>");
+			}
+			out.append("</tbody></table></div>");
+			response.setContentType("text/html");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(out.toString());
+		}
+	}
+	
+	//confirm transfer
+	protected void confirmTransfer(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		if(!request.getParameter("transferId").equals("")){
+			int transferId = Integer.parseInt(request.getParameter("transferId"));
+			User user = (User) request.getSession().getAttribute("user");
+			int updatedId = TransferService.confirmTransfer(transferId, user);
+			response.getWriter().print(updatedId);
+		}
+	}
+	
 	//delete a role from its id
 	protected void delete(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
