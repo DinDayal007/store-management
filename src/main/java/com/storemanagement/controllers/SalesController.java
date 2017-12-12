@@ -132,8 +132,9 @@ public class SalesController extends HttpServlet {
 	//get item from code
 	protected void getItemFromCode(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
 		if(!request.getParameter("itemCode").equals("")){
-			ItemBalance itemBalance = ItemService.getItemFromCode(request.getParameter("itemCode"));
+			ItemBalance itemBalance = ItemService.getItemFromCode(request.getParameter("itemCode"), user.getInventory().getId());
 			if(itemBalance != null){
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");

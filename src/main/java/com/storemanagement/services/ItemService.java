@@ -111,13 +111,14 @@ public class ItemService extends EntityService {
 	}
 	
 	//get item quantities from code
-	public static ItemBalance getItemFromCode(String code){
+	public static ItemBalance getItemFromCode(String code, int inventoryId){
 		ItemBalance itemBalance = null;
 		connection = JDBCUtil.getCon();
 		try{
-			String query = "select sum(ITEM_QTY), item_name, MIN_LIMIT, MAX_LIMIT, PURCHASE_PRICE, SALE_PRICE, item_id from item_movment where CODE = ? group by item_name, MIN_LIMIT, MAX_LIMIT, PURCHASE_PRICE, SALE_PRICE, item_id";
+			String query = "select sum(ITEM_QTY), item_name, MIN_LIMIT, MAX_LIMIT, PURCHASE_PRICE, SALE_PRICE, item_id from item_movment where CODE = ? and INVENTORY_ID = ? group by item_name, MIN_LIMIT, MAX_LIMIT, PURCHASE_PRICE, SALE_PRICE, item_id";
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, code);
+			preparedStatement.setInt(2, inventoryId);
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()){
 				itemBalance = new ItemBalance();
