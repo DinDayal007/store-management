@@ -416,7 +416,7 @@ public class ReportsUtil {
 		//put the invoice id
 		parameters.put("id", Integer.parseInt(String.valueOf(invoiceId)));
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("reports/SalesInvoice.jrxml").getFile());
+		File file = new File(classLoader.getResource("reports/SalesInvoice2.jrxml").getFile());
 		InputStream inputStream = new FileInputStream(file);
 		try {
 			JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
