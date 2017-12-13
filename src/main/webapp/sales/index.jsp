@@ -292,7 +292,7 @@ $(document).ready(function(){
 	function addRowsBarCode(unit, unitQuantity){
 		i++;
 		$('#item-rows').append('<tr id="row' + i + '">' + 
-		'<input type="hidden" class="itemPurchasePrice" name = "itemPurchasePrice[]"' +
+		'<input type="hidden" class="itemPurchasePrice" name = "itemPurchasePrice[]"/>' +
 		'<input type="hidden" class="itemId" name="itemId[]" />' +
 		'<input type="hidden" class="unitId" name="unitId[]" value = "' + unit + '"/>' +
 		'<td><input class="form-control itemBarCode" type="number" name="item_code[]" autofocus /></td>' +
@@ -519,7 +519,7 @@ $(document).ready(function(){
 		var tax = $('#tax').val();
 		if(discount == '') discount = 0;
 		if(tax == '') tax = 0;
-		if(itemIds.length < 1) alert('يجب إضافة على الأقل صنف واحد للفاتورة');
+		if(itemIds.length == 0) alert('يجب إضافة على الأقل صنف واحد للفاتورة');
 		else{
 			$.ajax({
 				url : "/store-management-system/sales",
