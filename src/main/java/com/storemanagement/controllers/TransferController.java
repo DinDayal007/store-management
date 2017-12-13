@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.storemanagement.entities.Branch;
 import com.storemanagement.entities.Cache;
-import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Inventory;
 import com.storemanagement.entities.Item;
 import com.storemanagement.entities.ItemBalance;
@@ -122,40 +121,6 @@ public class TransferController extends HttpServlet {
 			header.setTotalPrice(Double.parseDouble(request.getParameter("totalPrice")));
 
 			int transferId = EntityService.addObject(header);
-			
-			cacheFrom = (Cache) EntityService.getObject(Cache.class, cacheFrom.getId());
-			cacheFrom.setQty(cacheFrom.getQty() - header.getTotalPrice());
-			EntityService.updateObject(cacheFrom);
-			
-			cacheTo = (Cache) EntityService.getObject(Cache.class, cacheTo.getId());
-			cacheTo.setQty(cacheTo.getQty() + header.getTotalPrice());
-			EntityService.updateObject(cacheTo);
-			
-			CacheMovement cacheMovementFrom = new CacheMovement();
-			cacheMovementFrom.setUser(createdBy);
-			cacheMovementFrom.setInventory(inventoryFrom);
-			cacheMovementFrom.setCache(cacheFrom);
-			cacheMovementFrom.setClient(null);
-			cacheMovementFrom.setSupplier(null);
-			cacheMovementFrom.setDate(new Date());
-			cacheMovementFrom.setType(0);
-			cacheMovementFrom.setDescription("سحب أصناف");
-			cacheMovementFrom.setAmount(header.getTotalPrice() * -1);
-			cacheMovementFrom.setRefNumber(0);
-			EntityService.addObject(cacheMovementFrom);
-			
-			CacheMovement cacheMovementTo = new CacheMovement();
-			cacheMovementTo.setUser(createdBy);
-			cacheMovementTo.setInventory(inventoryTo);
-			cacheMovementTo.setCache(cacheTo);
-			cacheMovementTo.setClient(null);
-			cacheMovementTo.setSupplier(null);
-			cacheMovementTo.setDate(new Date());
-			cacheMovementTo.setType(1);
-			cacheMovementTo.setDescription("إيداع أصناف");
-			cacheMovementTo.setAmount(header.getTotalPrice());
-			cacheMovementTo.setRefNumber(0);
-			EntityService.addObject(cacheMovementTo);
 			
 			String[] itemIds = request.getParameter("itemIds").split(",");
 			String[] itemQty = request.getParameter("itemQty").split(",");

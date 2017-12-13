@@ -43,6 +43,7 @@ long invNumber = InvoicesCounterUtil.getPurchaseInvoiceCounter();
 					<div class="form-group form-inline">
 						<label for="supplier">المورد</label>
 						<select class="form-control" id="supplier" name="supplier">
+							<option value="">إختر المورد</option>
 							<% for(Supplier supplier : suppliers){ %>
 							<option value="<%= supplier.getId() %>"><%= supplier.getName() %></option>
 							<% } %>

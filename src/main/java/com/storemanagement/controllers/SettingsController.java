@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.storemanagement.entities.Cache;
+import com.storemanagement.entities.CacheMovement;
 import com.storemanagement.entities.Facility;
 import com.storemanagement.entities.Page;
 import com.storemanagement.entities.Privilege;
@@ -150,7 +152,44 @@ public class SettingsController extends HttpServlet {
 		if(!request.getParameter("transferId").equals("")){
 			int transferId = Integer.parseInt(request.getParameter("transferId"));
 			User user = (User) request.getSession().getAttribute("user");
+			TransferHeader header = (TransferHeader) TransferService.getObject(TransferHeader.class, transferId);
+			
 			int updatedId = TransferService.confirmTransfer(transferId, user);
+			
+			Cache cacheFrom = (Cache) EntityService.getObject(Cache.class, header.getCacheFrom().getId());
+			cacheFrom.setQty(cacheFrom.getQty() - header.getTotalPrice());
+			EntityService.updateObject(cacheFrom);
+			
+			Cache cacheTo = (Cache) EntityService.getObject(Cache.class, header.getCacheTo().getId());
+			cacheTo.setQty(cacheTo.getQty() + header.getTotalPrice());
+			EntityService.updateObject(cacheTo);
+			
+			CacheMovement cacheMovementFrom = new CacheMovement();
+			cacheMovementFrom.setUser(header.getCreatedBy());
+			cacheMovementFrom.setInventory(header.getInventoryFrom());
+			cacheMovementFrom.setCache(cacheFrom);
+			cacheMovementFrom.setClient(null);
+			cacheMovementFrom.setSupplier(null);
+			cacheMovementFrom.setDate(header.getCreatedDate());
+			cacheMovementFrom.setType(0);
+			cacheMovementFrom.setDescription("سحب أصناف");
+			cacheMovementFrom.setAmount(header.getTotalPrice() * -1);
+			cacheMovementFrom.setRefNumber(0);
+			EntityService.addObject(cacheMovementFrom);
+			
+			CacheMovement cacheMovementTo = new CacheMovement();
+			cacheMovementTo.setUser(header.getCreatedBy());
+			cacheMovementTo.setInventory(header.getInventoryTo());
+			cacheMovementTo.setCache(cacheTo);
+			cacheMovementTo.setClient(null);
+			cacheMovementTo.setSupplier(null);
+			cacheMovementTo.setDate(header.getCreatedDate());
+			cacheMovementTo.setType(1);
+			cacheMovementTo.setDescription("إيداع أصناف");
+			cacheMovementTo.setAmount(header.getTotalPrice());
+			cacheMovementTo.setRefNumber(0);
+			EntityService.addObject(cacheMovementTo);
+			
 			response.getWriter().print(updatedId);
 		}
 	}
